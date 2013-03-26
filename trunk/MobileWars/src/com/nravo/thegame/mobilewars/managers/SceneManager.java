@@ -1,8 +1,10 @@
 package com.nravo.thegame.mobilewars.managers;
 
+import com.nravo.thegame.mobilewars.layers.ManagedLayer;
 import com.nravo.thegame.mobilewars.runtime.ManagedScene;
 import org.andengine.engine.Engine;
 import org.andengine.engine.handler.IUpdateHandler;
+import org.andengine.entity.scene.Scene;
 
 public class SceneManager {
     private static final SceneManager INSTANCE = new SceneManager();
@@ -51,5 +53,8 @@ public class SceneManager {
         @Override public void reset() {}
     };
 
-
+    private boolean mCamerahadHud = false;
+    public boolean mIsLayerShown = false;
+    private Scene mPlaceholderModalScene;
+    public ManagedLayer currentLayer;
 }
