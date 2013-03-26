@@ -15,10 +15,10 @@ public class ResourceManager {
     public float cameraScaleFactorX;
     public float cameraScaleFactorY;
 
-    public static ITextureRegion gameBackgroundTextureRegion;
-    public static ITextureRegion gameMenuTextureRegion;
+    public static ITextureRegion sGameBackgroundTextureRegion;
+    public static ITextureRegion sGameMenuTextureRegion;
 
-    public static Font fontDefault32Bold;
+    public static Font sFontDefault32Bold;
 
     private String mPreviousAssetBasePath = "";
 
