@@ -1,4 +1,4 @@
-package com.nravo.thegame.mobilewars;
+package com.nravo.thegame.mobilewars.runtime;
 
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.options.EngineOptions;
