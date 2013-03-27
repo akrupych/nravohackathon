@@ -16,8 +16,8 @@ public class MainGameActivity extends BaseGameActivity {
     // Window resolution constants
     private static final float DESIGN_SCREEN_WIDTH_INCHES = 4.472441f;
     private static final float DESIGN_SCREEN_HEIGHT_INCHES = 2.805118f;
-    private static final float DESIGN_SCREEN_WIDTH_PIXELS = 1024;
-    private static final float DESIGN_SCREEN_HEIGHT_PIXELS = 800;
+    private static final float DESIGN_SCREEN_WIDTH_PIXELS = 800;
+    private static final float DESIGN_SCREEN_HEIGHT_PIXELS = 480;
 
     private static final float MIN_WIDTH_PIXELS = 800;
     private static final float MIN_HEIGHT_PIXELS = 480f;
@@ -88,6 +88,6 @@ public class MainGameActivity extends BaseGameActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        System.exit(0);
+//        System.exit(0);
     }
 }
