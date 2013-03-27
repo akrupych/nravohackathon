@@ -79,6 +79,10 @@ public class ResourceManager {
         // shared sounds, fonts, textures
     }
 
+    public static MainGameActivity getActivity() {
+        return getInstance().activity;
+    }
+
     // ===================================================
     // ================ PRIVATE METHODS ==================
     // ===================================================
