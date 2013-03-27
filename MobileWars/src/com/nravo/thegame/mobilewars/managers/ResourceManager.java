@@ -1,9 +1,11 @@
 package com.nravo.thegame.mobilewars.managers;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import com.nravo.thegame.mobilewars.runtime.MainGameActivity;
 import org.andengine.engine.Engine;
 import org.andengine.opengl.font.Font;
+import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
@@ -11,6 +13,7 @@ import org.andengine.opengl.texture.atlas.bitmap.source.AssetBitmapTextureAtlasS
 import org.andengine.opengl.texture.atlas.bitmap.source.IBitmapTextureAtlasSource;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.TextureRegion;
+import org.andengine.util.adt.color.Color;
 
 public class ResourceManager {
     private static final ResourceManager INSTANCE = new ResourceManager();
@@ -98,4 +101,14 @@ public class ResourceManager {
         }
     }
 
+    // =======================================
+    // =============== FONTS =================
+    // =======================================
+    private void loadFonts() {
+        if (sFontDefault32Bold != null) {
+            sFontDefault32Bold = FontFactory.create(engine.getFontManager(), engine.getTextureManager(),
+                    256, 256, Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 32f, true, Color.CYAN_ABGR_PACKED_INT);
+            sFontDefault32Bold.load();
+        }
+    }
 }
