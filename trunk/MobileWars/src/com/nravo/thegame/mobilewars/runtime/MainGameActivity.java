@@ -24,13 +24,10 @@ public class MainGameActivity extends BaseGameActivity {
     private static final float MAX_WIDTH_PIXELS = 1600f;
     private static final float MAX_HEIGHT_PIXELS = 960f;
 
-
     public float cameraWidth;
     public float cameraHeight;
     public float actualScreenWidthInches;
     public float actualScreenHeightInches;
-    private Camera mCamera;
-    private Scene mScene;
 
     @Override
     public EngineOptions onCreateEngineOptions() {
@@ -42,11 +39,10 @@ public class MainGameActivity extends BaseGameActivity {
                 * (actualScreenWidthInches / DESIGN_SCREEN_WIDTH_INCHES), MAX_WIDTH_PIXELS), MIN_WIDTH_PIXELS));
         cameraHeight = Math.round(Math.max(Math.min(DESIGN_SCREEN_HEIGHT_PIXELS
                 * (actualScreenHeightInches / DESIGN_SCREEN_HEIGHT_INCHES), MAX_HEIGHT_PIXELS), MIN_HEIGHT_PIXELS));
-        mCamera = new Camera(0, 0, cameraWidth, cameraHeight);
 
         EngineOptions engineOptions = new EngineOptions(true,
                 ScreenOrientation.LANDSCAPE_FIXED, new FillResolutionPolicy(),
-                mCamera);
+                new Camera(0, 0, cameraWidth, cameraHeight));
         engineOptions.getAudioOptions().setNeedsSound(true);
         engineOptions.getAudioOptions().setNeedsMusic(true);
         engineOptions.setWakeLockOptions(WakeLockOptions.SCREEN_ON);
@@ -63,7 +59,6 @@ public class MainGameActivity extends BaseGameActivity {
 
     @Override
     public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) {
-        mScene = new Scene();
         SceneManager.getInstance().showMainMenu();
         pOnCreateSceneCallback.onCreateSceneFinished(MainMenu.getInstance());
     }
