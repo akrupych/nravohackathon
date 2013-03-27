@@ -1,26 +1,29 @@
 package com.nravo.thegame.mobilewars.runtime;
 
+import com.nravo.thegame.mobilewars.managers.ResourceManager;
+import com.nravo.thegame.mobilewars.managers.SceneManager;
+import com.nravo.thegame.mobilewars.menu.MainMenu;
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.WakeLockOptions;
 import org.andengine.engine.options.resolutionpolicy.FillResolutionPolicy;
-import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.ui.activity.BaseGameActivity;
 
 public class MainGameActivity extends BaseGameActivity {
 
     // Window resolution constants
+    private static final float DESIGN_SCREEN_WIDTH_INCHES = 4.472441f;
+    private static final float DESIGN_SCREEN_HEIGHT_INCHES = 2.805118f;
+    private static final float DESIGN_SCREEN_WIDTH_PIXELS = 1024;
+    private static final float DESIGN_SCREEN_HEIGHT_PIXELS = 800;
+
     private static final float MIN_WIDTH_PIXELS = 800;
     private static final float MIN_HEIGHT_PIXELS = 480f;
     private static final float MAX_WIDTH_PIXELS = 1600f;
     private static final float MAX_HEIGHT_PIXELS = 960f;
 
-    private static final float DESIGN_SCREEN_WIDTH_INCHES = 4.472441f;
-    private static final float DESIGN_SCREEN_HEIGHT_INCHES = 2.805118f;
-    private static final float DESIGN_SCREEN_WIDTH_PIXELS = 1280f;
-    private static final float DESIGN_SCREEN_HEIGHT_PIXELS = 800f;
 
     public float cameraWidth;
     public float cameraHeight;
@@ -53,24 +56,27 @@ public class MainGameActivity extends BaseGameActivity {
     @Override
     public void onCreateResources(
             OnCreateResourcesCallback pOnCreateResourcesCallback) {
+        ResourceManager.setup(this, this.getEngine(), this.getApplicationContext(), cameraWidth, cameraHeight,
+                cameraWidth/DESIGN_SCREEN_WIDTH_PIXELS, cameraHeight/DESIGN_SCREEN_HEIGHT_PIXELS);
         pOnCreateResourcesCallback.onCreateResourcesFinished();
     }
 
     @Override
     public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) {
         mScene = new Scene();
-        pOnCreateSceneCallback.onCreateSceneFinished(mScene);
+        SceneManager.getInstance().showMainMenu();
+        pOnCreateSceneCallback.onCreateSceneFinished(MainMenu.getInstance());
     }
 
     @Override
     public void onPopulateScene(Scene pScene,
                                 OnPopulateSceneCallback pOnPopulateSceneCallback) {
-        Rectangle rectangle1 = new Rectangle(cameraWidth/2, cameraHeight/2, 200, 200, mEngine.getVertexBufferObjectManager());
-        rectangle1.setColor(1, 0, 1);
-        Rectangle rectangle2 = new Rectangle(0, 0, 200, 200, mEngine.getVertexBufferObjectManager());
-        rectangle2.setColor(0, 0, 1);
-        mScene.attachChild(rectangle1);
-        mScene.attachChild(rectangle2);
+//        Rectangle rectangle1 = new Rectangle(cameraWidth/2, cameraHeight/2, 200, 200, mEngine.getVertexBufferObjectManager());
+//        rectangle1.setColor(1, 0, 1);
+//        Rectangle rectangle2 = new Rectangle(0, 0, 200, 200, mEngine.getVertexBufferObjectManager());
+//        rectangle2.setColor(0, 0, 1);
+//        mScene.attachChild(rectangle1);
+//        mScene.attachChild(rectangle2);
         pOnPopulateSceneCallback.onPopulateSceneFinished();
     }
 }
