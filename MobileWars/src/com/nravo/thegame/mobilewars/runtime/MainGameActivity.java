@@ -30,6 +30,14 @@ public class MainGameActivity extends BaseGameActivity {
     public float actualScreenHeightInches;
 
     @Override
+    public void onBackPressed() {
+        if (ResourceManager.getInstance().engine != null) {
+
+        }
+        super.onBackPressed();
+    }
+
+    @Override
     public EngineOptions onCreateEngineOptions() {
         // Determine the device's physical screen size.
         actualScreenWidthInches = getResources().getDisplayMetrics().widthPixels / getResources().getDisplayMetrics().xdpi;
@@ -73,5 +81,13 @@ public class MainGameActivity extends BaseGameActivity {
 //        mScene.attachChild(rectangle1);
 //        mScene.attachChild(rectangle2);
         pOnPopulateSceneCallback.onPopulateSceneFinished();
+    }
+
+
+    // Ensure activity is destroyed
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        System.exit(0);
     }
 }
