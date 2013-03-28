@@ -4,6 +4,7 @@ import com.nravo.thegame.mobilewars.managers.ResourceManager;
 import com.nravo.thegame.mobilewars.runtime.ManagedScene;
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.entity.scene.Scene;
+import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 
 public abstract class ManagedGameScene extends ManagedScene {
@@ -47,6 +48,35 @@ public abstract class ManagedGameScene extends ManagedScene {
     }
 
     @Override
+    public void onLoadScene() {
+        ResourceManager.loadGameResources();
+
+        this.attachChild(new Sprite(0, 0, ResourceManager.sMenuBackgroundTR,
+                ResourceManager.getInstance().engine.getVertexBufferObjectManager()));
+        this.getLastChild().setScaleCenter(0f, 0f);
+    }
+
+    @Override
+    public void onShowScene() {
+        ResourceManager.getInstance().engine.getCamera().setHUD(gameHud);
+    }
+
+    @Override
+    public void onUnloadScene() {
+        // detach and unload the scene
+        ResourceManager.getInstance().engine.runOnUpdateThread(new Runnable() {
+            @Override
+            public void run() {
+                ManagedGameScene.this.detachChildren();;
+                ManagedGameScene.this.clearEntityModifiers();
+                ManagedGameScene.this.clearTouchAreas();
+                ManagedGameScene.this.clearUpdateHandlers();
+            }
+        });
+    }
+
+    @Override
     public void onHideScene() {
+        ResourceManager.getInstance().engine.getCamera().setHUD(null);
     };
 }

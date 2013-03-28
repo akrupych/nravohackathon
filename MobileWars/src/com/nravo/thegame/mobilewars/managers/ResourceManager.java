@@ -70,10 +70,11 @@ public class ResourceManager {
 
     public static void loadMenuResources() {
         getInstance().loadMenuTextures();
+        getInstance().loadSharedResources();
     }
 
     public static void unloadGameResources() {
-
+        getInstance().loadSharedResources();
     }
 
     public static void unloadMenuResources() {
@@ -91,6 +92,11 @@ public class ResourceManager {
     // ===================================================
     // ================ PRIVATE METHODS ==================
     // ===================================================
+
+    private void loadSharedResources() {
+        loadFonts();
+    }
+
     private void loadMenuTextures() {
         mPreviousAssetBasePath = BitmapTextureAtlasTextureRegionFactory.getAssetBasePath();
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath(MENU_GRAPHICS_PATH);
@@ -129,7 +135,7 @@ public class ResourceManager {
     // =============== FONTS =================
     // =======================================
     private void loadFonts() {
-        if (sFontDefault32Bold != null) {
+        if (sFontDefault32Bold == null) {
             sFontDefault32Bold = FontFactory.create(engine.getFontManager(), engine.getTextureManager(),
                     256, 256, Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 32f, true, Color.CYAN_ABGR_PACKED_INT);
             sFontDefault32Bold.load();

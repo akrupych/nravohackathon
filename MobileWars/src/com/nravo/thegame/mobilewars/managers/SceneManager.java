@@ -77,6 +77,10 @@ public class SceneManager {
                 mEngine.registerUpdateHandler(mLoadingScreenHandler);
                 mLoadingScreenHandlerRegistered = true;
             }
+
+            mNextScene = managedScene;
+            mEngine.setScene(managedScene);
+            return;
         }
         mNextScene = managedScene;
         mEngine.setScene(mNextScene);
