@@ -4,7 +4,7 @@ import com.nravo.thegame.mobilewars.managers.ResourceManager;
 import com.nravo.thegame.mobilewars.managers.SFXManager;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.ScaleModifier;
-import org.andengine.entity.sprite.ButtonSprite;
+import org.andengine.entity.sprite.Sprite;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.region.ITextureRegion;
 
@@ -14,7 +14,7 @@ import org.andengine.opengl.texture.region.ITextureRegion;
  *  
 *** @author Brian Broyles - IFL Game Studio
 **/
-public abstract class GrowButton extends ButtonSprite {
+public abstract class GrowButton extends Sprite {
 	
 	// ====================================================
 	// CONSTANTS

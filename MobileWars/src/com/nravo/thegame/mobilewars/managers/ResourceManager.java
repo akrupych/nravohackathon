@@ -115,7 +115,7 @@ public class ResourceManager {
             BuildableBitmapTextureAtlas bitmapTextureAtlas = new BuildableBitmapTextureAtlas(engine.getTextureManager(), 600, 100);
             menuMainButtonsTTR = BitmapTextureAtlasTextureRegionFactory
                     .createTiledFromAsset(bitmapTextureAtlas, getActivity().getAssets(),
-                            "button.png", 1, 1);
+                            "button.png", 2, 1);
             try {
                 bitmapTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
             } catch (ITextureAtlasBuilder.TextureAtlasBuilderException e) {
