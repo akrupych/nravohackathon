@@ -9,10 +9,14 @@ import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.atlas.bitmap.BuildableBitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.source.AssetBitmapTextureAtlasSource;
 import org.andengine.opengl.texture.atlas.bitmap.source.IBitmapTextureAtlasSource;
+import org.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureAtlasBuilder;
+import org.andengine.opengl.texture.atlas.buildable.builder.ITextureAtlasBuilder;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.TextureRegion;
+import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.util.adt.color.Color;
 
 public class ResourceManager {
@@ -34,8 +38,9 @@ public class ResourceManager {
     public static ITextureRegion sGameBackgroundTR;
 
     // ================== MENU RESOURCES =====================
-    // TR = Texture Region
+    // TR = Texture Region; TTR = Tiled texture region
     public static ITextureRegion sMenuBackgroundTR;
+    public static TiledTextureRegion menuMainButtonsTTR;
 
     public static Font sFontDefault32Bold;
 
@@ -49,7 +54,7 @@ public class ResourceManager {
     }
 
     public static void setup(MainGameActivity activity, Engine engine, Context context, float cameraWidth, float cameraHeight,
-                      float cameraScaleFactorX, float cameraScaleFactorY) {
+                             float cameraScaleFactorX, float cameraScaleFactorY) {
         getInstance().activity = activity;
         getInstance().engine = engine;
         getInstance().context = context;
@@ -90,6 +95,7 @@ public class ResourceManager {
         mPreviousAssetBasePath = BitmapTextureAtlasTextureRegionFactory.getAssetBasePath();
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath(MENU_GRAPHICS_PATH);
 
+        // MENU background
         if (sMenuBackgroundTR == null) {
             final IBitmapTextureAtlasSource bitmapTextureAtlasSource =
                     AssetBitmapTextureAtlasSource.create(activity.getAssets(),
@@ -102,6 +108,20 @@ public class ResourceManager {
             bitmapTextureAtlas.addTextureAtlasSource(bitmapTextureAtlasSource, 0, 0);
             bitmapTextureAtlas.load();
             sMenuBackgroundTR = textureRegion;
+        }
+
+        // MENU button
+        if (menuMainButtonsTTR == null) {
+            BuildableBitmapTextureAtlas bitmapTextureAtlas = new BuildableBitmapTextureAtlas(engine.getTextureManager(), 600, 100);
+            menuMainButtonsTTR = BitmapTextureAtlasTextureRegionFactory
+                    .createTiledFromAsset(bitmapTextureAtlas, getActivity().getAssets(),
+                            "button.png", 1, 1);
+            try {
+                bitmapTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
+            } catch (ITextureAtlasBuilder.TextureAtlasBuilderException e) {
+                e.printStackTrace();
+            }
+            bitmapTextureAtlas.load();
         }
     }
 

@@ -1,5 +1,6 @@
 package com.nravo.thegame.mobilewars.menu;
 
+import com.nravo.thegame.mobilewars.input.GrowButton;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
@@ -8,6 +9,9 @@ import org.andengine.entity.sprite.Sprite;
 public class MainMenu extends ManagedMenuScene {
 
     private static final MainMenu INSTANCE = new MainMenu();
+
+    private static final float CAMERA_WIDTH = ResourceManager.getInstance().cameraWidth;
+    private static final float CAMERA_HEIGHT = ResourceManager.getInstance().cameraHeight;
 
     public static MainMenu getInstance() {
         return INSTANCE;
@@ -45,6 +49,15 @@ public class MainMenu extends ManagedMenuScene {
         Rectangle rectangle = new Rectangle(0, 0, 200, 200, ResourceManager.getInstance().engine.getVertexBufferObjectManager());
         rectangle.setColor(0, 0, 1);
         this.attachChild(rectangle);
+
+        final GrowButton playButton = new GrowButton(CAMERA_WIDTH/2, CAMERA_HEIGHT/2, ResourceManager.menuMainButtonsTTR) {
+            @Override
+            public void onClick() {
+                //To change body of implemented methods use File | Settings | File Templates.
+            }
+        };
+        this.attachChild(playButton);
+        this.registerTouchArea(playButton);
 
         // create the background
     }

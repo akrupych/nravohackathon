@@ -3,6 +3,7 @@ package com.nravo.thegame.mobilewars.managers;
 import org.andengine.audio.music.Music;
 import org.andengine.audio.music.MusicFactory;
 import org.andengine.audio.sound.Sound;
+import org.andengine.audio.sound.SoundFactory;
 import org.andengine.util.debug.Debug;
 
 import java.io.IOException;
@@ -32,9 +33,35 @@ public class SFXManager {
         } catch (IOException e) {
             Debug.e(e);
         }
+
+        SoundFactory.setAssetBasePath("sounds/");
+        try {
+            mExplosion = SoundFactory.createSoundFromAsset(ResourceManager.getActivity().getSoundManager(),
+                    ResourceManager.getActivity(), "boom_sound.mp3");
+        } catch (IOException e) {
+            Debug.e(e);
+        }
+    }
+
+    public static boolean isSoundMuted() {
+        return getInstance().mSoundsMuted;
     }
 
     public static void playMusic() {
         mMusic.play();
+    }
+
+    public static void playExplosion(final float rate, final float volume) {
+        playSound(mExplosion, rate, volume);
+    }
+
+    private static void playSound(final Sound sound, final float pRate, final float pVolume) {
+        if (isSoundMuted()) {
+            return;
+        }
+
+        sound.setRate(pRate);
+        sound.setVolume(pVolume);
+        sound.play();
     }
 }
