@@ -29,7 +29,7 @@ public class SFXManager {
         MusicFactory.setAssetBasePath("sounds/");
         try {
             mMusic = MusicFactory.createMusicFromAsset(ResourceManager.getActivity().getMusicManager(),
-                    ResourceManager.getActivity(), "music.ogg");
+                    ResourceManager.getActivity(), "music.mp3");
         } catch (IOException e) {
             Debug.e(e);
         }

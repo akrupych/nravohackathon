@@ -9,11 +9,8 @@ import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
-import org.andengine.opengl.texture.atlas.bitmap.BuildableBitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.source.AssetBitmapTextureAtlasSource;
 import org.andengine.opengl.texture.atlas.bitmap.source.IBitmapTextureAtlasSource;
-import org.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureAtlasBuilder;
-import org.andengine.opengl.texture.atlas.buildable.builder.ITextureAtlasBuilder;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
@@ -42,6 +39,9 @@ public class ResourceManager {
     // TR = Texture Region; TTR = Tiled texture region
     public static ITextureRegion sMenuBackgroundTR;
     public static TiledTextureRegion menuMainButtonsTTR;
+
+    public static TiledTextureRegion musicToggleTTR;
+    public static TiledTextureRegion soundToggleTTR;
 
     public static Font sFontDefault32Bold;
 
@@ -122,16 +122,11 @@ public class ResourceManager {
 
         // MENU button
         if (menuMainButtonsTTR == null) {
-            BuildableBitmapTextureAtlas bitmapTextureAtlas = new BuildableBitmapTextureAtlas(engine.getTextureManager(), 600, 100);
-            menuMainButtonsTTR = BitmapTextureAtlasTextureRegionFactory
-                    .createTiledFromAsset(bitmapTextureAtlas, getActivity().getAssets(),
-                            "button.png", 2, 1);
-            try {
-                bitmapTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
-            } catch (ITextureAtlasBuilder.TextureAtlasBuilderException e) {
-                e.printStackTrace();
-            }
-            bitmapTextureAtlas.load();
+            menuMainButtonsTTR = getTiledTextureRegion("button.png", 2, 1, NORMAL_TEXTURE_OPTION);
+        }
+
+        if (musicToggleTTR == null) {
+            musicToggleTTR = getTiledTextureRegion("sound_on_off.png", 2, 1, NORMAL_TEXTURE_OPTION);
         }
     }
 
@@ -160,6 +155,30 @@ public class ResourceManager {
 
     private TiledTextureRegion getTiledTextureRegion(String tiledTextureRegionPath, int columns, int rows,
                                                      TextureOptions textureOptions) {
-        return null; // TODO implement it for buttons
+        final IBitmapTextureAtlasSource bitmapTextureAtlasSource =
+                AssetBitmapTextureAtlasSource.create(activity.getAssets(),
+                        BitmapTextureAtlasTextureRegionFactory.getAssetBasePath() + tiledTextureRegionPath);
+        final BitmapTextureAtlas bitmapTextureAtlas = new BitmapTextureAtlas(activity.getTextureManager(),
+                bitmapTextureAtlasSource.getTextureWidth(), bitmapTextureAtlasSource.getTextureHeight(), textureOptions);
+        final ITextureRegion[] textureRegions = new ITextureRegion[columns * rows];
+
+        final int tileWidth = bitmapTextureAtlas.getWidth() / columns;
+        final int tileHeight = bitmapTextureAtlas.getHeight() / rows;
+
+        for (int tileColumn = 0; tileColumn < columns; tileColumn++) {
+            for (int tileRow = 0; tileRow < rows; tileRow++) {
+                final int tileIndex = tileRow * columns + tileColumn;
+
+                final int x = tileColumn * tileWidth;
+                final int y = tileRow * tileHeight;
+                textureRegions[tileIndex] = new TextureRegion(bitmapTextureAtlas, x, y, tileWidth, tileHeight, false);
+            }
+        }
+
+        final TiledTextureRegion tiledTextureRegion = new TiledTextureRegion(bitmapTextureAtlas, false,
+                textureRegions);
+        bitmapTextureAtlas.addTextureAtlasSource(bitmapTextureAtlasSource, 0, 0);
+        bitmapTextureAtlas.load();
+        return tiledTextureRegion;
     }
 }
