@@ -6,9 +6,11 @@ import org.andengine.entity.primitive.Rectangle;
 
 public class GameLevel extends ManagedGameScene implements GameManager.GameLevelGoal {
 
+    private int mNumberOfEnemiesLeft;
+
     @Override
     public boolean isLevelCompleted() {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        return this.mNumberOfEnemiesLeft <= 0;
     }
 
     @Override
