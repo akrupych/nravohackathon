@@ -43,16 +43,48 @@ public class SFXManager {
         }
     }
 
+    // ======================================
+    // ============= METHODS ================
+    // ======================================
+
     public static boolean isSoundMuted() {
         return getInstance().mSoundsMuted;
     }
 
-    public static void playMusic() {
-        mMusic.play();
+    public static boolean isMusicMuted() {
+        return getInstance().mMusicMuted;
     }
 
-    public static void playExplosion(final float rate, final float volume) {
-        playSound(mExplosion, rate, volume);
+    public static void setSoundMuted(final boolean muted) {
+        getInstance().mSoundsMuted = muted;
+        setVolumeForAllSounds(getInstance().mSoundsMuted ? 0f : 1f);
+    }
+
+    private static void setVolumeForAllSounds(final float volume) {
+        mExplosion.setVolume(volume);
+    }
+
+    public static void setMusicMuted(final boolean muted) {
+        getInstance().mMusicMuted = muted;
+        if (getInstance().mMusicMuted) {
+            mMusic.pause();
+        } else {
+            mMusic.play();
+        }
+    }
+
+    public static boolean toggleMusicMuted() {
+        getInstance().mMusicMuted = !getInstance().mMusicMuted;
+        if (getInstance().mMusicMuted) {
+            mMusic.pause();
+        } else {
+            mMusic.play();
+        }
+        return getInstance().mMusicMuted;
+    }
+
+    public static void playMusic() {
+        mMusic.play();
     }
 
     private static void playSound(final Sound sound, final float pRate, final float pVolume) {
@@ -64,4 +96,21 @@ public class SFXManager {
         sound.setVolume(pVolume);
         sound.play();
     }
+
+    public static void pauseMusic() {
+        mMusic.pause();
+    }
+
+    public static void resumeMusic() {
+        if (!isMusicMuted()) {
+            mMusic.resume();
+        }
+    }
+
+    // ========================= SOUNDS ============================
+    public static void playExplosion(final float rate, final float volume) {
+        playSound(mExplosion, rate, volume);
+    }
+
+
 }

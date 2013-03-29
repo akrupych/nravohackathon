@@ -1,6 +1,7 @@
 package com.nravo.thegame.mobilewars.runtime;
 
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
+import com.nravo.thegame.mobilewars.managers.SFXManager;
 import com.nravo.thegame.mobilewars.managers.SceneManager;
 import com.nravo.thegame.mobilewars.menu.MainMenu;
 import org.andengine.engine.camera.Camera;
@@ -70,7 +71,7 @@ public class MainGameActivity extends BaseGameActivity {
     @Override
     public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) {
         SceneManager.getInstance().showMainMenu();
-//        SFXManager.playMusic();
+        SFXManager.playMusic();
         pOnCreateSceneCallback.onCreateSceneFinished(MainMenu.getInstance());
     }
 
