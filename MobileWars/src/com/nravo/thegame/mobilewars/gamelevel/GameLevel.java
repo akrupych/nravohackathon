@@ -5,12 +5,6 @@ import com.nravo.thegame.mobilewars.managers.ResourceManager;
 import org.andengine.entity.primitive.Rectangle;
 
 public class GameLevel extends ManagedGameScene implements GameManager.GameLevelGoal {
-    @Override
-    public void onLoadScene() {
-        super.onLoadScene();
-        Rectangle rectangle = new Rectangle(0f,0f,120f,120f, ResourceManager.getInstance().engine.getVertexBufferObjectManager());
-        rectangle.setColor(1, 0, 1);
-    }
 
     @Override
     public boolean isLevelCompleted() {
@@ -35,5 +29,8 @@ public class GameLevel extends ManagedGameScene implements GameManager.GameLevel
     @Override
     public void onLoadLevel() {
         GameManager.setGameLevel(this);
+        Rectangle rectangle = new Rectangle(0f,0f,120f,120f, ResourceManager.getInstance().engine.getVertexBufferObjectManager());
+        rectangle.setColor(1, 0, 1);
+        GameLevel.this.attachChild(rectangle);
     }
 }
