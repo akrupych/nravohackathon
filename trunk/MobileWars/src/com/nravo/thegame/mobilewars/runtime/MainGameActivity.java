@@ -9,6 +9,7 @@ import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.WakeLockOptions;
 import org.andengine.engine.options.resolutionpolicy.FillResolutionPolicy;
 import org.andengine.entity.scene.Scene;
+import org.andengine.entity.util.FPSLogger;
 import org.andengine.ui.activity.BaseGameActivity;
 
 public class MainGameActivity extends BaseGameActivity {
@@ -62,6 +63,7 @@ public class MainGameActivity extends BaseGameActivity {
             OnCreateResourcesCallback pOnCreateResourcesCallback) {
         ResourceManager.setup(this, this.getEngine(), this.getApplicationContext(), cameraWidth, cameraHeight,
                 cameraWidth/DESIGN_SCREEN_WIDTH_PIXELS, cameraHeight/DESIGN_SCREEN_HEIGHT_PIXELS);
+        ResourceManager.getEngine().registerUpdateHandler(new FPSLogger());
         pOnCreateResourcesCallback.onCreateResourcesFinished();
     }
 

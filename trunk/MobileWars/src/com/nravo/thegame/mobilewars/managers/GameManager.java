@@ -20,6 +20,10 @@ public class GameManager implements IUpdateHandler {
     private GameLevelGoal mGameLevelGoal;
     private GameLevel mGameLevel;
 
+    private GameManager() {
+        ResourceManager.getEngine().registerUpdateHandler(this);
+    }
+
     @Override
     public void onUpdate(float pSecondsElapsed) {
         if (mGameLevelGoal != null) {

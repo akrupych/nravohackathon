@@ -89,6 +89,10 @@ public class ResourceManager {
         return getInstance().activity;
     }
 
+    public static Engine getEngine() {
+        return getInstance().engine;
+    }
+
     // ===================================================
     // ================ PRIVATE METHODS ==================
     // ===================================================
