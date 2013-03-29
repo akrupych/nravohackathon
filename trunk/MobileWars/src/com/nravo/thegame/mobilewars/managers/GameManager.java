@@ -27,6 +27,7 @@ public class GameManager implements IUpdateHandler {
     @Override
     public void onUpdate(float pSecondsElapsed) {
         if (mGameLevelGoal != null) {
+            mGameLevel.mNumberOfEnemiesLeft--;
             if (mGameLevelGoal.isLevelCompleted()) {
                 mGameLevelGoal.onLevelCompleted();
                 mGameLevelGoal = null;
