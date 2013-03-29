@@ -24,6 +24,7 @@ public class ResourceManager {
     private static final TextureOptions NORMAL_TEXTURE_OPTION = TextureOptions.BILINEAR;
 
     private final String MENU_GRAPHICS_PATH = "graphics/menu/";
+    private final String GAME_GRAPHICS_PATH = "graphics/game/";
 
     public Engine engine;
     public Context context;
@@ -65,7 +66,7 @@ public class ResourceManager {
     }
 
     public static void loadGameResources() {
-
+        getInstance().loadGameTextures();
     }
 
     public static void loadMenuResources() {
@@ -101,23 +102,22 @@ public class ResourceManager {
         loadFonts();
     }
 
+    private void loadGameTextures() {
+        mPreviousAssetBasePath = BitmapTextureAtlasTextureRegionFactory.getAssetBasePath();
+        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath(GAME_GRAPHICS_PATH);
+
+        if (sGameBackgroundTR == null) {
+            sGameBackgroundTR = getTextureRegion("bg.png", NORMAL_TEXTURE_OPTION);
+        }
+    }
+
     private void loadMenuTextures() {
         mPreviousAssetBasePath = BitmapTextureAtlasTextureRegionFactory.getAssetBasePath();
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath(MENU_GRAPHICS_PATH);
 
         // MENU background
         if (sMenuBackgroundTR == null) {
-            final IBitmapTextureAtlasSource bitmapTextureAtlasSource =
-                    AssetBitmapTextureAtlasSource.create(activity.getAssets(),
-                            BitmapTextureAtlasTextureRegionFactory.getAssetBasePath() + "bg.png");
-            final BitmapTextureAtlas bitmapTextureAtlas = new BitmapTextureAtlas(
-                    activity.getTextureManager(), bitmapTextureAtlasSource.getTextureWidth(),
-                    bitmapTextureAtlasSource.getTextureHeight(), NORMAL_TEXTURE_OPTION);
-            final TextureRegion textureRegion = new TextureRegion(bitmapTextureAtlas, 0, 0,
-                    bitmapTextureAtlasSource.getTextureWidth(), bitmapTextureAtlasSource.getTextureHeight(), false);
-            bitmapTextureAtlas.addTextureAtlasSource(bitmapTextureAtlasSource, 0, 0);
-            bitmapTextureAtlas.load();
-            sMenuBackgroundTR = textureRegion;
+            sMenuBackgroundTR = getTextureRegion("bg.png", NORMAL_TEXTURE_OPTION);
         }
 
         // MENU button
@@ -144,5 +144,22 @@ public class ResourceManager {
                     256, 256, Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 32f, true, Color.CYAN_ABGR_PACKED_INT);
             sFontDefault32Bold.load();
         }
+    }
+
+    private TextureRegion getTextureRegion(String textureRegionPath, TextureOptions textureOptions) {
+        final IBitmapTextureAtlasSource bitmapTextureAtlasSource = AssetBitmapTextureAtlasSource.create(
+                activity.getAssets(), BitmapTextureAtlasTextureRegionFactory.getAssetBasePath() + textureRegionPath);
+        final BitmapTextureAtlas bitmapTextureAtlas = new BitmapTextureAtlas(activity.getTextureManager(),
+                bitmapTextureAtlasSource.getTextureWidth(), bitmapTextureAtlasSource.getTextureHeight(), textureOptions);
+        final TextureRegion textureRegion = new TextureRegion(bitmapTextureAtlas, 0, 0,
+                bitmapTextureAtlasSource.getTextureWidth(), bitmapTextureAtlasSource.getTextureHeight(), false);
+        bitmapTextureAtlas.addTextureAtlasSource(bitmapTextureAtlasSource, 0, 0);
+        bitmapTextureAtlas.load();
+        return textureRegion;
+    }
+
+    private TiledTextureRegion getTiledTextureRegion(String tiledTextureRegionPath, int columns, int rows,
+                                                     TextureOptions textureOptions) {
+        return null; // TODO implement it for buttons
     }
 }

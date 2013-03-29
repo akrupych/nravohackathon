@@ -13,6 +13,8 @@ public abstract class ManagedGameScene extends ManagedScene {
     private Text loadingText;
     private Scene loadingScene;
 
+    private Sprite mGameBackgroundSprite;
+
     public ManagedGameScene() {
         this(2f);
     }
@@ -53,10 +55,11 @@ public abstract class ManagedGameScene extends ManagedScene {
     public void onLoadScene() {
         ResourceManager.loadGameResources();
 
-        this.attachChild(new Sprite(ResourceManager.getInstance().cameraWidth/2,
-                ResourceManager.getInstance().cameraHeight/2, ResourceManager.sMenuBackgroundTR,
-                ResourceManager.getInstance().engine.getVertexBufferObjectManager()));
-        this.getLastChild().setScaleCenter(0f, 0f);
+        mGameBackgroundSprite = new Sprite(ResourceManager.getInstance().cameraWidth/2,
+                ResourceManager.getInstance().cameraHeight/2, ResourceManager.sGameBackgroundTR,
+                ResourceManager.getInstance().engine.getVertexBufferObjectManager());
+        mGameBackgroundSprite.setScale(ResourceManager.getInstance().cameraHeight / ResourceManager.sGameBackgroundTR.getHeight());
+        this.attachChild(mGameBackgroundSprite);
         this.onLoadLevel();
     }
 

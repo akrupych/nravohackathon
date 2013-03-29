@@ -15,6 +15,8 @@ public class MainMenu extends ManagedMenuScene {
     private static final float CAMERA_WIDTH = ResourceManager.getInstance().cameraWidth;
     private static final float CAMERA_HEIGHT = ResourceManager.getInstance().cameraHeight;
 
+    private Sprite mMenuBackgroundSprite;
+
     public static MainMenu getInstance() {
         return INSTANCE;
     }
@@ -35,25 +37,24 @@ public class MainMenu extends ManagedMenuScene {
         throw new UnsupportedOperationException(); // No loading screen for menu - no need to implement this
     }
 
-    private Sprite mBackgroundSprite;
 
     @Override
     public void onLoadScene() {
         ResourceManager.loadMenuResources();
 
         // create the background
-        mBackgroundSprite = new Sprite(ResourceManager.getInstance().cameraWidth/2f,
-                ResourceManager.getInstance().cameraHeight/2f,
+        mMenuBackgroundSprite = new Sprite(ResourceManager.getInstance().cameraWidth / 2f,
+                ResourceManager.getInstance().cameraHeight / 2f,
                 ResourceManager.sMenuBackgroundTR, ResourceManager.getInstance().engine.getVertexBufferObjectManager());
-        mBackgroundSprite.setScale(ResourceManager.getInstance().cameraHeight / ResourceManager.sMenuBackgroundTR.getHeight());
-        mBackgroundSprite.setZIndex(-5000);
-        this.attachChild(mBackgroundSprite);
+        mMenuBackgroundSprite.setScale(ResourceManager.getInstance().cameraHeight / ResourceManager.sMenuBackgroundTR.getHeight());
+        mMenuBackgroundSprite.setZIndex(-5000);
+        this.attachChild(mMenuBackgroundSprite);
 
         Rectangle rectangle = new Rectangle(0, 0, 200, 200, ResourceManager.getInstance().engine.getVertexBufferObjectManager());
         rectangle.setColor(0, 0, 1);
         this.attachChild(rectangle);
 
-        final GrowButton playButton = new GrowButton(CAMERA_WIDTH/2, CAMERA_HEIGHT/2, ResourceManager.menuMainButtonsTTR) {
+        final GrowButton playButton = new GrowButton(CAMERA_WIDTH / 2, CAMERA_HEIGHT / 2, ResourceManager.menuMainButtonsTTR) {
             @Override
             public void onClick() {
                 SceneManager.getInstance().showScene(new GameLevel());
