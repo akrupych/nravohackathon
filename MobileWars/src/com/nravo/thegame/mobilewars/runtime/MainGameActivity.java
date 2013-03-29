@@ -78,15 +78,25 @@ public class MainGameActivity extends BaseGameActivity {
     @Override
     public void onPopulateScene(Scene pScene,
                                 OnPopulateSceneCallback pOnPopulateSceneCallback) {
-//        Rectangle rectangle1 = new Rectangle(cameraWidth/2, cameraHeight/2, 200, 200, mEngine.getVertexBufferObjectManager());
-//        rectangle1.setColor(1, 0, 1);
-//        Rectangle rectangle2 = new Rectangle(0, 0, 200, 200, mEngine.getVertexBufferObjectManager());
-//        rectangle2.setColor(0, 0, 1);
-//        mScene.attachChild(rectangle1);
-//        mScene.attachChild(rectangle2);
         pOnPopulateSceneCallback.onPopulateSceneFinished();
     }
 
+    // ACTIVITY LICFECYCLE
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (this.isGameLoaded()) {
+            SFXManager.pauseMusic();
+        }
+    }
+
+    @Override
+    protected synchronized void onResume() {
+        super.onResume();
+        if (this.isGameLoaded()) {
+            SFXManager.resumeMusic();
+        }
+    }
 
     // Ensure activity is destroyed
     @Override
