@@ -27,6 +27,8 @@ public abstract class ManagedGameScene extends ManagedScene {
                 ResourceManager.getInstance().cameraScaleFactorY);
     }
 
+    public abstract void onLoadLevel();
+
     @Override
     public Scene onLoadingScreenLoadAndShown() {
         // Setup and return the loading screen
@@ -51,9 +53,11 @@ public abstract class ManagedGameScene extends ManagedScene {
     public void onLoadScene() {
         ResourceManager.loadGameResources();
 
-        this.attachChild(new Sprite(0, 0, ResourceManager.sMenuBackgroundTR,
+        this.attachChild(new Sprite(ResourceManager.getInstance().cameraWidth/2,
+                ResourceManager.getInstance().cameraHeight/2, ResourceManager.sMenuBackgroundTR,
                 ResourceManager.getInstance().engine.getVertexBufferObjectManager()));
         this.getLastChild().setScaleCenter(0f, 0f);
+        this.onLoadLevel();
     }
 
     @Override
