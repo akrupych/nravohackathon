@@ -6,11 +6,11 @@ package com.nravo.thegame.mobilewars.gamelevel;
  */
 public class Levels {
 
-    private static final LevelDefinition[] AVAILABLE_LEVELS = new LevelDefinition[] {
+    public static final LevelDefinition[] AVAILABLE_LEVELS = new LevelDefinition[] {
             new LevelDefinition(1,
             new BuildingDefinition[] {
-                new BuildingDefinition(0, 0, Race.ANDROID, BuildingDefinition.BuildingType.SIMPLE),
-                new BuildingDefinition(0, 0, Race.APPLE_IOS, BuildingDefinition.BuildingType.TOWER)
+                new BuildingDefinition(200, 200, Race.ANDROID, BuildingDefinition.BuildingType.SIMPLE),
+                new BuildingDefinition(300, 300, Race.APPLE_IOS, BuildingDefinition.BuildingType.TOWER)
             }),
     };
 

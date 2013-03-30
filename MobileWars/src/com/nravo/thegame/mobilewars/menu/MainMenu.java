@@ -1,6 +1,7 @@
 package com.nravo.thegame.mobilewars.menu;
 
 import com.nravo.thegame.mobilewars.gamelevel.GameLevel;
+import com.nravo.thegame.mobilewars.gamelevel.Levels;
 import com.nravo.thegame.mobilewars.input.GrowButton;
 import com.nravo.thegame.mobilewars.input.GrowToggleButton;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
@@ -72,7 +73,9 @@ public class MainMenu extends ManagedMenuScene {
         final GrowButton playButton = new GrowButton(CAMERA_WIDTH / 2, CAMERA_HEIGHT / 2, ResourceManager.menuMainButtonsTTR) {
             @Override
             public void onClick() {
-                SceneManager.getInstance().showScene(new GameLevel());
+                // Stub for now, later levels have to be chosen dynamically
+                Levels.LevelDefinition firstLevelDefinition = Levels.AVAILABLE_LEVELS[0]; // load first level
+                SceneManager.getInstance().showScene(new GameLevel(firstLevelDefinition));
             }
         };
 

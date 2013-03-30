@@ -1,5 +1,6 @@
 package com.nravo.thegame.mobilewars.gamelevel;
 
+import com.nravo.thegame.mobilewars.entity.Building;
 import com.nravo.thegame.mobilewars.layers.LevelWonLayer;
 import com.nravo.thegame.mobilewars.managers.GameManager;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
@@ -8,6 +9,8 @@ import org.andengine.engine.handler.IUpdateHandler;
 import org.andengine.entity.primitive.Rectangle;
 
 public class GameLevel extends ManagedGameScene implements GameManager.GameLevelGoal {
+
+    public final Levels.LevelDefinition mLevelDefinition;
 
     public int mNumberOfEnemiesLeft = 10;
     private int mNumberOfAlliesLeft = 10;
@@ -36,6 +39,13 @@ public class GameLevel extends ManagedGameScene implements GameManager.GameLevel
         public void reset() { }
     };
 
+    public GameLevel(final Levels.LevelDefinition levelDefinition) {
+        this.mLevelDefinition = levelDefinition;
+    }
+
+    // ======================================
+    // ============== METHODS ===============
+    // ======================================
     @Override
     public boolean isLevelCompleted() {
         return this.mNumberOfEnemiesLeft <= 0;
@@ -71,5 +81,10 @@ public class GameLevel extends ManagedGameScene implements GameManager.GameLevel
         Rectangle rectangle = new Rectangle(0f,0f,120f,120f, ResourceManager.getInstance().engine.getVertexBufferObjectManager());
         rectangle.setColor(1, 0, 1);
         GameLevel.this.attachChild(rectangle);
+
+        // Buildings
+        for (Levels.BuildingDefinition currentBuilding : GameLevel.this.mLevelDefinition.buildingsInLevel) {
+            new Building(currentBuilding.x, currentBuilding.y, GameLevel.this);
+        }
     }
 }
