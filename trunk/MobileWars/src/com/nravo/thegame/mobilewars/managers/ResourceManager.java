@@ -34,6 +34,7 @@ public class ResourceManager {
     // ================== GAME RESOURCES =====================
     // TR = Texture Region
     public static ITextureRegion sGameBackgroundTR;
+    public static ITextureRegion sBuildingTR;
 
     // ================== MENU RESOURCES =====================
     // TR = Texture Region; TTR = Tiled texture region
@@ -106,9 +107,8 @@ public class ResourceManager {
         mPreviousAssetBasePath = BitmapTextureAtlasTextureRegionFactory.getAssetBasePath();
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath(GAME_GRAPHICS_PATH);
 
-        if (sGameBackgroundTR == null) {
-            sGameBackgroundTR = getTextureRegion("bg.png", NORMAL_TEXTURE_OPTION);
-        }
+        if (sGameBackgroundTR == null) { sGameBackgroundTR = getTextureRegion("bg.png", NORMAL_TEXTURE_OPTION); }
+        if (sBuildingTR == null) { sBuildingTR = getTextureRegion("house.png", NORMAL_TEXTURE_OPTION); }
     }
 
     private void loadMenuTextures() {
