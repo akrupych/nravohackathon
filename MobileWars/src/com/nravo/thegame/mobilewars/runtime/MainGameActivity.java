@@ -37,6 +37,7 @@ public class MainGameActivity extends BaseGameActivity {
 
         }
         super.onBackPressed();
+        System.exit(RESULT_OK);
     }
 
     @Override
@@ -98,10 +99,10 @@ public class MainGameActivity extends BaseGameActivity {
         }
     }
 
-    // Ensure activity is destroyed
+   // Ensure activity is destroyed
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        System.exit(0);
-    }
+  //      System.exit(0);
+   }
 }
