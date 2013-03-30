@@ -7,6 +7,8 @@ import com.nravo.thegame.mobilewars.managers.ResourceManager;
 import com.nravo.thegame.mobilewars.managers.SceneManager;
 import org.andengine.engine.handler.IUpdateHandler;
 import org.andengine.entity.primitive.Rectangle;
+import org.andengine.entity.sprite.AnimatedSprite;
+import org.andengine.entity.sprite.Sprite;
 
 public class GameLevel extends ManagedGameScene implements GameManager.GameLevelGoal {
 
@@ -82,7 +84,15 @@ public class GameLevel extends ManagedGameScene implements GameManager.GameLevel
         rectangle.setColor(1, 0, 1);
         GameLevel.this.attachChild(rectangle);
 
-        // Buildings
+       AnimatedSprite android = new AnimatedSprite(600f,350f, ResourceManager.sAndroidTTR, ResourceManager.getInstance().engine.getVertexBufferObjectManager());
+       android.animate(new long[]{300,300});
+       GameLevel.this.attachChild(android);
+        
+       AnimatedSprite androidSmall = new AnimatedSprite(650f,150f, ResourceManager.sAndroidSmallTTR, ResourceManager.getInstance().engine.getVertexBufferObjectManager());
+       androidSmall.animate(new long[]{200,200});
+       GameLevel.this.attachChild(androidSmall);
+       
+       // Buildings
         for (Levels.BuildingDefinition currentBuilding : GameLevel.this.mLevelDefinition.buildingsInLevel) {
             new Building(currentBuilding.x, currentBuilding.y, GameLevel.this);
         }

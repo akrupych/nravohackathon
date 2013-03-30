@@ -17,168 +17,209 @@ import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.util.adt.color.Color;
 
 public class ResourceManager {
-    private static final ResourceManager INSTANCE = new ResourceManager();
-    private static final TextureOptions NORMAL_TEXTURE_OPTION = TextureOptions.BILINEAR;
+	private static final ResourceManager INSTANCE = new ResourceManager();
+	private static final TextureOptions NORMAL_TEXTURE_OPTION = TextureOptions.BILINEAR;
 
-    private final String MENU_GRAPHICS_PATH = "graphics/menu/";
-    private final String GAME_GRAPHICS_PATH = "graphics/game/";
+	private final String MENU_GRAPHICS_PATH = "graphics/menu/";
+	private final String GAME_GRAPHICS_PATH = "graphics/game/";
 
-    public Engine engine;
-    public Context context;
-    public MainGameActivity activity;
-    public float cameraWidth;
-    public float cameraHeight;
-    public float cameraScaleFactorX;
-    public float cameraScaleFactorY;
+	public Engine engine;
+	public Context context;
+	public MainGameActivity activity;
+	public float cameraWidth;
+	public float cameraHeight;
+	public float cameraScaleFactorX;
+	public float cameraScaleFactorY;
 
-    // ================== GAME RESOURCES =====================
-    // TR = Texture Region
-    public static ITextureRegion sGameBackgroundTR;
-    public static ITextureRegion sBuildingTR;
+	// ================== GAME RESOURCES =====================
+	// TR = Texture Region
+	public static ITextureRegion sGameBackgroundTR;
+	public static ITextureRegion sBuildingTR;
+	public static TiledTextureRegion sAndroidTTR;
+	public static TiledTextureRegion sAndroidSmallTTR;
 
-    // ================== MENU RESOURCES =====================
-    // TR = Texture Region; TTR = Tiled texture region
-    public static ITextureRegion sMenuBackgroundTR;
-    public static TiledTextureRegion menuMainButtonsTTR;
+	// ================== MENU RESOURCES =====================
+	// TR = Texture Region; TTR = Tiled texture region
+	public static ITextureRegion sMenuBackgroundTR;
+	public static TiledTextureRegion menuMainButtonsTTR;
 
-    public static TiledTextureRegion musicToggleTTR;
-    public static TiledTextureRegion soundToggleTTR;
+	public static TiledTextureRegion musicToggleTTR;
+	public static TiledTextureRegion soundToggleTTR;
 
-    public static Font sFontDefault32Bold;
+	public static Font sFontDefault32Bold;
 
-    private String mPreviousAssetBasePath = "";
+	private String mPreviousAssetBasePath = "";
 
-    private ResourceManager() {
-    }
+	private ResourceManager() {
+	}
 
-    public static ResourceManager getInstance() {
-        return INSTANCE;
-    }
+	public static ResourceManager getInstance() {
+		return INSTANCE;
+	}
 
-    public static void setup(MainGameActivity activity, Engine engine, Context context, float cameraWidth, float cameraHeight,
-                             float cameraScaleFactorX, float cameraScaleFactorY) {
-        getInstance().activity = activity;
-        getInstance().engine = engine;
-        getInstance().context = context;
-        getInstance().cameraWidth = cameraWidth;
-        getInstance().cameraHeight = cameraHeight;
-        getInstance().cameraScaleFactorX = cameraScaleFactorX;
-        getInstance().cameraScaleFactorY = cameraScaleFactorY;
-    }
+	public static void setup(MainGameActivity activity, Engine engine,
+			Context context, float cameraWidth, float cameraHeight,
+			float cameraScaleFactorX, float cameraScaleFactorY) {
+		getInstance().activity = activity;
+		getInstance().engine = engine;
+		getInstance().context = context;
+		getInstance().cameraWidth = cameraWidth;
+		getInstance().cameraHeight = cameraHeight;
+		getInstance().cameraScaleFactorX = cameraScaleFactorX;
+		getInstance().cameraScaleFactorY = cameraScaleFactorY;
+	}
 
-    public static void loadGameResources() {
-        getInstance().loadGameTextures();
-    }
+	public static void loadGameResources() {
+		getInstance().loadGameTextures();
+	}
 
-    public static void loadMenuResources() {
-        getInstance().loadMenuTextures();
-        getInstance().loadSharedResources();
-    }
+	public static void loadMenuResources() {
+		getInstance().loadMenuTextures();
+		getInstance().loadSharedResources();
+	}
 
-    public static void unloadGameResources() {
-        getInstance().loadSharedResources();
-    }
+	public static void unloadGameResources() {
+		getInstance().loadSharedResources();
+	}
 
-    public static void unloadMenuResources() {
+	public static void unloadMenuResources() {
 
-    }
+	}
 
-    public static void unloadSharedResources() {
-        // shared sounds, fonts, textures
-    }
+	public static void unloadSharedResources() {
+		// shared sounds, fonts, textures
+	}
 
-    public static MainGameActivity getActivity() {
-        return getInstance().activity;
-    }
+	public static MainGameActivity getActivity() {
+		return getInstance().activity;
+	}
 
-    public static Engine getEngine() {
-        return getInstance().engine;
-    }
+	public static Engine getEngine() {
+		return getInstance().engine;
+	}
 
-    // ===================================================
-    // ================ PRIVATE METHODS ==================
-    // ===================================================
+	// ===================================================
+	// ================ PRIVATE METHODS ==================
+	// ===================================================
 
-    private void loadSharedResources() {
-        loadFonts();
-    }
+	private void loadSharedResources() {
+		loadFonts();
+	}
 
-    private void loadGameTextures() {
-        mPreviousAssetBasePath = BitmapTextureAtlasTextureRegionFactory.getAssetBasePath();
-        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath(GAME_GRAPHICS_PATH);
+	private void loadGameTextures() {
+		mPreviousAssetBasePath = BitmapTextureAtlasTextureRegionFactory
+				.getAssetBasePath();
+		BitmapTextureAtlasTextureRegionFactory
+				.setAssetBasePath(GAME_GRAPHICS_PATH);
 
-        if (sGameBackgroundTR == null) { sGameBackgroundTR = getTextureRegion("bg.png", NORMAL_TEXTURE_OPTION); }
-        if (sBuildingTR == null) { sBuildingTR = getTextureRegion("house.png", NORMAL_TEXTURE_OPTION); }
-    }
+		if (sGameBackgroundTR == null) {
+			sGameBackgroundTR = getTextureRegion("bg.png",
+					NORMAL_TEXTURE_OPTION);
+		}
+		if (sBuildingTR == null) {
+			sBuildingTR = getTextureRegion("house.png", NORMAL_TEXTURE_OPTION);
+		}
+		if (sAndroidTTR == null) {
+			sAndroidTTR = getTiledTextureRegion("androidHero.png", 2, 1,
+					NORMAL_TEXTURE_OPTION);
+		}
+		if (sAndroidSmallTTR == null) {
+			sAndroidSmallTTR = getTiledTextureRegion("androidHeroSmall.png", 2, 1,
+					NORMAL_TEXTURE_OPTION);
+		}
 
-    private void loadMenuTextures() {
-        mPreviousAssetBasePath = BitmapTextureAtlasTextureRegionFactory.getAssetBasePath();
-        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath(MENU_GRAPHICS_PATH);
+	}
 
-        // MENU background
-        if (sMenuBackgroundTR == null) {
-            sMenuBackgroundTR = getTextureRegion("bg.png", NORMAL_TEXTURE_OPTION);
-        }
+	private void loadMenuTextures() {
+		mPreviousAssetBasePath = BitmapTextureAtlasTextureRegionFactory
+				.getAssetBasePath();
+		BitmapTextureAtlasTextureRegionFactory
+				.setAssetBasePath(MENU_GRAPHICS_PATH);
 
-        // MENU button
-        if (menuMainButtonsTTR == null) {
-            menuMainButtonsTTR = getTiledTextureRegion("button.png", 2, 1, NORMAL_TEXTURE_OPTION);
-        }
+		// MENU background
+		if (sMenuBackgroundTR == null) {
+			sMenuBackgroundTR = getTextureRegion("bg.png",
+					NORMAL_TEXTURE_OPTION);
+		}
 
-        if (musicToggleTTR == null) {
-            musicToggleTTR = getTiledTextureRegion("sound_on_off.png", 2, 1, NORMAL_TEXTURE_OPTION);
-        }
-    }
+		// MENU button
+		if (menuMainButtonsTTR == null) {
+			menuMainButtonsTTR = getTiledTextureRegion("button.png", 2, 1,
+					NORMAL_TEXTURE_OPTION);
+		}
 
-    // =======================================
-    // =============== FONTS =================
-    // =======================================
-    private void loadFonts() {
-        if (sFontDefault32Bold == null) {
-            sFontDefault32Bold = FontFactory.create(engine.getFontManager(), engine.getTextureManager(),
-                    256, 256, Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 32f, true, Color.CYAN_ABGR_PACKED_INT);
-            sFontDefault32Bold.load();
-        }
-    }
+		if (musicToggleTTR == null) {
+			musicToggleTTR = getTiledTextureRegion("sound_on_off.png", 2, 1,
+					NORMAL_TEXTURE_OPTION);
+		}
+	}
 
-    private TextureRegion getTextureRegion(String textureRegionPath, TextureOptions textureOptions) {
-        final IBitmapTextureAtlasSource bitmapTextureAtlasSource = AssetBitmapTextureAtlasSource.create(
-                activity.getAssets(), BitmapTextureAtlasTextureRegionFactory.getAssetBasePath() + textureRegionPath);
-        final BitmapTextureAtlas bitmapTextureAtlas = new BitmapTextureAtlas(activity.getTextureManager(),
-                bitmapTextureAtlasSource.getTextureWidth(), bitmapTextureAtlasSource.getTextureHeight(), textureOptions);
-        final TextureRegion textureRegion = new TextureRegion(bitmapTextureAtlas, 0, 0,
-                bitmapTextureAtlasSource.getTextureWidth(), bitmapTextureAtlasSource.getTextureHeight(), false);
-        bitmapTextureAtlas.addTextureAtlasSource(bitmapTextureAtlasSource, 0, 0);
-        bitmapTextureAtlas.load();
-        return textureRegion;
-    }
+	// =======================================
+	// =============== FONTS =================
+	// =======================================
+	private void loadFonts() {
+		if (sFontDefault32Bold == null) {
+			sFontDefault32Bold = FontFactory.create(engine.getFontManager(),
+					engine.getTextureManager(), 256, 256,
+					Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 32f,
+					true, Color.CYAN_ABGR_PACKED_INT);
+			sFontDefault32Bold.load();
+		}
+	}
 
-    private TiledTextureRegion getTiledTextureRegion(String tiledTextureRegionPath, int columns, int rows,
-                                                     TextureOptions textureOptions) {
-        final IBitmapTextureAtlasSource bitmapTextureAtlasSource =
-                AssetBitmapTextureAtlasSource.create(activity.getAssets(),
-                        BitmapTextureAtlasTextureRegionFactory.getAssetBasePath() + tiledTextureRegionPath);
-        final BitmapTextureAtlas bitmapTextureAtlas = new BitmapTextureAtlas(activity.getTextureManager(),
-                bitmapTextureAtlasSource.getTextureWidth(), bitmapTextureAtlasSource.getTextureHeight(), textureOptions);
-        final ITextureRegion[] textureRegions = new ITextureRegion[columns * rows];
+	private TextureRegion getTextureRegion(String textureRegionPath,
+			TextureOptions textureOptions) {
+		final IBitmapTextureAtlasSource bitmapTextureAtlasSource = AssetBitmapTextureAtlasSource
+				.create(activity.getAssets(),
+						BitmapTextureAtlasTextureRegionFactory
+								.getAssetBasePath() + textureRegionPath);
+		final BitmapTextureAtlas bitmapTextureAtlas = new BitmapTextureAtlas(
+				activity.getTextureManager(),
+				bitmapTextureAtlasSource.getTextureWidth(),
+				bitmapTextureAtlasSource.getTextureHeight(), textureOptions);
+		final TextureRegion textureRegion = new TextureRegion(
+				bitmapTextureAtlas, 0, 0,
+				bitmapTextureAtlasSource.getTextureWidth(),
+				bitmapTextureAtlasSource.getTextureHeight(), false);
+		bitmapTextureAtlas
+				.addTextureAtlasSource(bitmapTextureAtlasSource, 0, 0);
+		bitmapTextureAtlas.load();
+		return textureRegion;
+	}
 
-        final int tileWidth = bitmapTextureAtlas.getWidth() / columns;
-        final int tileHeight = bitmapTextureAtlas.getHeight() / rows;
+	private TiledTextureRegion getTiledTextureRegion(
+			String tiledTextureRegionPath, int columns, int rows,
+			TextureOptions textureOptions) {
+		final IBitmapTextureAtlasSource bitmapTextureAtlasSource = AssetBitmapTextureAtlasSource
+				.create(activity.getAssets(),
+						BitmapTextureAtlasTextureRegionFactory
+								.getAssetBasePath() + tiledTextureRegionPath);
+		final BitmapTextureAtlas bitmapTextureAtlas = new BitmapTextureAtlas(
+				activity.getTextureManager(),
+				bitmapTextureAtlasSource.getTextureWidth(),
+				bitmapTextureAtlasSource.getTextureHeight(), textureOptions);
+		final ITextureRegion[] textureRegions = new ITextureRegion[columns
+				* rows];
 
-        for (int tileColumn = 0; tileColumn < columns; tileColumn++) {
-            for (int tileRow = 0; tileRow < rows; tileRow++) {
-                final int tileIndex = tileRow * columns + tileColumn;
+		final int tileWidth = bitmapTextureAtlas.getWidth() / columns;
+		final int tileHeight = bitmapTextureAtlas.getHeight() / rows;
 
-                final int x = tileColumn * tileWidth;
-                final int y = tileRow * tileHeight;
-                textureRegions[tileIndex] = new TextureRegion(bitmapTextureAtlas, x, y, tileWidth, tileHeight, false);
-            }
-        }
+		for (int tileColumn = 0; tileColumn < columns; tileColumn++) {
+			for (int tileRow = 0; tileRow < rows; tileRow++) {
+				final int tileIndex = tileRow * columns + tileColumn;
 
-        final TiledTextureRegion tiledTextureRegion = new TiledTextureRegion(bitmapTextureAtlas, false,
-                textureRegions);
-        bitmapTextureAtlas.addTextureAtlasSource(bitmapTextureAtlasSource, 0, 0);
-        bitmapTextureAtlas.load();
-        return tiledTextureRegion;
-    }
+				final int x = tileColumn * tileWidth;
+				final int y = tileRow * tileHeight;
+				textureRegions[tileIndex] = new TextureRegion(
+						bitmapTextureAtlas, x, y, tileWidth, tileHeight, false);
+			}
+		}
+
+		final TiledTextureRegion tiledTextureRegion = new TiledTextureRegion(
+				bitmapTextureAtlas, false, textureRegions);
+		bitmapTextureAtlas
+				.addTextureAtlasSource(bitmapTextureAtlasSource, 0, 0);
+		bitmapTextureAtlas.load();
+		return tiledTextureRegion;
+	}
 }
