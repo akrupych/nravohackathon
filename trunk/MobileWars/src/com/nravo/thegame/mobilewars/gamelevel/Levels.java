@@ -50,6 +50,8 @@ public class Levels {
     }
 
     public enum Race {
-        ANDROID, APPLE_IOS
+        ANDROID,
+        APPLE_IOS,
+        NEUTRAL
     }
 }
