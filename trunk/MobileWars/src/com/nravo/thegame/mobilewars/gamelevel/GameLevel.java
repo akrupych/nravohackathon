@@ -92,7 +92,7 @@ public class GameLevel extends ManagedGameScene implements
 
 		// Buildings
 		for (Levels.BuildingDefinition currentBuilding : GameLevel.this.mLevelDefinition.buildingsInLevel) {
-			new Building(GameLevel.this, currentBuilding.x, currentBuilding.y, 40);
+			new Building(GameLevel.this, currentBuilding.x, currentBuilding.y, 40000);
 		}
 
 		new Hero(500f, 400f, GameLevel.this,Race.ANDROID).moveHero(100, 100,900, 500);
