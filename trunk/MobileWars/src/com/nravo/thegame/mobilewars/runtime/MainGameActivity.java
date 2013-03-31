@@ -52,7 +52,7 @@ public class MainGameActivity extends BaseGameActivity {
                 * (actualScreenHeightInches / DESIGN_SCREEN_HEIGHT_INCHES), MAX_HEIGHT_PIXELS), MIN_HEIGHT_PIXELS));
 
         EngineOptions engineOptions = new EngineOptions(true,
-                ScreenOrientation.LANDSCAPE_FIXED, new FillResolutionPolicy(),
+                ScreenOrientation.LANDSCAPE_SENSOR, new FillResolutionPolicy(),
                 new Camera(0, 0, cameraWidth, cameraHeight));
         engineOptions.getAudioOptions().setNeedsSound(true);
         engineOptions.getAudioOptions().setNeedsMusic(true);
