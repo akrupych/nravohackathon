@@ -92,11 +92,11 @@ public class GameLevel extends ManagedGameScene implements
 
 		// Buildings
 		for (Levels.BuildingDefinition currentBuilding : GameLevel.this.mLevelDefinition.buildingsInLevel) {
-			new Building(GameLevel.this, currentBuilding.x, currentBuilding.y, 40000);
+			new Building(GameLevel.this, currentBuilding.race, currentBuilding.x, currentBuilding.y, 0);
 		}
 
-		new Hero(500f, 400f, GameLevel.this,Race.ANDROID).moveHero(100, 100,900, 500);
+		new Hero(500f, 400f, GameLevel.this, Race.ANDROID).moveHero(100, 100, 900, 500);
 		
-		new Hero(500f, 400f, GameLevel.this,Race.APPLE_IOS).moveHero(300,300,700, 400);
+		new Hero(500f, 400f, GameLevel.this, Race.APPLE_IOS).moveHero(300, 300, 700, 400);
 	}
 }
