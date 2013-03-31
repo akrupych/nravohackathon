@@ -10,6 +10,9 @@ import org.andengine.entity.text.Text;
  * A building where units are generated
  */
 public class Building extends Entity {
+
+    private static final float UNIT_REGENERATION_DELAY_IN_SEC = 2f;
+
     private final GameLevel mGameLevel;
     private int mNumberOfUnits;
 
@@ -25,11 +28,20 @@ public class Building extends Entity {
         Text unitNumber = new Text(x, y, ResourceManager.sFontDefault32Bold,
                 String.valueOf(initialNumberOfUnits), 100,
                 ResourceManager.getEngine().getVertexBufferObjectManager()) {
+
+            float timePassed = 0;
+
             @Override
             protected void onManagedUpdate(float pSecondsElapsed) {
+                timePassed += pSecondsElapsed;
+
+                if (timePassed >= UNIT_REGENERATION_DELAY_IN_SEC) {
+                    mNumberOfUnits++;
+                    this.setText(String.valueOf(mNumberOfUnits));
+                    timePassed = 0;
+                }
+
                 super.onManagedUpdate(pSecondsElapsed);
-                mNumberOfUnits--;
-                this.setText(String.valueOf(mNumberOfUnits));
             }
         };
         gameLevel.attachChild(unitNumber);
