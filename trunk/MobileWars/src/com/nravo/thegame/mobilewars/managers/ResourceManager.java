@@ -36,7 +36,7 @@ public class ResourceManager {
 	public static ITextureRegion sGameBackgroundTR;
 	public static ITextureRegion sBuildingTR;
 	public static TiledTextureRegion sAndroidTTR;
-	public static TiledTextureRegion sAndroidSmallTTR;
+	public static TiledTextureRegion sAppleTTR;
 
 	// ================== MENU RESOURCES =====================
 	// TR = Texture Region; TTR = Tiled texture region
@@ -120,11 +120,11 @@ public class ResourceManager {
 			sBuildingTR = getTextureRegion("house.png", NORMAL_TEXTURE_OPTION);
 		}
 		if (sAndroidTTR == null) {
-			sAndroidTTR = getTiledTextureRegion("androidHero.png", 2, 1,
+			sAndroidTTR = getTiledTextureRegion("android_small.png", 4, 1,
 					NORMAL_TEXTURE_OPTION);
 		}
-		if (sAndroidSmallTTR == null) {
-			sAndroidSmallTTR = getTiledTextureRegion("androidHeroSmall.png", 2, 1,
+		if (sAppleTTR == null) {
+			sAppleTTR = getTiledTextureRegion("apple_bite.png", 5, 1,
 					NORMAL_TEXTURE_OPTION);
 		}
 
