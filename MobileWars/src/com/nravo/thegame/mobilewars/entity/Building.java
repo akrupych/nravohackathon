@@ -45,8 +45,13 @@ public class Building extends Entity {
         gameLevel.attachChild(buildingSprite);
         gameLevel.registerTouchArea(buildingSprite);
 
+        // Background for counter text
+        final Sprite counterBgSprite = new Sprite(0, 0, ResourceManager.sBuildingCounterBgTR,
+                ResourceManager.getActivity().getVertexBufferObjectManager());
+        buildingSprite.attachChild(counterBgSprite);
+
         // Text displaying number of units
-        Text unitNumber = new Text(x, y, ResourceManager.sFontDefault32Bold,
+        Text unitNumber = new Text(0, 0, ResourceManager.sFontDefault32Bold,
                 String.valueOf(initialNumberOfUnits), 100,
                 ResourceManager.getEngine().getVertexBufferObjectManager()) {
 
@@ -69,7 +74,7 @@ public class Building extends Entity {
                 super.onManagedUpdate(pSecondsElapsed);
             }
         };
-        gameLevel.attachChild(unitNumber);
+        buildingSprite.attachChild(unitNumber);
     }
 
 }
