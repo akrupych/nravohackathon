@@ -14,8 +14,8 @@ public class Building extends Entity {
     public Building(final float x, final float y, GameLevel gameLevel) {
         this.gameLevel = gameLevel;
 
-        final Sprite buildingSpprite = new Sprite(x, y, ResourceManager.sBuildingTR,
+        final Sprite buildingSprite = new Sprite(x, y, ResourceManager.sBuildingTR,
                 ResourceManager.getActivity().getVertexBufferObjectManager());
-        gameLevel.attachChild(buildingSpprite);
+        gameLevel.attachChild(buildingSprite);
     }
 }
