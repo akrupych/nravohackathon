@@ -10,7 +10,7 @@ public class Levels {
             new LevelDefinition(1,
             new BuildingDefinition[] {
                 new BuildingDefinition(200, 200, 40, Race.ANDROID, BuildingDefinition.BuildingType.SIMPLE),
-                new BuildingDefinition(300, 300, 40, Race.APPLE_IOS, BuildingDefinition.BuildingType.TOWER)
+                new BuildingDefinition(500, 500, 40, Race.APPLE_IOS, BuildingDefinition.BuildingType.TOWER)
             }),
     };
 

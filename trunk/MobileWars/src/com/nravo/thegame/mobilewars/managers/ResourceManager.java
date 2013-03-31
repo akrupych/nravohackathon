@@ -35,6 +35,7 @@ public class ResourceManager {
 	// TR = Texture Region
 	public static ITextureRegion sGameBackgroundTR;
 	public static ITextureRegion sBuildingTR;
+    public static ITextureRegion sBuildingCounterBgTR;
 	public static TiledTextureRegion sAndroidTTR;
 	public static TiledTextureRegion sAppleTTR;
 
@@ -119,6 +120,9 @@ public class ResourceManager {
 		if (sBuildingTR == null) {
 			sBuildingTR = getTextureRegion("house.png", NORMAL_TEXTURE_OPTION);
 		}
+        if (sBuildingCounterBgTR == null) {
+            sBuildingCounterBgTR = getTextureRegion("counter_bg.png", NORMAL_TEXTURE_OPTION);
+		}
 		if (sAndroidTTR == null) {
 			sAndroidTTR = getTiledTextureRegion("android_small.png", 4, 1,
 					NORMAL_TEXTURE_OPTION);
@@ -162,7 +166,7 @@ public class ResourceManager {
 			sFontDefault32Bold = FontFactory.create(engine.getFontManager(),
 					engine.getTextureManager(), 256, 256,
 					Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 32f,
-					true, Color.CYAN_ABGR_PACKED_INT);
+					true, Color.BLACK_ABGR_PACKED_INT);
 			sFontDefault32Bold.load();
 		}
 	}
