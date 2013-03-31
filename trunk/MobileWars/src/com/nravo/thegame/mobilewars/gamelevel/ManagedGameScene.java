@@ -56,7 +56,7 @@ public abstract class ManagedGameScene extends ManagedScene {
         ResourceManager.loadGameResources();
 
         mGameBackgroundSprite = new Sprite(ResourceManager.getInstance().cameraWidth/2,
-                ResourceManager.getInstance().cameraHeight/2, ResourceManager.sGameBackgroundTR,
+                ResourceManager.getInstance().cameraHeight/2, ResourceManager.sMenuBackgroundTR,
                 ResourceManager.getInstance().engine.getVertexBufferObjectManager());
         mGameBackgroundSprite.setScale(ResourceManager.getInstance().cameraHeight / ResourceManager.sGameBackgroundTR.getHeight());
         this.attachChild(mGameBackgroundSprite);
