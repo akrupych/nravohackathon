@@ -21,12 +21,14 @@ public class Building extends Entity {
                 ResourceManager.getActivity().getVertexBufferObjectManager());
         gameLevel.attachChild(buildingSprite);
 
+        // Text displaying number of units
         Text unitNumber = new Text(x, y, ResourceManager.sFontDefault32Bold,
                 String.valueOf(initialNumberOfUnits), 100,
                 ResourceManager.getEngine().getVertexBufferObjectManager()) {
             @Override
             protected void onManagedUpdate(float pSecondsElapsed) {
-                super.onManagedUpdate(mNumberOfUnits--);
+                super.onManagedUpdate(pSecondsElapsed);
+                mNumberOfUnits--;
                 this.setText(String.valueOf(mNumberOfUnits));
             }
         };
