@@ -1,7 +1,6 @@
 package com.nravo.thegame.mobilewars.gamelevel;
 
 import org.andengine.engine.handler.IUpdateHandler;
-import org.andengine.entity.modifier.MoveModifier;
 import org.andengine.entity.primitive.Rectangle;
 
 import com.nravo.thegame.mobilewars.entity.Building;
@@ -93,7 +92,7 @@ public class GameLevel extends ManagedGameScene implements
 
 		// Buildings
 		for (Levels.BuildingDefinition currentBuilding : GameLevel.this.mLevelDefinition.buildingsInLevel) {
-			new Building(currentBuilding.x, currentBuilding.y, GameLevel.this);
+			new Building(GameLevel.this, currentBuilding.x, currentBuilding.y, 40);
 		}
 
 		new Hero(500f, 400f, GameLevel.this,Race.ANDROID).moveHero(100, 100,900, 500);
