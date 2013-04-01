@@ -18,6 +18,7 @@ public class Building extends Entity {
     private static final int MAX_NUMBER_OF_UNITS_IN_BUILDING = 20;
 
     private final GameLevel mGameLevel;
+    public final Sprite buildingSprite;
     private int mNumberOfUnits;
 
     public Building(final GameLevel gameLevel, final Levels.Race buildingRace,
@@ -28,7 +29,7 @@ public class Building extends Entity {
         // BUILDING SPRITE
         ITextureRegion buildingTextureRegion = buildingRace.equals(Levels.Race.APPLE_IOS)
                 ? ResourceManager.sAppleSmallBuildingTR : ResourceManager.sAndroidSmallBuildingTR;
-        final Sprite buildingSprite = new Sprite(x, y, buildingTextureRegion,
+        buildingSprite = new Sprite(x, y, buildingTextureRegion,
                 ResourceManager.getActivity().getVertexBufferObjectManager()) {
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
@@ -40,7 +41,7 @@ public class Building extends Entity {
                 }
                 if (pSceneTouchEvent.isActionDown() && isAndroid && gameLevel.buildingsFrom.isEmpty()) {
                     gameLevel.buildingsFrom.add(Building.this);
-                    return true;
+                    return false;
                 } else if (pSceneTouchEvent.isActionMove() && isAndroid
                         && !gameLevel.buildingsFrom.contains(Building.this)) {
                     gameLevel.buildingsFrom.add(Building.this);

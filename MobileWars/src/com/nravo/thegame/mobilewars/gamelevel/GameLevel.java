@@ -25,17 +25,21 @@ public class GameLevel extends ManagedGameScene implements
     public int mNumberOfEnemiesLeft = 10;
     private int mNumberOfAlliesLeft = 10;
 
+    private float mX;
+    private float mY;
+
     // Moving units from building to building
     // These hold information about the touch event
     // to collect units from multiple buildings (buildingsFrom)
     public Set<Building> buildingsFrom = null;
     public Building buildingTo;
 
-    private Line line; // line to track movements
-
     private boolean mHasCompletionTimerRun = false;
 
-    public IUpdateHandler onCompletionTimer = new IUpdateHandler() {
+    // ============================================================
+    // ===================== UPDATE HANDLERS=======================
+    // ============================================================
+    private IUpdateHandler onCompletionTimer = new IUpdateHandler() {
         final float COMPLETION_DELAY_SECONDS = 3f;
         private float mTotalElapsedTime = 0f;
 
@@ -57,6 +61,28 @@ public class GameLevel extends ManagedGameScene implements
         public void reset() {
         }
     };
+
+    public IUpdateHandler lineDrawingHandler = new IUpdateHandler() {
+        Line line = new Line(0, 0, 0, 0, 2f, ResourceManager.getEngine().getVertexBufferObjectManager());
+
+        @Override
+        public void onUpdate(float pSecondsElapsed) {
+            if (!line.hasParent()) {
+                GameLevel.this.attachChild(line);
+            }
+            if (!buildingsFrom.isEmpty()) {
+                for (Building building : buildingsFrom) {
+                    line.setPosition(building.buildingSprite.getX(), building.buildingSprite.getY(), mX, mY);
+                }
+            }
+        }
+
+        @Override
+        public void reset() {
+        }
+    };
+
+
 
     public GameLevel(final Levels.LevelDefinition levelDefinition) {
         this.mLevelDefinition = levelDefinition;
@@ -99,10 +125,6 @@ public class GameLevel extends ManagedGameScene implements
         GameManager.setGameLevel(this);
         GameManager.setGameLevelGoal(this);
         buildingsFrom = new HashSet<Building>(mLevelDefinition.buildingsInLevel.length);
-        line = new Line(0, 0, 100, 100,
-                ResourceManager.getEngine().getVertexBufferObjectManager());
-        ;
-        GameLevel.this.attachChild(line);
 
         Rectangle rectangle = new Rectangle(0f, 0f, 120f, 120f,
                 ResourceManager.getInstance().engine
@@ -126,19 +148,12 @@ public class GameLevel extends ManagedGameScene implements
     public boolean onSceneTouchEvent(final Scene pScene, final TouchEvent pSceneTouchEvent) {
 
         if (pSceneTouchEvent.isActionDown()) {
-            line.registerUpdateHandler(new IUpdateHandler() {
-                @Override
-                public void onUpdate(float pSecondsElapsed) {
-                    line.setPosition(0, 0, pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
-                }
-
-                @Override
-                public void reset() {
-                }
-            });
+            GameLevel.this.registerUpdateHandler(lineDrawingHandler);
+            int a = 1;
             return false;
         }
         if (pSceneTouchEvent.isActionUp()) {
+            GameLevel.this.unregisterUpdateHandler(lineDrawingHandler);
             // if our touch event of collecting houses is correct
             // perform moving units
             if (!buildingsFrom.isEmpty() && buildingTo != null) {
@@ -146,8 +161,13 @@ public class GameLevel extends ManagedGameScene implements
             }
             buildingsFrom.clear();
             buildingTo = null;
+            return true;
         }
-        return true;
+        if (pSceneTouchEvent.isActionMove()) {
+            mX = pSceneTouchEvent.getX();
+            mY = pSceneTouchEvent.getY();
+        }
+        return false;
     }
 
     private void performUnitMovement() {
