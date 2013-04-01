@@ -56,13 +56,19 @@ public class Building extends Entity {
         gameLevel.attachChild(buildingSprite);
         gameLevel.registerTouchArea(buildingSprite);
 
+        // coordinates for building unit counter
+        final float counterWidth = buildingSprite.getWidth()/2;
+        final float counterHeight = buildingSprite.getHeight() + 0.25f * buildingSprite.getHeight();
+
         // Background for counter text
-        final Sprite counterBgSprite = new Sprite(0, 0, ResourceManager.sBuildingCounterBgTR,
+        final Sprite counterBgSprite = new Sprite(counterWidth, counterHeight,
+                ResourceManager.sBuildingCounterBgTR,
                 ResourceManager.getActivity().getVertexBufferObjectManager());
         buildingSprite.attachChild(counterBgSprite);
 
         // Text displaying number of units
-        Text unitNumber = new Text(0, 0, ResourceManager.sFontDefault32Bold,
+        Text unitNumber = new Text(counterWidth, counterHeight,
+                ResourceManager.sFontDefault32Bold,
                 String.valueOf(initialNumberOfUnits), 100,
                 ResourceManager.getEngine().getVertexBufferObjectManager()) {
 
