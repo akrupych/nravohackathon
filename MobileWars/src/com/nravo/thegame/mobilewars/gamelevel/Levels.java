@@ -14,10 +14,11 @@ public class Levels {
     public static final LevelDefinition[] AVAILABLE_LEVELS = new LevelDefinition[] {
             new LevelDefinition(1,
             new BuildingDefinition[] {
-                new BuildingDefinition(CAMERA_WIDTH/4, CAMERA_HEIGHT/4, 40, Race.ANDROID, BuildingDefinition.BuildingType.SIMPLE),
-                new BuildingDefinition(CAMERA_WIDTH/4, 3*CAMERA_HEIGHT/4, 40, Race.ANDROID, BuildingDefinition.BuildingType.TOWER),
-                new BuildingDefinition(3*CAMERA_WIDTH/4, CAMERA_HEIGHT/4, 40, Race.APPLE_IOS, BuildingDefinition.BuildingType.TOWER),
-                new BuildingDefinition(3*CAMERA_WIDTH/4, 3*CAMERA_HEIGHT/4, 40, Race.APPLE_IOS, BuildingDefinition.BuildingType.TOWER)
+                new BuildingDefinition(CAMERA_WIDTH/4, CAMERA_HEIGHT/4, 10, Race.ANDROID, BuildingDefinition.BuildingType.SIMPLE),
+                new BuildingDefinition(CAMERA_WIDTH/4, 3*CAMERA_HEIGHT/4, 10, Race.ANDROID, BuildingDefinition.BuildingType.TOWER),
+                new BuildingDefinition(CAMERA_WIDTH/2, CAMERA_HEIGHT/2, 10, Race.ANDROID, BuildingDefinition.BuildingType.TOWER),
+                new BuildingDefinition(3*CAMERA_WIDTH/4, CAMERA_HEIGHT/4, 10, Race.APPLE_IOS, BuildingDefinition.BuildingType.TOWER),
+                new BuildingDefinition(3*CAMERA_WIDTH/4, 3*CAMERA_HEIGHT/4, 10, Race.APPLE_IOS, BuildingDefinition.BuildingType.TOWER)
             }),
     };
 

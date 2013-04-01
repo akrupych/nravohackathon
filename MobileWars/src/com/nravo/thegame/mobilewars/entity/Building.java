@@ -1,6 +1,5 @@
 package com.nravo.thegame.mobilewars.entity;
 
-import android.widget.Toast;
 import com.nravo.thegame.mobilewars.gamelevel.GameLevel;
 import com.nravo.thegame.mobilewars.gamelevel.Levels;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
@@ -16,7 +15,7 @@ import org.andengine.opengl.texture.region.ITextureRegion;
 public class Building extends Entity {
 
     private static final float UNIT_REGENERATION_DELAY_IN_SEC = 1f;
-    private static final int MAX_NUMBER_OF_UNITS_IN_BUILDING = 10;
+    private static final int MAX_NUMBER_OF_UNITS_IN_BUILDING = 20;
 
     private final GameLevel mGameLevel;
     private int mNumberOfUnits;
@@ -33,19 +32,23 @@ public class Building extends Entity {
                 ResourceManager.getActivity().getVertexBufferObjectManager()) {
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                if (buildingRace.equals(Levels.Race.ANDROID) && pSceneTouchEvent.isActionDown()) {
-                    mNumberOfUnits--;
-                    gameLevel.buildingFrom = Building.this;
-                    ResourceManager.getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(ResourceManager.getActivity(), "Number of units "
-                                    + mNumberOfUnits, Toast.LENGTH_LONG).show();
-                        }
-                    });
+
+                boolean isAndroid = (buildingRace == Levels.Race.ANDROID);
+
+                if (pSceneTouchEvent.isActionOutside()) {
+                    return true;
                 }
-                if (buildingRace.equals(Levels.Race.APPLE_IOS) && pSceneTouchEvent.isActionUp()) {
-                    mNumberOfUnits++;
+                if (pSceneTouchEvent.isActionDown() && isAndroid && gameLevel.buildingsFrom.isEmpty()) {
+                    gameLevel.buildingsFrom.add(Building.this);
+                    return true;
+                } else if (pSceneTouchEvent.isActionMove() && isAndroid
+                        && !gameLevel.buildingsFrom.contains(Building.this)) {
+                    gameLevel.buildingsFrom.add(Building.this);
+                    return true;
+                } else if (pSceneTouchEvent.isActionUp() && !isAndroid
+                        && !gameLevel.buildingsFrom.contains(Building.this) && gameLevel.buildingTo == null) {
+                    gameLevel.buildingTo = (Building.this);
+                    return false;
                 }
                 return super.onAreaTouched(pSceneTouchEvent, pTouchAreaLocalX, pTouchAreaLocalY);
             }
@@ -84,6 +87,16 @@ public class Building extends Entity {
             }
         };
         buildingSprite.attachChild(unitNumber);
+    }
+
+    public void decrementNumberOfUnits(int numberOfUnits) {
+        // TODO perform checks here
+        mNumberOfUnits -= numberOfUnits;
+    }
+
+    public void incrementNumberOfUnits(int numberOfUnits) {
+        // TODO perform checks here
+        mNumberOfUnits += numberOfUnits;
     }
 
 }
