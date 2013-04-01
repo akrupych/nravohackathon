@@ -21,7 +21,8 @@ public class Building extends Entity {
     private final GameLevel mGameLevel;
     private int mNumberOfUnits;
 
-    public Building(GameLevel gameLevel, Levels.Race buildingRace, final float x, final float y, int initialNumberOfUnits) {
+    public Building(final GameLevel gameLevel, final Levels.Race buildingRace,
+                    final float x, final float y, final int initialNumberOfUnits) {
         this.mGameLevel = gameLevel;
         this.mNumberOfUnits = initialNumberOfUnits;
 
@@ -32,8 +33,9 @@ public class Building extends Entity {
                 ResourceManager.getActivity().getVertexBufferObjectManager()) {
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                if (pSceneTouchEvent.isActionDown()) {
-                    mNumberOfUnits++;
+                if (buildingRace.equals(Levels.Race.ANDROID) && pSceneTouchEvent.isActionDown()) {
+                    mNumberOfUnits--;
+                    gameLevel.buildingFrom = Building.this;
                     ResourceManager.getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -41,6 +43,9 @@ public class Building extends Entity {
                                     + mNumberOfUnits, Toast.LENGTH_LONG).show();
                         }
                     });
+                }
+                if (buildingRace.equals(Levels.Race.APPLE_IOS) && pSceneTouchEvent.isActionUp()) {
+                    mNumberOfUnits++;
                 }
                 return super.onAreaTouched(pSceneTouchEvent, pTouchAreaLocalX, pTouchAreaLocalY);
             }
@@ -66,7 +71,7 @@ public class Building extends Entity {
 
                 if (timePassed >= UNIT_REGENERATION_DELAY_IN_SEC) {
                     if (mNumberOfUnits < MAX_NUMBER_OF_UNITS_IN_BUILDING) {
-                        mNumberOfUnits++;
+//                        mNumberOfUnits++;
                         timePassed = 0;
 
                         // TODO
