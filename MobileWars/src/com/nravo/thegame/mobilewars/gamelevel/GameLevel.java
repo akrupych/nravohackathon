@@ -19,6 +19,10 @@ public class GameLevel extends ManagedGameScene implements
 	public int mNumberOfEnemiesLeft = 10;
 	private int mNumberOfAlliesLeft = 10;
 
+    // Moving units from building to building
+    public Building buildingFrom;
+    public Building buildingTo;
+
 	private boolean mHasCompletionTimerRun = false;
 
 	public IUpdateHandler onCompletionTimer = new IUpdateHandler() {
