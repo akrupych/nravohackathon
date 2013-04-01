@@ -1,16 +1,23 @@
 package com.nravo.thegame.mobilewars.gamelevel;
 
+import com.nravo.thegame.mobilewars.managers.ResourceManager;
+
 /**
  * Contains an array of levels that can be played in the game as well as helper methods
  * to retrieve specific levels
  */
 public class Levels {
 
+    private static final float CAMERA_WIDTH = ResourceManager.getInstance().cameraWidth;
+    private static final float CAMERA_HEIGHT = ResourceManager.getInstance().cameraHeight;
+
     public static final LevelDefinition[] AVAILABLE_LEVELS = new LevelDefinition[] {
             new LevelDefinition(1,
             new BuildingDefinition[] {
-                new BuildingDefinition(200, 200, 40, Race.ANDROID, BuildingDefinition.BuildingType.SIMPLE),
-                new BuildingDefinition(500, 500, 40, Race.APPLE_IOS, BuildingDefinition.BuildingType.TOWER)
+                new BuildingDefinition(CAMERA_WIDTH/4, CAMERA_HEIGHT/4, 40, Race.ANDROID, BuildingDefinition.BuildingType.SIMPLE),
+                new BuildingDefinition(CAMERA_WIDTH/4, 3*CAMERA_HEIGHT/4, 40, Race.ANDROID, BuildingDefinition.BuildingType.TOWER),
+                new BuildingDefinition(3*CAMERA_WIDTH/4, CAMERA_HEIGHT/4, 40, Race.APPLE_IOS, BuildingDefinition.BuildingType.TOWER),
+                new BuildingDefinition(3*CAMERA_WIDTH/4, 3*CAMERA_HEIGHT/4, 40, Race.APPLE_IOS, BuildingDefinition.BuildingType.TOWER)
             }),
     };
 

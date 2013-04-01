@@ -8,14 +8,15 @@ import org.andengine.entity.Entity;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.input.touch.TouchEvent;
+import org.andengine.opengl.texture.region.ITextureRegion;
 
 /**
  * A building where units are generated
  */
 public class Building extends Entity {
 
-    private static final float UNIT_REGENERATION_DELAY_IN_SEC = 2f;
-    private static final int MAX_NUMBER_OF_UNITS_IN_BUILDING = 40;
+    private static final float UNIT_REGENERATION_DELAY_IN_SEC = 1f;
+    private static final int MAX_NUMBER_OF_UNITS_IN_BUILDING = 10;
 
     private final GameLevel mGameLevel;
     private int mNumberOfUnits;
@@ -25,7 +26,9 @@ public class Building extends Entity {
         this.mNumberOfUnits = initialNumberOfUnits;
 
         // BUILDING SPRITE
-        final Sprite buildingSprite = new Sprite(x, y, ResourceManager.sBuildingTR,
+        ITextureRegion buildingTextureRegion = buildingRace.equals(Levels.Race.APPLE_IOS)
+                ? ResourceManager.sAppleSmallBuildingTR : ResourceManager.sAndroidSmallBuildingTR;
+        final Sprite buildingSprite = new Sprite(x, y, buildingTextureRegion,
                 ResourceManager.getActivity().getVertexBufferObjectManager()) {
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
@@ -62,15 +65,16 @@ public class Building extends Entity {
                 timePassed += pSecondsElapsed;
 
                 if (timePassed >= UNIT_REGENERATION_DELAY_IN_SEC) {
-                    mNumberOfUnits++;
-                    this.setText(String.valueOf(mNumberOfUnits));
-                    timePassed = 0;
+                    if (mNumberOfUnits < MAX_NUMBER_OF_UNITS_IN_BUILDING) {
+                        mNumberOfUnits++;
+                        timePassed = 0;
 
-                    // TODO
-                    // increment number of total units depending on
-                    // race of the building.
+                        // TODO
+                        // increment number of total units depending on
+                        // race of the building.
+                    }
                 }
-
+                this.setText(String.valueOf(mNumberOfUnits));
                 super.onManagedUpdate(pSecondsElapsed);
             }
         };
