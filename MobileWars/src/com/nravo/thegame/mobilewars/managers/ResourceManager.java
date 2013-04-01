@@ -34,7 +34,8 @@ public class ResourceManager {
 	// ================== GAME RESOURCES =====================
 	// TR = Texture Region
 	public static ITextureRegion sGameBackgroundTR;
-	public static ITextureRegion sBuildingTR;
+	public static ITextureRegion sAppleSmallBuildingTR;
+	public static ITextureRegion sAndroidSmallBuildingTR;
     public static ITextureRegion sBuildingCounterBgTR;
 	public static TiledTextureRegion sAndroidTTR;
 	public static TiledTextureRegion sAppleTTR;
@@ -119,8 +120,11 @@ public class ResourceManager {
 			sGameBackgroundTR = getTextureRegion("bg.png",
 					NORMAL_TEXTURE_OPTION);
 		}
-		if (sBuildingTR == null) {
-			sBuildingTR = getTextureRegion("house.png", NORMAL_TEXTURE_OPTION);
+		if (sAppleSmallBuildingTR == null) {
+			sAppleSmallBuildingTR = getTextureRegion("apple_mac.png", NORMAL_TEXTURE_OPTION);
+		}
+        if (sAndroidSmallBuildingTR == null) {
+			sAndroidSmallBuildingTR = getTextureRegion("android.png", NORMAL_TEXTURE_OPTION);
 		}
         if (sBuildingCounterBgTR == null) {
             sBuildingCounterBgTR = getTextureRegion("counter_bg.png", NORMAL_TEXTURE_OPTION);
