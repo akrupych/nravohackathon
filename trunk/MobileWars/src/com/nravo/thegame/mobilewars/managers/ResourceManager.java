@@ -47,7 +47,9 @@ public class ResourceManager {
 	public static TiledTextureRegion musicToggleTTR;
 	public static TiledTextureRegion soundToggleTTR;
 
-	public static Font sFontDefault32Bold;
+    public static TextureRegion mStarFlightTR;
+
+    public static Font sFontDefault32Bold;
 
 	private String mPreviousAssetBasePath = "";
 
@@ -140,6 +142,15 @@ public class ResourceManager {
 		BitmapTextureAtlasTextureRegionFactory
 				.setAssetBasePath(MENU_GRAPHICS_PATH);
 
+        if (mStarFlightTR == null) {
+        	mStarFlightTR = getTextureRegion("star.png", NORMAL_TEXTURE_OPTION);
+        }
+        
+        // MENU button
+        if (menuMainButtonsTTR == null) {
+            menuMainButtonsTTR = getTiledTextureRegion("button.png", 2, 1, NORMAL_TEXTURE_OPTION);
+        }
+        
 		// MENU background
 		if (sMenuBackgroundTR == null) {
 			sMenuBackgroundTR = getTextureRegion("bg.png",
