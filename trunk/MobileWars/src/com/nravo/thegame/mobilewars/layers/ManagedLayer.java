@@ -3,6 +3,8 @@ package com.nravo.thegame.mobilewars.layers;
 import org.andengine.entity.scene.CameraScene;
 
 public abstract class ManagedLayer extends CameraScene {
+    public static final float SLIDE_PIXELS_PER_SECOND = 3000f;
+
     public boolean hasLoaded = false;
     public boolean unloadOnHidden;
 

@@ -2,6 +2,7 @@ package com.nravo.thegame.mobilewars.managers;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import com.nravo.thegame.mobilewars.layers.LevelWonLayer;
 import com.nravo.thegame.mobilewars.runtime.MainGameActivity;
 import org.andengine.engine.Engine;
 import org.andengine.opengl.font.Font;
@@ -75,6 +76,8 @@ public class ResourceManager {
 
 	public static void loadGameResources() {
 		getInstance().loadGameTextures();
+        getInstance().loadSharedResources();
+        LevelWonLayer.getInstance().onLoadLayer();
 	}
 
 	public static void loadMenuResources() {
