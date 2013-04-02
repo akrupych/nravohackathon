@@ -15,7 +15,7 @@ import org.andengine.opengl.texture.region.ITextureRegion;
 public class Building extends Entity {
 
     private static final float UNIT_REGENERATION_DELAY_IN_SEC = 1f;
-    private static final int MAX_NUMBER_OF_UNITS_IN_BUILDING = 20;
+    private static final int MAX_NUMBER_OF_UNITS_IN_BUILDING = 100;
 
     private final GameLevel mGameLevel;
     public final Sprite buildingSprite;
@@ -81,7 +81,7 @@ public class Building extends Entity {
 
                 if (timePassed >= UNIT_REGENERATION_DELAY_IN_SEC) {
                     if (mNumberOfUnits < MAX_NUMBER_OF_UNITS_IN_BUILDING) {
-//                        mNumberOfUnits++;
+                        mNumberOfUnits++;
                         timePassed = 0;
 
                         // TODO
