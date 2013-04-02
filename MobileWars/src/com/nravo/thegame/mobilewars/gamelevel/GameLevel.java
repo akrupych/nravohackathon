@@ -141,9 +141,9 @@ public class GameLevel extends ManagedGameScene implements
         if (pSceneTouchEvent.isActionMove()) {
             mX = pSceneTouchEvent.getX();
             mY = pSceneTouchEvent.getY();
-            lineDrawingHandler.setPointersVisible(true);
             if (!lineDrawingHandler.isRegistered()) {
                 GameLevel.this.registerUpdateHandler(lineDrawingHandler);
+                lineDrawingHandler.setPointersVisible(true);
                 lineDrawingHandler.setRegistered(true);
             }
         }
