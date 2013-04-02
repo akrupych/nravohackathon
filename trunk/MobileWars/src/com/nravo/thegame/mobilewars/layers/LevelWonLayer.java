@@ -14,8 +14,14 @@ public class LevelWonLayer extends ManagedLayer {
     }
 
     public static LevelWonLayer getInstance(final GameLevel currentLevel) {
+        INSTANCE.setCurrentLevel(currentLevel);
         return INSTANCE;
     }
+
+    // ===============================
+    // ========= VARIABLES ===========
+    // ===============================
+    private GameLevel mCurrentLevel;
 
     @Override
     public void onLoadLayer() {
@@ -34,4 +40,8 @@ public class LevelWonLayer extends ManagedLayer {
 
     @Override
     public void onUnloadLayer() { }
+
+    public void setCurrentLevel(final GameLevel currentLevel) {
+        this.mCurrentLevel = currentLevel;
+    }
 }
