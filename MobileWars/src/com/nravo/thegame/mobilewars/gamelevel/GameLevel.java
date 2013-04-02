@@ -3,35 +3,37 @@ package com.nravo.thegame.mobilewars.gamelevel;
 import com.nravo.thegame.mobilewars.entity.Building;
 import com.nravo.thegame.mobilewars.entity.Hero;
 import com.nravo.thegame.mobilewars.gamelevel.Levels.Race;
+import com.nravo.thegame.mobilewars.gamelevel.handlers.DrawPointerUpdateHandler;
 import com.nravo.thegame.mobilewars.layers.LevelWonLayer;
 import com.nravo.thegame.mobilewars.managers.GameManager;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
 import com.nravo.thegame.mobilewars.managers.SceneManager;
 import org.andengine.engine.handler.IUpdateHandler;
-import org.andengine.entity.primitive.Line;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.input.touch.TouchEvent;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameLevel extends ManagedGameScene implements
         GameManager.GameLevelGoal, IOnSceneTouchListener {
 
     public final Levels.LevelDefinition mLevelDefinition;
+    public final int mNumberOfBuildingsInCurrentLevel;
 
     public int mNumberOfEnemiesLeft = 10;
     private int mNumberOfAlliesLeft = 10;
 
-    private float mX;
-    private float mY;
+    // if coordinates are -1 than pointing lines are invisible
+    public float mX = -1;
+    public float mY = -1;
 
     // Moving units from building to building
     // These hold information about the touch event
     // to collect units from multiple buildings (buildingsFrom)
-    public Set<Building> buildingsFrom = null;
+    public List<Building> buildingsFrom = null;
     public Building buildingTo;
 
     private boolean mHasCompletionTimerRun = false;
@@ -62,30 +64,13 @@ public class GameLevel extends ManagedGameScene implements
         }
     };
 
-    public IUpdateHandler lineDrawingHandler = new IUpdateHandler() {
-        Line line = new Line(0, 0, 0, 0, 2f, ResourceManager.getEngine().getVertexBufferObjectManager());
-
-        @Override
-        public void onUpdate(float pSecondsElapsed) {
-            if (!line.hasParent()) {
-                GameLevel.this.attachChild(line);
-            }
-            if (!buildingsFrom.isEmpty()) {
-                for (Building building : buildingsFrom) {
-                    line.setPosition(building.buildingSprite.getX(), building.buildingSprite.getY(), mX, mY);
-                }
-            }
-        }
-
-        @Override
-        public void reset() {
-        }
-    };
+    public DrawPointerUpdateHandler lineDrawingHandler;
 
 
 
     public GameLevel(final Levels.LevelDefinition levelDefinition) {
         this.mLevelDefinition = levelDefinition;
+        mNumberOfBuildingsInCurrentLevel = levelDefinition.buildingsInLevel.length;
     }
 
     // ======================================
@@ -124,7 +109,10 @@ public class GameLevel extends ManagedGameScene implements
     public void onLoadLevel() {
         GameManager.setGameLevel(this);
         GameManager.setGameLevelGoal(this);
-        buildingsFrom = new HashSet<Building>(mLevelDefinition.buildingsInLevel.length);
+
+        final int numberOfBuildingsInLevel = mLevelDefinition.buildingsInLevel.length;
+        buildingsFrom = new ArrayList<Building>(numberOfBuildingsInLevel);
+        lineDrawingHandler = new DrawPointerUpdateHandler(GameLevel.this);
 
         Rectangle rectangle = new Rectangle(0f, 0f, 120f, 120f,
                 ResourceManager.getInstance().engine
@@ -148,11 +136,11 @@ public class GameLevel extends ManagedGameScene implements
     public boolean onSceneTouchEvent(final Scene pScene, final TouchEvent pSceneTouchEvent) {
 
         if (pSceneTouchEvent.isActionDown()) {
-            GameLevel.this.registerUpdateHandler(lineDrawingHandler);
             int a = 1;
             return false;
         }
         if (pSceneTouchEvent.isActionUp()) {
+            lineDrawingHandler.setPointersVisible(false);
             GameLevel.this.unregisterUpdateHandler(lineDrawingHandler);
             // if our touch event of collecting houses is correct
             // perform moving units
@@ -166,6 +154,8 @@ public class GameLevel extends ManagedGameScene implements
         if (pSceneTouchEvent.isActionMove()) {
             mX = pSceneTouchEvent.getX();
             mY = pSceneTouchEvent.getY();
+            lineDrawingHandler.setPointersVisible(true);
+            GameLevel.this.registerUpdateHandler(lineDrawingHandler);
         }
         return false;
     }
