@@ -26,9 +26,8 @@ public class GameLevel extends ManagedGameScene implements
     public int mNumberOfEnemiesLeft = 10;
     private int mNumberOfAlliesLeft = 10;
 
-    // if coordinates are -1 than pointing lines are invisible
-    public float mX = -1;
-    public float mY = -1;
+    public float mX = 0;
+    public float mY = 0;
 
     // Moving units from building to building
     // These hold information about the touch event
@@ -64,9 +63,8 @@ public class GameLevel extends ManagedGameScene implements
         }
     };
 
+    // Draws pointers when dragging your finger
     public DrawPointerUpdateHandler lineDrawingHandler;
-
-
 
     public GameLevel(final Levels.LevelDefinition levelDefinition) {
         this.mLevelDefinition = levelDefinition;
@@ -139,8 +137,19 @@ public class GameLevel extends ManagedGameScene implements
             int a = 1;
             return false;
         }
+
+        if (pSceneTouchEvent.isActionMove()) {
+            mX = pSceneTouchEvent.getX();
+            mY = pSceneTouchEvent.getY();
+            lineDrawingHandler.setPointersVisible(true);
+            if (!lineDrawingHandler.isRegistered()) {
+                GameLevel.this.registerUpdateHandler(lineDrawingHandler);
+                lineDrawingHandler.setRegistered(true);
+            }
+        }
+
         if (pSceneTouchEvent.isActionUp()) {
-            lineDrawingHandler.setPointersVisible(false);
+            lineDrawingHandler.reset();
             GameLevel.this.unregisterUpdateHandler(lineDrawingHandler);
             // if our touch event of collecting houses is correct
             // perform moving units
@@ -150,12 +159,6 @@ public class GameLevel extends ManagedGameScene implements
             buildingsFrom.clear();
             buildingTo = null;
             return true;
-        }
-        if (pSceneTouchEvent.isActionMove()) {
-            mX = pSceneTouchEvent.getX();
-            mY = pSceneTouchEvent.getY();
-            lineDrawingHandler.setPointersVisible(true);
-            GameLevel.this.registerUpdateHandler(lineDrawingHandler);
         }
         return false;
     }

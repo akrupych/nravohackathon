@@ -17,6 +17,8 @@ public class DrawPointerUpdateHandler implements IUpdateHandler {
     GameLevel mGameLevel;
     private List<Line> lines;
 
+    private boolean isRegistered = false;
+
     public DrawPointerUpdateHandler(GameLevel gameLevel) {
         mGameLevel = gameLevel;
         int capacity = gameLevel.mNumberOfBuildingsInCurrentLevel;
@@ -48,8 +50,10 @@ public class DrawPointerUpdateHandler implements IUpdateHandler {
 
     @Override
     public void reset() {
+        isRegistered = false;
         for (Line line : lines) {
             line.setPosition(0, 0, 0, 0);
+            line.setVisible(false);
         }
     }
 
@@ -63,5 +67,13 @@ public class DrawPointerUpdateHandler implements IUpdateHandler {
         for (Line line : lines) {
             line.setVisible(visible);
         }
+    }
+
+    public void setRegistered(boolean registered) {
+        isRegistered = registered;
+    }
+
+    public boolean isRegistered() {
+        return isRegistered;
     }
 }
