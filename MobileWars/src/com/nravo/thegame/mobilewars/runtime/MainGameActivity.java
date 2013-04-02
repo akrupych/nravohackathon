@@ -1,5 +1,6 @@
 package com.nravo.thegame.mobilewars.runtime;
 
+import com.nravo.thegame.mobilewars.gamelevel.GameLevel;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
 import com.nravo.thegame.mobilewars.managers.SFXManager;
 import com.nravo.thegame.mobilewars.managers.SceneManager;
@@ -34,10 +35,16 @@ public class MainGameActivity extends BaseGameActivity {
     @Override
     public void onBackPressed() {
         if (ResourceManager.getInstance().engine != null) {
-
+            if (SceneManager.getInstance().mIsLayerShown) {
+                SceneManager.getInstance().currentLayer.onHideLayer();
+            } else if (SceneManager.getInstance().currentScene.getClass().equals(GameLevel.class)) {
+                ((GameLevel) SceneManager.getInstance().currentScene).disposeLevel();
+                SceneManager.getInstance().showMainMenu();
+            }
+        } else {
+            super.onBackPressed();
+            System.exit(RESULT_OK);
         }
-        super.onBackPressed();
-        System.exit(RESULT_OK);
     }
 
     @Override

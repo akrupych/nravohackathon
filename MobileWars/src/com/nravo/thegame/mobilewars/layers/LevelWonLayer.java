@@ -65,7 +65,6 @@ public class LevelWonLayer extends ManagedLayer {
             } else {
                 ResourceManager.getInstance().engine.unregisterUpdateHandler(this);
                 SceneManager.getInstance().hideLayer();
-                SceneManager.getInstance().showMainMenu();
             }
         }
 
@@ -109,7 +108,7 @@ public class LevelWonLayer extends ManagedLayer {
     @Override
     public void onHideLayer() {
         // Register the slide-out animation with the engine
-        ResourceManager.getInstance().engine.registerUpdateHandler(mSlideInUpdateHandler);
+        ResourceManager.getInstance().engine.registerUpdateHandler(mSlideOutUpdateHandler);
     }
 
     @Override
