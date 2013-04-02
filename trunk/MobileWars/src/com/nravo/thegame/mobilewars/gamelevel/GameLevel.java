@@ -169,4 +169,8 @@ public class GameLevel extends ManagedGameScene implements
         }
         buildingTo.incrementNumberOfUnits(1);
     }
+
+    public void disposeLevel() {
+        // TODO dispose HUD here
+    }
 }

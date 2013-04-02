@@ -122,6 +122,7 @@ public class SceneManager {
                 ResourceManager.getInstance().cameraScaleFactorY);
         layer.onShowManagedLayer();
         mIsLayerShown = true;
+        currentLayer = layer;
     }
 
     public void hideLayer() {
