@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import com.nravo.thegame.mobilewars.layers.LevelWonLayer;
 import com.nravo.thegame.mobilewars.runtime.MainGameActivity;
 import org.andengine.engine.Engine;
+import org.andengine.engine.camera.Camera;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.texture.TextureOptions;
@@ -27,6 +28,7 @@ public class ResourceManager {
 	public Engine engine;
 	public Context context;
 	public MainGameActivity activity;
+	public Camera camera;
 	public float cameraWidth;
 	public float cameraHeight;
 	public float cameraScaleFactorX;
@@ -40,6 +42,8 @@ public class ResourceManager {
     public static ITextureRegion sBuildingCounterBgTR;
 	public static TiledTextureRegion sAndroidTTR;
 	public static TiledTextureRegion sAppleTTR;
+	public static TextureRegion sApplePieTR;
+	public static TextureRegion sMagnetTR;
 
 	// ================== MENU RESOURCES =====================
 	// TR = Texture Region; TTR = Tiled texture region
@@ -63,11 +67,12 @@ public class ResourceManager {
 	}
 
 	public static void setup(MainGameActivity activity, Engine engine,
-			Context context, float cameraWidth, float cameraHeight,
+			Context context, Camera camera, float cameraWidth, float cameraHeight,
 			float cameraScaleFactorX, float cameraScaleFactorY) {
 		getInstance().activity = activity;
 		getInstance().engine = engine;
 		getInstance().context = context;
+		getInstance().camera = camera;
 		getInstance().cameraWidth = cameraWidth;
 		getInstance().cameraHeight = cameraHeight;
 		getInstance().cameraScaleFactorX = cameraScaleFactorX;
@@ -139,6 +144,12 @@ public class ResourceManager {
 		if (sAppleTTR == null) {
 			sAppleTTR = getTiledTextureRegion("apple_bite.png", 5, 1,
 					NORMAL_TEXTURE_OPTION);
+		}
+		if (sApplePieTR == null) {
+			sApplePieTR = getTextureRegion("apple_pie.png", NORMAL_TEXTURE_OPTION);
+		}
+		if (sMagnetTR == null) {
+			sMagnetTR = getTextureRegion("magnet.png", NORMAL_TEXTURE_OPTION);
 		}
 
 	}

@@ -31,6 +31,8 @@ public class MainGameActivity extends BaseGameActivity {
     public float cameraHeight;
     public float actualScreenWidthInches;
     public float actualScreenHeightInches;
+    
+	private Camera mCamera;
 
     @Override
     public void onBackPressed() {
@@ -58,9 +60,10 @@ public class MainGameActivity extends BaseGameActivity {
         cameraHeight = Math.round(Math.max(Math.min(DESIGN_SCREEN_HEIGHT_PIXELS
                 * (actualScreenHeightInches / DESIGN_SCREEN_HEIGHT_INCHES), MAX_HEIGHT_PIXELS), MIN_HEIGHT_PIXELS));
 
+        mCamera = new Camera(0, 0, cameraWidth, cameraHeight);
         EngineOptions engineOptions = new EngineOptions(true,
                 ScreenOrientation.LANDSCAPE_SENSOR, new FillResolutionPolicy(),
-                new Camera(0, 0, cameraWidth, cameraHeight));
+                mCamera);
         engineOptions.getAudioOptions().setNeedsSound(true);
         engineOptions.getAudioOptions().setNeedsMusic(true);
         engineOptions.setWakeLockOptions(WakeLockOptions.SCREEN_ON);
@@ -70,7 +73,7 @@ public class MainGameActivity extends BaseGameActivity {
     @Override
     public void onCreateResources(
             OnCreateResourcesCallback pOnCreateResourcesCallback) {
-        ResourceManager.setup(this, this.getEngine(), this.getApplicationContext(), cameraWidth, cameraHeight,
+        ResourceManager.setup(this, this.getEngine(), this.getApplicationContext(), mCamera, cameraWidth, cameraHeight,
                 cameraWidth/DESIGN_SCREEN_WIDTH_PIXELS, cameraHeight/DESIGN_SCREEN_HEIGHT_PIXELS);
         ResourceManager.getEngine().registerUpdateHandler(new FPSLogger());
         pOnCreateResourcesCallback.onCreateResourcesFinished();
@@ -78,6 +81,7 @@ public class MainGameActivity extends BaseGameActivity {
 
     @Override
     public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) {
+    	mEngine.enableVibrator(this);
         SceneManager.getInstance().showMainMenu();
         SFXManager.playMusic();
         pOnCreateSceneCallback.onCreateSceneFinished(MainMenu.getInstance());

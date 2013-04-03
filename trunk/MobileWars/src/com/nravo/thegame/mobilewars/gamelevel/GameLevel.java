@@ -1,5 +1,6 @@
 package com.nravo.thegame.mobilewars.gamelevel;
 
+import com.nravo.thegame.mobilewars.effects.ApplePiePower;
 import com.nravo.thegame.mobilewars.entity.Building;
 import com.nravo.thegame.mobilewars.entity.Hero;
 import com.nravo.thegame.mobilewars.gamelevel.Levels.Race;
@@ -155,6 +156,11 @@ public class GameLevel extends ManagedGameScene implements
             // perform moving units
             if (!buildingsFrom.isEmpty() && buildingTo != null) {
                 performUnitMovement();
+            } else {
+            	new ApplePiePower(pSceneTouchEvent.getX(), pSceneTouchEvent.getY(),
+            			ResourceManager.sApplePieTR, ResourceManager.sMagnetTR,
+            			ResourceManager.getEngine(), this,
+            			ResourceManager.getInstance().camera);
             }
             buildingsFrom.clear();
             buildingTo = null;
