@@ -13,6 +13,7 @@ import org.andengine.engine.Engine;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 public class MainMenu extends ManagedMenuScene {
 
@@ -46,19 +47,21 @@ public class MainMenu extends ManagedMenuScene {
     	
         ResourceManager.loadMenuResources();
         
-        Engine engine = ResourceManager.getInstance().engine;
+        VertexBufferObjectManager vboManager =
+        		ResourceManager.getEngine().getVertexBufferObjectManager();
         float centerX = ResourceManager.getInstance().cameraWidth / 2f;
         float centerY = ResourceManager.getInstance().cameraHeight / 2f;
 
         // create the background
         mMenuBackgroundSprite = new Sprite(centerX, centerY,
-        		ResourceManager.sMenuBackgroundTR, engine.getVertexBufferObjectManager());
+        		ResourceManager.sMenuBackgroundTR, vboManager);
         mMenuBackgroundSprite.setScale(ResourceManager.getInstance().cameraHeight /
         		ResourceManager.sMenuBackgroundTR.getHeight());
         mMenuBackgroundSprite.setZIndex(-5000);
         attachChild(mMenuBackgroundSprite);
         
-        attachChild(new StarFlightEffect(engine, ResourceManager.mStarFlightTR, centerX, centerY));
+        attachChild(new StarFlightEffect(vboManager,
+        		ResourceManager.mStarFlightTR, centerX, centerY));
 
         GrowToggleButton musicToggleButton = new GrowToggleButton(ResourceManager.musicToggleTTR.getWidth() / 2,
                 ResourceManager.musicToggleTTR.getHeight() / 2, ResourceManager.musicToggleTTR, !SFXManager.isMusicMuted()) {
@@ -73,7 +76,7 @@ public class MainMenu extends ManagedMenuScene {
             }
         };
 
-        Rectangle rectangle = new Rectangle(0, 0, 200, 200, engine.getVertexBufferObjectManager());
+        Rectangle rectangle = new Rectangle(0, 0, 200, 200, vboManager);
         rectangle.setColor(0, 0, 1);
         this.attachChild(rectangle);
 

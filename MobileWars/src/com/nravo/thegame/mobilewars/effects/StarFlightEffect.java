@@ -1,6 +1,5 @@
 package com.nravo.thegame.mobilewars.effects;
 
-import org.andengine.engine.Engine;
 import org.andengine.entity.particle.BatchedSpriteParticleSystem;
 import org.andengine.entity.particle.emitter.PointParticleEmitter;
 import org.andengine.entity.particle.initializer.AccelerationParticleInitializer;
@@ -8,6 +7,7 @@ import org.andengine.entity.particle.initializer.ExpireParticleInitializer;
 import org.andengine.entity.particle.modifier.ScaleParticleModifier;
 import org.andengine.entity.sprite.UncoloredSprite;
 import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 /**
  * Simple star-flight particle system.
@@ -27,17 +27,14 @@ public class StarFlightEffect extends BatchedSpriteParticleSystem {
 	 * @param x - effect center on X axis
 	 * @param y - effect center on Y axis
 	 */
-	public StarFlightEffect(Engine engine, ITextureRegion texture, float x,
-			float y) {
+	public StarFlightEffect(VertexBufferObjectManager manager,
+			ITextureRegion texture, float x, float y) {
 		super(new PointParticleEmitter(x, y), MIN_SPAWN_RATE, MAX_SPAWN_RATE,
-				MAX_PARTICLE_COUNT, texture, engine
-						.getVertexBufferObjectManager());
+				MAX_PARTICLE_COUNT, texture, manager);
 		addParticleInitializer(new AccelerationParticleInitializer<UncoloredSprite>(
 				-100, 100, -100, 100));
-		addParticleInitializer(new ExpireParticleInitializer<UncoloredSprite>(
-				10));
-		addParticleModifier(new ScaleParticleModifier<UncoloredSprite>(0, 10,
-				0, 2));
+		addParticleInitializer(new ExpireParticleInitializer<UncoloredSprite>(10));
+		addParticleModifier(new ScaleParticleModifier<UncoloredSprite>(0, 10, 0, 2));
 	}
 
 }
