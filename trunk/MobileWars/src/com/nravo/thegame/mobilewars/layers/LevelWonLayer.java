@@ -1,5 +1,6 @@
 package com.nravo.thegame.mobilewars.layers;
 
+import com.nravo.thegame.mobilewars.effects.StarFlightEffect;
 import com.nravo.thegame.mobilewars.gamelevel.GameLevel;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
 import com.nravo.thegame.mobilewars.managers.SceneManager;
@@ -91,9 +92,12 @@ public class LevelWonLayer extends ManagedLayer {
         this.attachChild(fadingBackgroundRectangle);
 
         mLayerBackground = new Sprite(0f, (ResourceManager.getInstance().cameraHeight/2f) +
-                (ResourceManager.sMenuBackgroundTR.getHeight()/2f),
-                ResourceManager.sMenuBackgroundTR, ResourceManager.getActivity().getVertexBufferObjectManager());
-        mLayerBackground.setScale(1.5f / ResourceManager.getInstance().cameraScaleFactorY);
+                (ResourceManager.sLevelWonBackgroundTR.getHeight()/2f),
+                ResourceManager.sLevelWonBackgroundTR, ResourceManager.getActivity().getVertexBufferObjectManager());
+        mLayerBackground.setScale(ResourceManager.getInstance().cameraHeight /
+                ResourceManager.sMenuBackgroundTR.getHeight());
+        mLayerBackground.attachChild(new StarFlightEffect(ResourceManager.getEngine().getVertexBufferObjectManager(),
+                ResourceManager.mStarFlightTR, 0, 0));
         this.attachChild(mLayerBackground);
 
         this.setPosition(ResourceManager.getInstance().cameraWidth/2f,

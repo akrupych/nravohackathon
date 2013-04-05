@@ -37,6 +37,7 @@ public class ResourceManager {
 	// ================== GAME RESOURCES =====================
 	// TR = Texture Region
 	public static ITextureRegion sGameBackgroundTR;
+	public static ITextureRegion sLevelWonBackgroundTR;
 	public static ITextureRegion sAppleSmallBuildingTR;
 	public static ITextureRegion sAndroidSmallBuildingTR;
     public static ITextureRegion sBuildingCounterBgTR;
@@ -126,6 +127,10 @@ public class ResourceManager {
 
 		if (sGameBackgroundTR == null) {
 			sGameBackgroundTR = getTextureRegion("bg.png",
+					NORMAL_TEXTURE_OPTION);
+		}
+        if (sLevelWonBackgroundTR == null) {
+			sLevelWonBackgroundTR = getTextureRegion("level_won_bg.jpg",
 					NORMAL_TEXTURE_OPTION);
 		}
 		if (sAppleSmallBuildingTR == null) {
