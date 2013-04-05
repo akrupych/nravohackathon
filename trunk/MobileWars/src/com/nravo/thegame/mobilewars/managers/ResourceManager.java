@@ -111,6 +111,14 @@ public class ResourceManager {
 		return getInstance().engine;
 	}
 
+    public static Context getContext() {
+        return getInstance().context;
+    }
+
+    public static Camera getCamera() {
+        return getInstance().camera;
+    }
+
 	// ===================================================
 	// ================ PRIVATE METHODS ==================
 	// ===================================================
