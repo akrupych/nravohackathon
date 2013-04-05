@@ -42,10 +42,10 @@ public class MainGameActivity extends BaseGameActivity {
             } else if (SceneManager.getInstance().currentScene.getClass().equals(GameLevel.class)) {
                 ((GameLevel) SceneManager.getInstance().currentScene).disposeLevel();
                 SceneManager.getInstance().showMainMenu();
+            } else {
+                super.onBackPressed();
+                System.exit(RESULT_OK);
             }
-        } else {
-            super.onBackPressed();
-            System.exit(RESULT_OK);
         }
     }
 
