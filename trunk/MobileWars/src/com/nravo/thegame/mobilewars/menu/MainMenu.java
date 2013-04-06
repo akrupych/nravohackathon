@@ -8,9 +8,6 @@ import com.nravo.thegame.mobilewars.input.GrowToggleButton;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
 import com.nravo.thegame.mobilewars.managers.SFXManager;
 import com.nravo.thegame.mobilewars.managers.SceneManager;
-
-import org.andengine.engine.Engine;
-import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
@@ -54,8 +51,8 @@ public class MainMenu extends ManagedMenuScene {
         // create the background
         mMenuBackgroundSprite = new Sprite(centerX, centerY,
         		ResourceManager.sMenuBackgroundTR, vboManager);
-//        mMenuBackgroundSprite.setScale(ResourceManager.getInstance().cameraHeight /
-//        		ResourceManager.sMenuBackgroundTR.getHeight());
+        mMenuBackgroundSprite.setScale(ResourceManager.getInstance().cameraHeight /
+        		ResourceManager.sMenuBackgroundTR.getHeight());
         mMenuBackgroundSprite.setZIndex(-5000);
         attachChild(mMenuBackgroundSprite);
         
@@ -74,7 +71,7 @@ public class MainMenu extends ManagedMenuScene {
                 return !SFXManager.isMusicMuted();
             }
         };
-        this.attachChild(musicToggleButton);
+        mMenuBackgroundSprite.attachChild(musicToggleButton);
         this.registerTouchArea(musicToggleButton);
 
         final GrowButton playButton = new GrowButton(centerX, centerY,
