@@ -4,7 +4,7 @@ import com.nravo.thegame.mobilewars.gamelevel.GameLevel;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
 import com.nravo.thegame.mobilewars.managers.SFXManager;
 import com.nravo.thegame.mobilewars.managers.SceneManager;
-import com.nravo.thegame.mobilewars.menu.MainMenu;
+import com.nravo.thegame.mobilewars.menu.SplashScreens;
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
@@ -85,9 +85,9 @@ public class MainGameActivity extends BaseGameActivity {
     @Override
     public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) {
     	mEngine.enableVibrator(this);
-        SceneManager.getInstance().showMainMenu();
+        SceneManager.getInstance().showScene(new SplashScreens());
         SFXManager.playMusic();
-        pOnCreateSceneCallback.onCreateSceneFinished(MainMenu.getInstance());
+        pOnCreateSceneCallback.onCreateSceneFinished(mEngine.getScene());
     }
 
     @Override
