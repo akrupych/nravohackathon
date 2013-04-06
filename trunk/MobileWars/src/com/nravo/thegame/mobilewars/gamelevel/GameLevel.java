@@ -42,14 +42,14 @@ public class GameLevel extends ManagedGameScene implements
     // ===================== UPDATE HANDLERS=======================
     // ============================================================
     private IUpdateHandler onCompletionTimer = new IUpdateHandler() {
-        final float COMPLETION_DELAY_SECONDS = 3f;
+        final float COMPLETION_DELAY_SECONDS = 60f;
         private float mTotalElapsedTime = 0f;
 
         @Override
         public void onUpdate(float pSecondsElapsed) {
             this.mTotalElapsedTime += pSecondsElapsed;
             if (this.mTotalElapsedTime >= this.COMPLETION_DELAY_SECONDS) {
-                GameLevel.this.mHasCompletionTimerRun = true;
+//                GameLevel.this.mHasCompletionTimerRun = true;
                 if (GameLevel.this.isLevelCompleted()) {
                     GameLevel.this.onLevelCompleted();
                 } else {

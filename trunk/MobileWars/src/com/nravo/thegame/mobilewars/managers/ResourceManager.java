@@ -1,9 +1,5 @@
 package com.nravo.thegame.mobilewars.managers;
 
-import android.content.Context;
-import android.graphics.Typeface;
-import com.nravo.thegame.mobilewars.layers.LevelWonLayer;
-import com.nravo.thegame.mobilewars.runtime.MainGameActivity;
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
 import org.andengine.opengl.font.Font;
@@ -14,9 +10,16 @@ import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegion
 import org.andengine.opengl.texture.atlas.bitmap.source.AssetBitmapTextureAtlasSource;
 import org.andengine.opengl.texture.atlas.bitmap.source.IBitmapTextureAtlasSource;
 import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.util.adt.color.Color;
+
+import android.content.Context;
+import android.graphics.Typeface;
+
+import com.nravo.thegame.mobilewars.layers.LevelWonLayer;
+import com.nravo.thegame.mobilewars.runtime.MainGameActivity;
 
 public class ResourceManager {
 	private static final ResourceManager INSTANCE = new ResourceManager();
@@ -49,7 +52,7 @@ public class ResourceManager {
 	// ================== MENU RESOURCES =====================
 	// TR = Texture Region; TTR = Tiled texture region
 	public static ITextureRegion sMenuBackgroundTR;
-	public static TiledTextureRegion menuMainButtonsTTR;
+	public static ITiledTextureRegion menuMainButtonTTR;
 
 	public static TiledTextureRegion musicToggleTTR;
 	public static TiledTextureRegion soundToggleTTR;
@@ -134,7 +137,7 @@ public class ResourceManager {
 				.setAssetBasePath(GAME_GRAPHICS_PATH);
 
 		if (sGameBackgroundTR == null) {
-			sGameBackgroundTR = getTextureRegion("bg.png",
+			sGameBackgroundTR = getTextureRegion("andrew_background.png",
 					NORMAL_TEXTURE_OPTION);
 		}
         if (sLevelWonBackgroundTR == null) {
@@ -142,13 +145,16 @@ public class ResourceManager {
 					NORMAL_TEXTURE_OPTION);
 		}
 		if (sAppleSmallBuildingTR == null) {
-			sAppleSmallBuildingTR = getTextureRegion("apple_mac.png", NORMAL_TEXTURE_OPTION);
+			sAppleSmallBuildingTR = getTextureRegion("apple_mac.png",
+					NORMAL_TEXTURE_OPTION);
 		}
         if (sAndroidSmallBuildingTR == null) {
-			sAndroidSmallBuildingTR = getTextureRegion("android.png", NORMAL_TEXTURE_OPTION);
+			sAndroidSmallBuildingTR = getTextureRegion("android.png",
+					NORMAL_TEXTURE_OPTION);
 		}
         if (sBuildingCounterBgTR == null) {
-            sBuildingCounterBgTR = getTextureRegion("counter_bg.png", NORMAL_TEXTURE_OPTION);
+            sBuildingCounterBgTR = getTextureRegion("counter_bg.png",
+            		NORMAL_TEXTURE_OPTION);
 		}
 		if (sAndroidTTR == null) {
 			sAndroidTTR = getTiledTextureRegion("android_small.png", 4, 1,
@@ -177,25 +183,20 @@ public class ResourceManager {
         	mStarFlightTR = getTextureRegion("star.png", NORMAL_TEXTURE_OPTION);
         }
         
-        // MENU button
-        if (menuMainButtonsTTR == null) {
-            menuMainButtonsTTR = getTiledTextureRegion("button.png", 2, 1, NORMAL_TEXTURE_OPTION);
-        }
-        
 		// MENU background
 		if (sMenuBackgroundTR == null) {
-			sMenuBackgroundTR = getTextureRegion("bg.png",
+			sMenuBackgroundTR = getTextureRegion("andrew_background.png",
 					NORMAL_TEXTURE_OPTION);
 		}
 
 		// MENU button
-		if (menuMainButtonsTTR == null) {
-			menuMainButtonsTTR = getTiledTextureRegion("button.png", 2, 1,
+		if (menuMainButtonTTR == null) {
+			menuMainButtonTTR = getTiledTextureRegion("andrew_play_button.png", 2, 1,
 					NORMAL_TEXTURE_OPTION);
 		}
 
 		if (musicToggleTTR == null) {
-			musicToggleTTR = getTiledTextureRegion("sound_on_off.png", 2, 1,
+			musicToggleTTR = getTiledTextureRegion("andrew_sound_button.png", 2, 1,
 					NORMAL_TEXTURE_OPTION);
 		}
 	}

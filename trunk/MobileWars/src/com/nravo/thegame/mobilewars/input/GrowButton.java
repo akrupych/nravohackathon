@@ -1,12 +1,15 @@
 package com.nravo.thegame.mobilewars.input;
 
-import com.nravo.thegame.mobilewars.managers.ResourceManager;
-import com.nravo.thegame.mobilewars.managers.SFXManager;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.ScaleModifier;
-import org.andengine.entity.sprite.Sprite;
+import org.andengine.entity.sprite.TiledSprite;
 import org.andengine.input.touch.TouchEvent;
-import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.ITiledTextureRegion;
+
+import android.util.Log;
+
+import com.nravo.thegame.mobilewars.managers.ResourceManager;
+import com.nravo.thegame.mobilewars.managers.SFXManager;
 
 /** The GrowButton class simply shows an image that grows to a specific scale
  *  while the player is touching it and returns to its original scale when
@@ -14,7 +17,7 @@ import org.andengine.opengl.texture.region.ITextureRegion;
  *  
 *** @author Brian Broyles - IFL Game Studio
 **/
-public abstract class GrowButton extends Sprite {
+public abstract class GrowButton extends TiledSprite {
 	
 	// ====================================================
 	// CONSTANTS
@@ -44,8 +47,10 @@ public abstract class GrowButton extends Sprite {
 	// ====================================================
 	// CONSTRUCTOR
 	// ====================================================
-	public GrowButton(final float pX, final float pY, final ITextureRegion pTextureRegion) {
-		super(pX, pY, pTextureRegion, ResourceManager.getActivity().getVertexBufferObjectManager());
+	public GrowButton(final float pX, final float pY,
+			final ITiledTextureRegion pTextureRegion) {
+		super(pX, pY, pTextureRegion, ResourceManager.getActivity()
+				.getVertexBufferObjectManager());
 	}
 	
 	// ====================================================
@@ -61,18 +66,24 @@ public abstract class GrowButton extends Sprite {
 	protected void onManagedUpdate(final float pSecondsElapsed) {
 		super.onManagedUpdate(pSecondsElapsed);
 		if(!mIsLarge && mIsTouched) {
-			this.registerEntityModifier(new ScaleModifier(mGROW_DURATION_SECONDS, mNormalScale, mGrownScale) {
+			Log.e("andrew", "pressed");
+			this.registerEntityModifier(new ScaleModifier(mGROW_DURATION_SECONDS,
+					mNormalScale, mGrownScale) {
 				@Override
 				protected void onModifierFinished(final IEntity pItem) {
 					super.onModifierFinished(pItem);
+					setCurrentTileIndex(1);
 					mIsLarge = true;
 				}
 			});
 		} else if(mIsLarge && !mIsTouched) {
-			this.registerEntityModifier(new ScaleModifier(mGROW_DURATION_SECONDS, mGrownScale, mNormalScale) {
+			Log.i("andrew", "released");
+			this.registerEntityModifier(new ScaleModifier(mGROW_DURATION_SECONDS,
+					mGrownScale, mNormalScale) {
 				@Override
 				protected void onModifierFinished(final IEntity pItem) {
 					super.onModifierFinished(pItem);
+					setCurrentTileIndex(0);
 					mIsLarge = false;
 					if(mIsClicked) {
 						onClick();
@@ -95,23 +106,25 @@ public abstract class GrowButton extends Sprite {
 	public boolean onAreaTouched(TouchEvent pSceneTouchEvent,
 			float pTouchAreaLocalX, float pTouchAreaLocalY) {
 		if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_DOWN) {
-			if(pTouchAreaLocalX>this.getWidth() || pTouchAreaLocalX < 0f || pTouchAreaLocalY>this.getHeight() || pTouchAreaLocalY < 0f) {
-				mTouchStartedOnThis = false;
-			} else {
-				mTouchStartedOnThis = true;
-			}
-			if(mIsEnabled)
+			mTouchStartedOnThis = !(pTouchAreaLocalX>this.getWidth() ||
+					pTouchAreaLocalX < 0f || pTouchAreaLocalY>this.getHeight() ||
+					pTouchAreaLocalY < 0f);
+			if (mIsEnabled) {
 				mIsTouched = true;
+			}
 		} else if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_MOVE) {
-				if(pTouchAreaLocalX>this.getWidth() || pTouchAreaLocalX < 0f || pTouchAreaLocalY>this.getHeight() || pTouchAreaLocalY < 0f) {
-					if(mIsTouched) {
-						mIsTouched = false;
-					}
-				} else {
-					if(mTouchStartedOnThis && !mIsTouched)
-						if(mIsEnabled)
-							mIsTouched = true;
+			if(pTouchAreaLocalX>this.getWidth() || pTouchAreaLocalX < 0f ||
+					pTouchAreaLocalY>this.getHeight() || pTouchAreaLocalY < 0f) {
+				if(mIsTouched) {
+					mIsTouched = false;
 				}
+			} else {
+				if(mTouchStartedOnThis && !mIsTouched) {
+					if(mIsEnabled) {
+						mIsTouched = true;
+					}
+				}
+			}
 		} else if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP && mIsTouched && mTouchStartedOnThis) {
 			mIsTouched = false;
 			mIsClicked = true;

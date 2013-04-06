@@ -46,6 +46,9 @@ public class MainGameActivity extends BaseGameActivity {
                 super.onBackPressed();
                 System.exit(RESULT_OK);
             }
+        } else {
+            super.onBackPressed();
+            System.exit(RESULT_OK);
         }
     }
 

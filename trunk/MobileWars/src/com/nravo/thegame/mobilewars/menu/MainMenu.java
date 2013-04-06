@@ -41,7 +41,6 @@ public class MainMenu extends ManagedMenuScene {
         throw new UnsupportedOperationException(); // No loading screen for menu - no need to implement this
     }
 
-
     @Override
     public void onLoadScene() {
     	
@@ -55,8 +54,8 @@ public class MainMenu extends ManagedMenuScene {
         // create the background
         mMenuBackgroundSprite = new Sprite(centerX, centerY,
         		ResourceManager.sMenuBackgroundTR, vboManager);
-        mMenuBackgroundSprite.setScale(ResourceManager.getInstance().cameraHeight /
-        		ResourceManager.sMenuBackgroundTR.getHeight());
+//        mMenuBackgroundSprite.setScale(ResourceManager.getInstance().cameraHeight /
+//        		ResourceManager.sMenuBackgroundTR.getHeight());
         mMenuBackgroundSprite.setZIndex(-5000);
         attachChild(mMenuBackgroundSprite);
         
@@ -75,12 +74,11 @@ public class MainMenu extends ManagedMenuScene {
                 return !SFXManager.isMusicMuted();
             }
         };
+        this.attachChild(musicToggleButton);
+        this.registerTouchArea(musicToggleButton);
 
-        Rectangle rectangle = new Rectangle(0, 0, 200, 200, vboManager);
-        rectangle.setColor(0, 0, 1);
-        this.attachChild(rectangle);
-
-        final GrowButton playButton = new GrowButton(centerX, centerY, ResourceManager.menuMainButtonsTTR) {
+        final GrowButton playButton = new GrowButton(centerX, centerY,
+        		ResourceManager.menuMainButtonTTR) {
             @Override
             public void onClick() {
                 // Stub for now, later levels have to be chosen dynamically
@@ -88,19 +86,13 @@ public class MainMenu extends ManagedMenuScene {
                 SceneManager.getInstance().showScene(new GameLevel(firstLevelDefinition));
             }
         };
-
-        this.attachChild(musicToggleButton);
         this.attachChild(playButton);
         this.registerTouchArea(playButton);
-        this.registerTouchArea(musicToggleButton);
 
     }
 
     @Override
     public void onShowScene() {
-        Rectangle rectangle = new Rectangle(200, 200, 200, 200, ResourceManager.getInstance().engine.getVertexBufferObjectManager());
-        rectangle.setColor(0, 0, 1);
-        this.attachChild(rectangle);
     }
 
     @Override
