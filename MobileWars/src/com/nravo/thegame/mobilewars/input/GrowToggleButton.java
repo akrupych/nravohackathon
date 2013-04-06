@@ -47,8 +47,10 @@ public abstract class GrowToggleButton extends TiledSprite {
     // ====================================================
     // CONSTRUCTOR
     // ====================================================
-    public GrowToggleButton(final float pX, final float pY, final ITiledTextureRegion pTextureRegion, final boolean pCurrentState) {
-        super(pX, pY, pTextureRegion, ResourceManager.getActivity().getVertexBufferObjectManager());
+    public GrowToggleButton(final float pX, final float pY,
+    		final ITiledTextureRegion pTextureRegion, final boolean pCurrentState) {
+        super(pX, pY, pTextureRegion, ResourceManager.getActivity()
+        		.getVertexBufferObjectManager());
         isStateTrue = pCurrentState;
         if(isStateTrue)
             this.setCurrentTileIndex(0);
@@ -63,7 +65,8 @@ public abstract class GrowToggleButton extends TiledSprite {
     protected void onManagedUpdate(final float pSecondsElapsed) {
         super.onManagedUpdate(pSecondsElapsed);
         if(!mIsLarge && mIsTouched) {
-            this.registerEntityModifier(new ScaleModifier(mGROW_DURATION_SECONDS, mNormalScale, mGrownScale) {
+            this.registerEntityModifier(new ScaleModifier(mGROW_DURATION_SECONDS,
+            		mNormalScale, mGrownScale) {
                 @Override
                 protected void onModifierFinished(final IEntity pItem) {
                     super.onModifierFinished(pItem);
@@ -71,7 +74,8 @@ public abstract class GrowToggleButton extends TiledSprite {
                 }
             });
         } else if(mIsLarge && !mIsTouched) {
-            this.registerEntityModifier(new ScaleModifier(mGROW_DURATION_SECONDS, mGrownScale, mNormalScale) {
+            this.registerEntityModifier(new ScaleModifier(mGROW_DURATION_SECONDS,
+            		mGrownScale, mNormalScale) {
                 @Override
                 protected void onModifierFinished(final IEntity pItem) {
                     super.onModifierFinished(pItem);
@@ -104,7 +108,8 @@ public abstract class GrowToggleButton extends TiledSprite {
     public boolean onAreaTouched(TouchEvent pSceneTouchEvent,
                                  float pTouchAreaLocalX, float pTouchAreaLocalY) {
         if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_DOWN) {
-            if(pTouchAreaLocalX>this.getWidth() || pTouchAreaLocalX < 0f || pTouchAreaLocalY>this.getHeight() || pTouchAreaLocalY < 0f) {
+            if(pTouchAreaLocalX>this.getWidth() || pTouchAreaLocalX < 0f ||
+            		pTouchAreaLocalY>this.getHeight() || pTouchAreaLocalY < 0f) {
                 mTouchStartedOnThis = false;
             } else {
                 mTouchStartedOnThis = true;
@@ -114,7 +119,8 @@ public abstract class GrowToggleButton extends TiledSprite {
                 mIsTouched = true;
         } else if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_MOVE) {
             if(mTouchStartedOnThis)
-                if(pTouchAreaLocalX>this.getWidth() || pTouchAreaLocalX < 0f || pTouchAreaLocalY>this.getHeight() || pTouchAreaLocalY < 0f) {
+                if(pTouchAreaLocalX>this.getWidth() || pTouchAreaLocalX < 0f ||
+                		pTouchAreaLocalY>this.getHeight() || pTouchAreaLocalY < 0f) {
                     if(mIsTouched) {
                         mIsTouched = false;
                     }
@@ -123,7 +129,8 @@ public abstract class GrowToggleButton extends TiledSprite {
                         if(mIsEnabled)
                             mIsTouched = true;
                 }
-        } else if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP && mIsTouched && mTouchStartedOnThis) {
+        } else if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP &&
+        		mIsTouched && mTouchStartedOnThis) {
             mIsTouched = false;
             mIsClicked = true;
             mTouchStartedOnThis = false;
