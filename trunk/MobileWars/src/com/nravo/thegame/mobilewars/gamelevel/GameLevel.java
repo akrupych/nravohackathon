@@ -120,13 +120,13 @@ public class GameLevel extends ManagedGameScene implements
         GameLevel.this.attachChild(rectangle);
 
         // Buildings
-        for (Levels.BuildingDefinition currentBuilding : GameLevel.this.mLevelDefinition.buildingsInLevel) {
-            new Building(GameLevel.this, currentBuilding.race,
-                    currentBuilding.x, currentBuilding.y, currentBuilding.initialNumberOfUnits);
-        }
+//        for (Levels.BuildingDefinition currentBuilding : GameLevel.this.mLevelDefinition.buildingsInLevel) {
+//            new Building(GameLevel.this, currentBuilding.race,
+//                    currentBuilding.x, currentBuilding.y, currentBuilding.initialNumberOfUnits);
+//        }
 
-        new Hero(500f, 400f, GameLevel.this, Race.ANDROID).moveHero(100, 100, 900, 500);
-        new Hero(500f, 400f, GameLevel.this, Race.APPLE_IOS).moveHero(300, 300, 700, 400);
+        //new Hero(500f, 400f, GameLevel.this, Race.ANDROID).moveHero(100, 100, 900, 500);
+        //new Hero(500f, 400f, GameLevel.this, Race.APPLE_IOS).moveHero(300, 300, 700, 400);
 
         GameLevel.this.setOnSceneTouchListener(this);
     }
@@ -156,12 +156,12 @@ public class GameLevel extends ManagedGameScene implements
             // perform moving units
             if (!buildingsFrom.isEmpty() && buildingTo != null) {
                 performUnitMovement();
-            } else {
+            }/* else {
             	new ApplePiePower(pSceneTouchEvent.getX(), pSceneTouchEvent.getY(),
             			ResourceManager.sApplePieTR, ResourceManager.sMagnetTR,
             			ResourceManager.getEngine(), this,
             			ResourceManager.getInstance().camera);
-            }
+            }*/
             buildingsFrom.clear();
             buildingTo = null;
             return true;

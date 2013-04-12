@@ -56,8 +56,8 @@ public class MainMenu extends ManagedMenuScene {
         mMenuBackgroundSprite.setZIndex(-5000);
         attachChild(mMenuBackgroundSprite);
         
-        attachChild(new StarFlightEffect(vboManager,
-        		ResourceManager.mStarFlightTR, centerX, centerY));
+//        attachChild(new StarFlightEffect(vboManager,
+//        		ResourceManager.mStarFlightTR, centerX, centerY));
 
         GrowToggleButton musicToggleButton = new GrowToggleButton(ResourceManager.musicToggleTTR.getWidth() / 2,
                 ResourceManager.musicToggleTTR.getHeight() / 2, ResourceManager.musicToggleTTR, !SFXManager.isMusicMuted()) {

@@ -96,8 +96,8 @@ public class LevelWonLayer extends ManagedLayer {
                 ResourceManager.sLevelWonBackgroundTR, ResourceManager.getActivity().getVertexBufferObjectManager());
         mLayerBackground.setScale(ResourceManager.getInstance().cameraHeight /
                 ResourceManager.sMenuBackgroundTR.getHeight());
-        mLayerBackground.attachChild(new StarFlightEffect(ResourceManager.getEngine().getVertexBufferObjectManager(),
-                ResourceManager.mStarFlightTR, 0, 0));
+//        mLayerBackground.attachChild(new StarFlightEffect(ResourceManager.getEngine().getVertexBufferObjectManager(),
+//                ResourceManager.mStarFlightTR, 0, 0));
         this.attachChild(mLayerBackground);
 
         this.setPosition(ResourceManager.getInstance().cameraWidth/2f,
