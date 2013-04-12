@@ -85,8 +85,9 @@ public class MainGameActivity extends BaseGameActivity {
     @Override
     public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) {
     	mEngine.enableVibrator(this);
-        SceneManager.getInstance().showScene(new SplashScreens());
-        SFXManager.playMusic();
+        //SceneManager.getInstance().showScene(new SplashScreens());
+        SceneManager.getInstance().showMainMenu();
+    	SFXManager.playMusic();
         pOnCreateSceneCallback.onCreateSceneFinished(mEngine.getScene());
     }
 
