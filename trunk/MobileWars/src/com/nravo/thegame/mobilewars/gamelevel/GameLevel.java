@@ -188,15 +188,6 @@ public class GameLevel extends ManagedGameScene implements
 					building.buildingSprite.getY(),
 					buildingTo.buildingSprite.getX(),
 					buildingTo.buildingSprite.getY());
-			/*
-			 * SequenceEntityModifier move = new SequenceEntityModifier( new
-			 * MoveModifier(5, heroAndroid.fromX, heroAndroid.fromY,
-			 * heroAndroid.toX, heroAndroid.toY), new DelayModifier(5), new
-			 * MoveModifier(5, heroAndroid.toX, heroAndroid.toY,
-			 * heroAndroid.fromX, heroAndroid.fromY));
-			 */
-			// move.addModifierListener(new
-			// ModifierForHeroListener(GameLevel.this));
 			move = new ModifierForHero(Utils.calculateTime(heroAndroid.fromX,
 					heroAndroid.fromY, heroAndroid.toX, heroAndroid.toY), heroAndroid.fromX,
 					heroAndroid.fromY, heroAndroid.toX, heroAndroid.toY,
