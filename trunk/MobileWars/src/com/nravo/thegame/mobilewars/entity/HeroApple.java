@@ -1,13 +1,16 @@
 package com.nravo.thegame.mobilewars.entity;
 
+import org.andengine.entity.sprite.AnimatedSprite;
+
+import com.nravo.thegame.mobilewars.managers.ResourceManager;
+
 public class HeroApple extends Hero {
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+	public HeroApple() {
+		hero = new AnimatedSprite(fromX, fromY, ResourceManager.sAppleTTR,
+				ResourceManager.getActivity().getVertexBufferObjectManager());
 
+		hero.animate(new long[] { 250, 250, 250, 250, 250 });
 	}
 
 }
