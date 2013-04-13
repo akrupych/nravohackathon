@@ -15,11 +15,10 @@ public class AndroidHeroPool<H> extends GenericPool<HeroAndroid> {
 
     public synchronized Hero obtainAndroid(int xFrom, int yFrom, int xTo, int yTo) {
         HeroAndroid hero = super.obtainPoolItem();
-
-        return super.obtainPoolItem();
-    }
-
-    public synchronized Hero obtainApple(int xFrom, int yFrom, int xTo, int yTo) {
-        return super.obtainPoolItem();
+         hero.fromX=xFrom;
+        hero.fromY=yFrom;
+        hero.toX=xTo;
+        hero.toY=yTo;
+        return hero;
     }
 }
