@@ -161,7 +161,7 @@ public class GameLevel extends ManagedGameScene implements
 			 * ResourceManager.sMagnetTR, ResourceManager.getEngine(), this,
 			 * ResourceManager.getInstance().camera); }
 			 */
-		
+		    buildingsFrom.clear();
 			buildingTo = null;
 			return true;
 		}
