@@ -8,11 +8,7 @@ import com.nravo.thegame.mobilewars.managers.GameManager;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
 import com.nravo.thegame.mobilewars.managers.SceneManager;
 import com.nravo.thegame.mobilewars.modifier.ModifierForHero;
-import com.nravo.thegame.mobilewars.modifier.ModifierForHeroListener;
 import org.andengine.engine.handler.IUpdateHandler;
-import org.andengine.entity.modifier.DelayModifier;
-import org.andengine.entity.modifier.MoveModifier;
-import org.andengine.entity.modifier.SequenceEntityModifier;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
@@ -191,15 +187,6 @@ public class GameLevel extends ManagedGameScene implements
 					building.buildingSprite.getY(),
 					buildingTo.buildingSprite.getX(),
 					buildingTo.buildingSprite.getY());
-			/*
-			 * SequenceEntityModifier move = new SequenceEntityModifier( new
-			 * MoveModifier(5, heroAndroid.fromX, heroAndroid.fromY,
-			 * heroAndroid.toX, heroAndroid.toY), new DelayModifier(5), new
-			 * MoveModifier(5, heroAndroid.toX, heroAndroid.toY,
-			 * heroAndroid.fromX, heroAndroid.fromY));
-			 */
-			// move.addModifierListener(new
-			// ModifierForHeroListener(GameLevel.this));
 			ModifierForHero move = new ModifierForHero(5, heroAndroid.fromX,
 					heroAndroid.fromY, heroAndroid.toX, heroAndroid.toY,
 					buildingsFrom, buildingTo);
