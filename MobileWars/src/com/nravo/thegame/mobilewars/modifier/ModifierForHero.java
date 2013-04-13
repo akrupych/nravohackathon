@@ -13,19 +13,20 @@ public class ModifierForHero extends MoveModifier {
 	
 	public ModifierForHero(float duration, float fromX, float fromY, float toX, float toY,
                            final List<Building> buildingsFrom, final Building buildingTo,
-                           final AndroidSpritePool pool, final Hero hero, final Building building) {
+                           final AndroidSpritePool pool, final Hero hero) {
 		super(duration,fromX, fromY, toX, toY);
 		this.addModifierListener(new IModifierListener<IEntity>() {
             @Override
             public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) {
-                    hero.countOfEnemy = building.decrementNumberOfUnits();
-               buildingsFrom.clear();
+                for (Building building : buildingsFrom) {
+                    building.decrementNumberOfUnits();
+                }
             }
 
             @Override
             public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
                 pool.recyclePoolItem(hero.heroSprite);
-                buildingTo.incrementNumberOfUnits(hero.countOfEnemy);
+                buildingTo.incrementNumberOfUnits(1);
             }
         });
 	}

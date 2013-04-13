@@ -21,7 +21,7 @@ import java.util.List;
 public class GameLevel extends ManagedGameScene implements
 		GameManager.GameLevelGoal, IOnSceneTouchListener {
 
-	public static final int HEROES_POOL_SIZE = 25;
+	public static final int HEROES_POOL_SIZE = 1000;
 	public final Levels.LevelDefinition mLevelDefinition;
 	public final int mNumberOfBuildingsInCurrentLevel;
 
@@ -155,15 +155,8 @@ public class GameLevel extends ManagedGameScene implements
 			// perform moving units
 			if (!buildingsFrom.isEmpty() && buildingTo != null) {
 				performUnitMovement();
-			} else {
-			    buildingsFrom.clear();
-			/*
-			 * else { new ApplePiePower(pSceneTouchEvent.getX(),
-			 * pSceneTouchEvent.getY(), ResourceManager.sApplePieTR,
-			 * ResourceManager.sMagnetTR, ResourceManager.getEngine(), this,
-			 * ResourceManager.getInstance().camera); }
-			 */
-            }
+			}
+            buildingsFrom.clear();
 			buildingTo = null;
 			return true;
 		}
@@ -186,7 +179,7 @@ public class GameLevel extends ManagedGameScene implements
                     heroAndroid.fromY, heroAndroid.toX, heroAndroid.toY);
 			move = new ModifierForHero(timeToMove, heroAndroid.fromX,
 					heroAndroid.fromY, heroAndroid.toX, heroAndroid.toY,
-					buildingsFrom, buildingTo, mAndroidHeroPool, heroAndroid,building);
+					buildingsFrom, buildingTo, mAndroidHeroPool, heroAndroid);
             GameLevel.this.attachChild(heroAndroid.heroSprite);
 			heroAndroid.heroSprite.registerEntityModifier(move);
 		}
