@@ -14,4 +14,9 @@ public class HeroPool extends GenericPool<Hero> {
 		return new Hero(0, 0, Levels.Race.ANDROID);
 	}
 
+
+    @Override
+    public synchronized Hero obtainPoolItem() {
+        return super.obtainPoolItem();
+    }
 }
