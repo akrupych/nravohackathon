@@ -22,9 +22,9 @@ public class AndroidSpritePool extends GenericPool<AnimatedSprite> {
 
     @Override
     protected void onHandleRecycleItem(AnimatedSprite pItem) {
+        pItem.detachSelf();
         pItem.setVisible(false);
         pItem.setIgnoreUpdate(true);
-        pItem.clearEntityModifiers();
         pItem.clearUpdateHandlers();
     }
 }

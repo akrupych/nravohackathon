@@ -186,7 +186,7 @@ public class GameLevel extends ManagedGameScene implements
                     heroAndroid.fromY, heroAndroid.toX, heroAndroid.toY);
 			move = new ModifierForHero(timeToMove, heroAndroid.fromX,
 					heroAndroid.fromY, heroAndroid.toX, heroAndroid.toY,
-					buildingsFrom, buildingTo, mAndroidHeroPool, heroAndroid.heroSprite);
+					buildingsFrom, buildingTo, mAndroidHeroPool, heroAndroid);
             GameLevel.this.attachChild(heroAndroid.heroSprite);
 			heroAndroid.heroSprite.registerEntityModifier(move);
 		}
