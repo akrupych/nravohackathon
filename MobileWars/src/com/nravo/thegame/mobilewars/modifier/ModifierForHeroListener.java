@@ -20,11 +20,11 @@ public class ModifierForHeroListener implements IModifier.IModifierListener {
 
     @Override
     public void onModifierStarted(IModifier pModifier, Object pItem) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        // reduce number of units in buidingsFrom[]
     }
 
     @Override
     public void onModifierFinished(IModifier pModifier, Object pItem) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        // increase number of units in buildingTo
     }
 }
