@@ -63,7 +63,7 @@ public abstract class ManagedGameScene extends ManagedScene {
 
     @Override
     public void onShowScene() {
-    	mGameHud = new GameHUD();
+    	mGameHud = new GameHUD(this);
         ResourceManager.getInstance().engine.getCamera().setHUD(mGameHud);
     }
 

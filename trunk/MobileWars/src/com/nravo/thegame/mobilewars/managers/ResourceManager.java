@@ -18,10 +18,12 @@ import org.andengine.util.adt.color.Color;
 import android.content.Context;
 import android.graphics.Typeface;
 
+import com.nravo.thegame.mobilewars.effects.JellyBeansEffect;
 import com.nravo.thegame.mobilewars.layers.LevelWonLayer;
 import com.nravo.thegame.mobilewars.runtime.MainGameActivity;
 
 public class ResourceManager {
+	
 	private static final ResourceManager INSTANCE = new ResourceManager();
 	private static final TextureOptions NORMAL_TEXTURE_OPTION = TextureOptions.BILINEAR;
 
@@ -48,7 +50,20 @@ public class ResourceManager {
 	public static TiledTextureRegion sAppleTTR;
 	public static TextureRegion sApplePieTR;
 	public static TextureRegion sMagnetTR;
+	
 	public static ITextureRegion sHudBackgroundTR;
+	public static ITextureRegion sPowerHoneycombTR;
+	public static ITextureRegion sPowerIceCreamSandwichTR;
+	public static ITextureRegion sPowerJellyBeansTR;
+	
+	public static ITextureRegion[] sJellyBeansTRs;
+	private static final String[] mJellyBeanImages = {
+		"jelly_bean_blue.png",
+		"jelly_bean_green.png",
+		"jelly_bean_purple.png",
+		"jelly_bean_red.png",
+		"jelly_bean_yellow.png"
+	};
 
 	// ================== MENU RESOURCES =====================
 	// TR = Texture Region; TTR = Tiled texture region
@@ -136,11 +151,31 @@ public class ResourceManager {
 				.getAssetBasePath();
 		BitmapTextureAtlasTextureRegionFactory
 				.setAssetBasePath(GAME_GRAPHICS_PATH);
-
+		//////////////////////////////// HUD ///////////////////////////////////
 		if (sHudBackgroundTR == null) {
 			sHudBackgroundTR = getTextureRegion("hud_background.png",
 					NORMAL_TEXTURE_OPTION);
 		}
+		if (sPowerHoneycombTR == null) {
+			sPowerHoneycombTR = getTextureRegion("power_honeycomb.png",
+					NORMAL_TEXTURE_OPTION);
+		}
+		if (sPowerIceCreamSandwichTR == null) {
+			sPowerIceCreamSandwichTR = getTextureRegion("power_ice_cream_sandwich.png",
+					NORMAL_TEXTURE_OPTION);
+		}
+		if (sPowerJellyBeansTR == null) {
+			sPowerJellyBeansTR = getTextureRegion("power_jelly_beans.png",
+					NORMAL_TEXTURE_OPTION);
+		}
+		///////////////////////////// JELLY BEANS //////////////////////////////
+		sJellyBeansTRs = new TextureRegion[mJellyBeanImages.length];
+		for (int i = 0; i < mJellyBeanImages.length; i++) {
+			sJellyBeansTRs[i] = getTextureRegion(mJellyBeanImages[i],
+					NORMAL_TEXTURE_OPTION);
+		}
+		JellyBeansEffect.setTextures(sJellyBeansTRs);
+		/////////////////////////////// ETC ////////////////////////////////////
 		if (sGameBackgroundTR == null) {
 			sGameBackgroundTR = getTextureRegion("andrew_background.png",
 					NORMAL_TEXTURE_OPTION);

@@ -1,6 +1,8 @@
 package com.nravo.thegame.mobilewars.gamelevel;
 
 import com.nravo.thegame.mobilewars.Utils.Utils;
+import com.nravo.thegame.mobilewars.effects.JellyBeansEffect;
+import com.nravo.thegame.mobilewars.effects.JellyBeansEffect.State;
 import com.nravo.thegame.mobilewars.entity.AndroidSpritePool;
 import com.nravo.thegame.mobilewars.entity.Building;
 import com.nravo.thegame.mobilewars.entity.Hero;
@@ -8,6 +10,7 @@ import com.nravo.thegame.mobilewars.entity.HeroAndroid;
 import com.nravo.thegame.mobilewars.gamelevel.handlers.DrawPointerUpdateHandler;
 import com.nravo.thegame.mobilewars.layers.LevelWonLayer;
 import com.nravo.thegame.mobilewars.managers.GameManager;
+import com.nravo.thegame.mobilewars.managers.ResourceManager;
 import com.nravo.thegame.mobilewars.managers.SceneManager;
 import com.nravo.thegame.mobilewars.modifier.ModifierForHero;
 import org.andengine.engine.handler.IUpdateHandler;
@@ -24,6 +27,8 @@ public class GameLevel extends ManagedGameScene implements
 	public static final int HEROES_POOL_SIZE = 1000;
 	public final Levels.LevelDefinition mLevelDefinition;
 	public final int mNumberOfBuildingsInCurrentLevel;
+	
+	public static JellyBeansEffect mJellyBeansEffect = new JellyBeansEffect();
 
 	public int mNumberOfEnemiesLeft = 10;
 	private int mNumberOfAlliesLeft = 10;
@@ -57,6 +62,9 @@ public class GameLevel extends ManagedGameScene implements
 					GameLevel.this.onLevelFailed();
 				}
 				GameLevel.this.unregisterUpdateHandler(this);
+			} else if (mJellyBeansEffect.mState == State.RUNNING) {
+				// TODO: foreach(building) building.damage(mJellyBeansEffect.getDamageTo(
+				//           building.x, building.y));
 			}
 		}
 
@@ -132,9 +140,19 @@ public class GameLevel extends ManagedGameScene implements
 	@Override
 	public boolean onSceneTouchEvent(final Scene pScene,
 			final TouchEvent pSceneTouchEvent) {
+		
+		float x = pSceneTouchEvent.getX();
+		float y = pSceneTouchEvent.getY();
 
 		if (pSceneTouchEvent.isActionDown()) {
-			int a = 1;
+			if (mJellyBeansEffect.mState == State.WAITING) {
+				mJellyBeansEffect.launch(x, y, this,
+					ResourceManager.getEngine().getVertexBufferObjectManager());
+				if (pScene instanceof ManagedGameScene) {
+					
+				}
+				return true;
+			}
 			return false;
 		}
 
