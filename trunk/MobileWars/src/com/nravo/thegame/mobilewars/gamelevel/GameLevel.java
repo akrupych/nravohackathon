@@ -140,9 +140,6 @@ public class GameLevel extends ManagedGameScene implements
 					currentBuilding.initialNumberOfUnits);
 		}
 
-		// new Hero(500f, 400f, GameLevel.this, Race.ANDROID).moveHero(100, 100,
-		// 900, 500);
-
 		GameLevel.this.setOnSceneTouchListener(this);
 	}
 
@@ -178,8 +175,8 @@ public class GameLevel extends ManagedGameScene implements
 			 * ResourceManager.sMagnetTR, ResourceManager.getEngine(), this,
 			 * ResourceManager.getInstance().camera); }
 			 */
-			buildingsFrom.clear();
-			//buildingTo = null;
+		
+			buildingTo = null;
 			return true;
 		}
 		return false;
@@ -194,16 +191,22 @@ public class GameLevel extends ManagedGameScene implements
 					building.buildingSprite.getY(),
 					buildingTo.buildingSprite.getX(),
 					buildingTo.buildingSprite.getY());
-			SequenceEntityModifier move = new SequenceEntityModifier(
-					new MoveModifier(5, heroAndroid.fromX, heroAndroid.fromY,
-							heroAndroid.toX, heroAndroid.toY)/*,
-					new DelayModifier(5), new MoveModifier(5, heroAndroid.toX,
-							heroAndroid.toY, heroAndroid.fromX,
-							heroAndroid.fromY)*/);
-			move.addModifierListener(new ModifierForHeroListener(GameLevel.this));
+			/*
+			 * SequenceEntityModifier move = new SequenceEntityModifier( new
+			 * MoveModifier(5, heroAndroid.fromX, heroAndroid.fromY,
+			 * heroAndroid.toX, heroAndroid.toY), new DelayModifier(5), new
+			 * MoveModifier(5, heroAndroid.toX, heroAndroid.toY,
+			 * heroAndroid.fromX, heroAndroid.fromY));
+			 */
+			// move.addModifierListener(new
+			// ModifierForHeroListener(GameLevel.this));
+			ModifierForHero move = new ModifierForHero(5, heroAndroid.fromX,
+					heroAndroid.fromY, heroAndroid.toX, heroAndroid.toY,
+					buildingsFrom, buildingTo);
 			heroAndroid.heroSprite.registerEntityModifier(move);
 		}
-		buildingTo.incrementNumberOfUnits(1);
+	
+	//	buildingTo.incrementNumberOfUnits(1);
 	}
 
 	public void disposeLevel() {

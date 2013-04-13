@@ -1,22 +1,35 @@
 package com.nravo.thegame.mobilewars.modifier;
 
-import org.andengine.entity.modifier.MoveModifier;
-import org.andengine.entity.modifier.SequenceEntityModifier;
+import java.util.List;
 
+import org.andengine.entity.IEntity;
+import org.andengine.entity.modifier.MoveModifier;
+import org.andengine.util.modifier.IModifier;
+
+import com.nravo.thegame.mobilewars.entity.Building;
 import com.nravo.thegame.mobilewars.entity.Hero;
 
 public class ModifierForHero extends MoveModifier {
 
 	public Hero hero;
 	
-	public ModifierForHero(Hero hero) {
-		super (5, hero.fromX, hero.fromY, hero.toX, hero.toY);
-		this.hero = hero;
-		 
-	/*	MoveModifier move = new MoveModifier(5, hero.fromX, hero.fromY, hero.toX, hero.toY);
-		hero.registerEntityModifier(move);
-	
-	*/	//this.addModifierListener(pModifierListener);
+	public ModifierForHero(float duration, float fromX, float fromY, float toX, float toY, final List<Building> from, final Building to) {
+		super (5, fromX,fromY,toX,toY);	
+		this.addModifierListener(new IModifierListener<IEntity>() {			
+			@Override
+			public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) {
+				for (Building building: from){
+					building.decrementNumberOfUnits(1);
+				}	
+				from.clear();
+			}
+			
+			@Override
+			public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
+				to.incrementNumberOfUnits(1);		
+			}
+		});
+
 	}
 
 
