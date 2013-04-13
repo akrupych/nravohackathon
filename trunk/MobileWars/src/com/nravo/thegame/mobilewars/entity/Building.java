@@ -81,7 +81,7 @@ public class Building extends Entity {
 
                 if (timePassed >= UNIT_REGENERATION_DELAY_IN_SEC) {
                     if (mNumberOfUnits < MAX_NUMBER_OF_UNITS_IN_BUILDING) {
-                        mNumberOfUnits++;
+//                        mNumberOfUnits++;
                         gameLevel.mNumberOfEnemiesLeft--;
                         timePassed = 0;
 
