@@ -155,13 +155,15 @@ public class GameLevel extends ManagedGameScene implements
 			// perform moving units
 			if (!buildingsFrom.isEmpty() && buildingTo != null) {
 				performUnitMovement();
-			}/*
+			} else {
+			    buildingsFrom.clear();
+			/*
 			 * else { new ApplePiePower(pSceneTouchEvent.getX(),
 			 * pSceneTouchEvent.getY(), ResourceManager.sApplePieTR,
 			 * ResourceManager.sMagnetTR, ResourceManager.getEngine(), this,
 			 * ResourceManager.getInstance().camera); }
 			 */
-		    buildingsFrom.clear();
+            }
 			buildingTo = null;
 			return true;
 		}
@@ -184,7 +186,7 @@ public class GameLevel extends ManagedGameScene implements
                     heroAndroid.fromY, heroAndroid.toX, heroAndroid.toY);
 			move = new ModifierForHero(timeToMove, heroAndroid.fromX,
 					heroAndroid.fromY, heroAndroid.toX, heroAndroid.toY,
-					buildingsFrom, buildingTo);
+					buildingsFrom, buildingTo, mAndroidHeroPool, heroAndroid.heroSprite);
             GameLevel.this.attachChild(heroAndroid.heroSprite);
 			heroAndroid.heroSprite.registerEntityModifier(move);
 		}
