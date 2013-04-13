@@ -2,7 +2,6 @@ package com.nravo.thegame.mobilewars.gamelevel;
 
 import com.nravo.thegame.mobilewars.entity.*;
 import com.nravo.thegame.mobilewars.gamelevel.handlers.DrawPointerUpdateHandler;
-import com.nravo.thegame.mobilewars.gamelevel.handlers.UnitMovementHandler;
 import com.nravo.thegame.mobilewars.layers.LevelWonLayer;
 import com.nravo.thegame.mobilewars.managers.GameManager;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
@@ -179,18 +178,16 @@ public class GameLevel extends ManagedGameScene implements
 	}
 
 	private void performUnitMovement() {
-		GameLevel.this.registerUpdateHandler(new UnitMovementHandler(this));
-
 		for (Building building : buildingsFrom) {
 			Hero heroAndroid = mAndroidHeroPool.obtainAndroid(
 					building.buildingSprite.getX(),
 					building.buildingSprite.getY(),
 					buildingTo.buildingSprite.getX(),
 					buildingTo.buildingSprite.getY());
-			ModifierForHero move = new ModifierForHero(5, heroAndroid.fromX,
+			ModifierForHero moveModifier = new ModifierForHero(5, heroAndroid.fromX,
 					heroAndroid.fromY, heroAndroid.toX, heroAndroid.toY,
 					buildingsFrom, buildingTo);
-			heroAndroid.heroSprite.registerEntityModifier(move);
+			heroAndroid.heroSprite.registerEntityModifier(moveModifier);
 		}
 	
 	//	buildingTo.incrementNumberOfUnits(1);
