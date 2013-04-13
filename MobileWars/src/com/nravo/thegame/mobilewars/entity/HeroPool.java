@@ -15,8 +15,7 @@ public class HeroPool extends GenericPool<Hero> {
 	}
 
 
-    @Override
-    public synchronized Hero obtainPoolItem() {
+    public synchronized Hero obtainPoolItem(int xFrom, int yFrom, int xTo, int yTo) {
         return super.obtainPoolItem();
     }
 }
