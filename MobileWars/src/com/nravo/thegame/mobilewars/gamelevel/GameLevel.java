@@ -156,6 +156,9 @@ public class GameLevel extends ManagedGameScene implements
 			if (!buildingsFrom.isEmpty() && buildingTo != null) {
 				performUnitMovement();
 			}
+			else {
+				buildingsFrom.clear();
+			}
 			buildingTo = null;
 			return true;
 		}
