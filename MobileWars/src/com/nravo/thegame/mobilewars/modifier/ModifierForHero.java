@@ -26,7 +26,7 @@ public class ModifierForHero extends MoveModifier {
 
             @Override
             public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
-//                pool.recyclePoolItem(hero.heroSprite);
+                pool.recyclePoolItem(hero.heroSprite);
                 buildingTo.incrementNumberOfUnits(1);
             }
         });
