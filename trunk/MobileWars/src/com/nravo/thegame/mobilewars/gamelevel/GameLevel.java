@@ -1,5 +1,14 @@
 package com.nravo.thegame.mobilewars.gamelevel;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.andengine.engine.handler.IUpdateHandler;
+import org.andengine.entity.scene.IOnSceneTouchListener;
+import org.andengine.entity.scene.Scene;
+import org.andengine.entity.sprite.Sprite;
+import org.andengine.input.touch.TouchEvent;
+
 import com.nravo.thegame.mobilewars.Utils.Utils;
 import com.nravo.thegame.mobilewars.effects.JellyBeansEffect;
 import com.nravo.thegame.mobilewars.effects.JellyBeansEffect.State;
@@ -13,13 +22,6 @@ import com.nravo.thegame.mobilewars.managers.GameManager;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
 import com.nravo.thegame.mobilewars.managers.SceneManager;
 import com.nravo.thegame.mobilewars.modifier.ModifierForHero;
-import org.andengine.engine.handler.IUpdateHandler;
-import org.andengine.entity.scene.IOnSceneTouchListener;
-import org.andengine.entity.scene.Scene;
-import org.andengine.input.touch.TouchEvent;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class GameLevel extends ManagedGameScene implements
 		GameManager.GameLevelGoal, IOnSceneTouchListener {
@@ -43,6 +45,8 @@ public class GameLevel extends ManagedGameScene implements
 	public Building buildingTo;
 
 	private boolean mHasCompletionTimerRun = false;
+	
+	private Sprite mJellyBeansSprite;
 
 	// ============================================================
 	// ===================== UPDATE HANDLERS=======================
@@ -138,6 +142,9 @@ public class GameLevel extends ManagedGameScene implements
 					currentBuilding.initialNumberOfUnits);
 		}
 
+		mJellyBeansSprite = new Sprite(0, 0, ResourceManager.sPowerJellyBeansTR,
+				ResourceManager.getEngine().getVertexBufferObjectManager());
+
 		GameLevel.this.setOnSceneTouchListener(this);
 	}
 
@@ -150,12 +157,9 @@ public class GameLevel extends ManagedGameScene implements
 
 		if (pSceneTouchEvent.isActionDown()) {
 			if (mJellyBeansEffect.mState == State.WAITING) {
-				mJellyBeansEffect.launch(x, y, this,
-					ResourceManager.getEngine().getVertexBufferObjectManager());
-				if (pScene instanceof ManagedGameScene) {
-					
-				}
-				return true;
+				mJellyBeansSprite.setPosition(x, y);
+				mJellyBeansSprite.setScale(2);
+				pScene.attachChild(mJellyBeansSprite);
 			}
 			return false;
 		}
@@ -163,7 +167,9 @@ public class GameLevel extends ManagedGameScene implements
 		if (pSceneTouchEvent.isActionMove()) {
 			mX = pSceneTouchEvent.getX();
 			mY = pSceneTouchEvent.getY();
-			if (!lineDrawingHandler.isRegistered()) {
+			if (mJellyBeansEffect.mState == State.WAITING) {
+				mJellyBeansSprite.setPosition(x, y);
+			} else if (!lineDrawingHandler.isRegistered()) {
 				GameLevel.this.registerUpdateHandler(lineDrawingHandler);
 				lineDrawingHandler.setPointersVisible(true);
 				lineDrawingHandler.setRegistered(true);
@@ -182,6 +188,11 @@ public class GameLevel extends ManagedGameScene implements
 				buildingsFrom.clear();
 			}
 			buildingTo = null;
+			if (mJellyBeansEffect.mState == State.WAITING) {
+				mJellyBeansSprite.detachSelf();
+				mJellyBeansEffect.launch(x, y, pScene,
+					ResourceManager.getEngine().getVertexBufferObjectManager());
+			}
 			return true;
 		}
 		return false;
