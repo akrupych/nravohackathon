@@ -186,7 +186,7 @@ public class GameLevel extends ManagedGameScene implements
             Hero heroAndroid =
                     mAndroidHeroPool.obtainAndroid(building.buildingSprite.getX(), building.buildingSprite.getY(), 0, 0);
             heroAndroid.heroSprite.registerEntityModifier(new MoveModifier(5,
-                    heroAndroid.fromX, heroAndroid.fromY, buildingTo.buildingSprite.getX(), buildingTo.getY()));
+                    heroAndroid.fromX, heroAndroid.fromY, buildingTo.buildingSprite.getX(), buildingTo.buildingSprite.getY()));
         }
         buildingTo.incrementNumberOfUnits(1);
     }
