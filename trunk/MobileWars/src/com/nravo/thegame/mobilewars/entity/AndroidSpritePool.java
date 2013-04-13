@@ -21,8 +21,13 @@ public class AndroidSpritePool extends GenericPool<AnimatedSprite> {
     }
 
     @Override
-    protected void onHandleRecycleItem(AnimatedSprite pItem) {
-        pItem.detachSelf();
+    protected void onHandleRecycleItem(final AnimatedSprite pItem) {
+        ResourceManager.getEngine().runOnUpdateThread(new Runnable() {
+            @Override
+            public void run() {
+                pItem.detachSelf();
+            }
+        });
         pItem.setVisible(false);
         pItem.setIgnoreUpdate(true);
         pItem.clearUpdateHandlers();
