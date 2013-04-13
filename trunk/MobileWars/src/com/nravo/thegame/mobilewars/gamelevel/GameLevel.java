@@ -1,8 +1,8 @@
 package com.nravo.thegame.mobilewars.gamelevel;
 
+import com.nravo.thegame.mobilewars.entity.AndroidHeroPool;
 import com.nravo.thegame.mobilewars.entity.Building;
 import com.nravo.thegame.mobilewars.entity.Hero;
-import com.nravo.thegame.mobilewars.entity.HeroPool;
 import com.nravo.thegame.mobilewars.gamelevel.handlers.DrawPointerUpdateHandler;
 import com.nravo.thegame.mobilewars.gamelevel.handlers.UnitMovementHandler;
 import com.nravo.thegame.mobilewars.layers.LevelWonLayer;
@@ -115,7 +115,7 @@ public class GameLevel extends ManagedGameScene implements
         buildingsFrom = new ArrayList<Building>(numberOfBuildingsInLevel);
         lineDrawingHandler = new DrawPointerUpdateHandler(GameLevel.this);
 
-        GenericPool<Hero> heroPool = new HeroPool();
+        GenericPool<Hero> heroPool = new AndroidHeroPool();
         heroPool.batchAllocatePoolItems(HEROES_POOL_SIZE);
 
         Rectangle rectangle = new Rectangle(0f, 0f, 120f, 120f,
