@@ -48,6 +48,7 @@ public class ResourceManager {
 	public static TiledTextureRegion sAppleTTR;
 	public static TextureRegion sApplePieTR;
 	public static TextureRegion sMagnetTR;
+	public static ITextureRegion sHudBackgroundTR;
 
 	// ================== MENU RESOURCES =====================
 	// TR = Texture Region; TTR = Tiled texture region
@@ -136,6 +137,10 @@ public class ResourceManager {
 		BitmapTextureAtlasTextureRegionFactory
 				.setAssetBasePath(GAME_GRAPHICS_PATH);
 
+		if (sHudBackgroundTR == null) {
+			sHudBackgroundTR = getTextureRegion("hud_background.png",
+					NORMAL_TEXTURE_OPTION);
+		}
 		if (sGameBackgroundTR == null) {
 			sGameBackgroundTR = getTextureRegion("andrew_background.png",
 					NORMAL_TEXTURE_OPTION);
