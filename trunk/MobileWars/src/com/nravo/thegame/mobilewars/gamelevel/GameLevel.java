@@ -1,20 +1,26 @@
 package com.nravo.thegame.mobilewars.gamelevel;
 
-import com.nravo.thegame.mobilewars.entity.*;
-import com.nravo.thegame.mobilewars.gamelevel.handlers.DrawPointerUpdateHandler;
-import com.nravo.thegame.mobilewars.gamelevel.handlers.UnitMovementHandler;
-import com.nravo.thegame.mobilewars.layers.LevelWonLayer;
-import com.nravo.thegame.mobilewars.managers.GameManager;
-import com.nravo.thegame.mobilewars.managers.ResourceManager;
-import com.nravo.thegame.mobilewars.managers.SceneManager;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.andengine.engine.handler.IUpdateHandler;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.input.touch.TouchEvent;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.nravo.thegame.mobilewars.entity.AndroidHeroPool;
+import com.nravo.thegame.mobilewars.entity.AppleHeroPool;
+import com.nravo.thegame.mobilewars.entity.Building;
+import com.nravo.thegame.mobilewars.entity.Hero;
+import com.nravo.thegame.mobilewars.entity.HeroAndroid;
+import com.nravo.thegame.mobilewars.entity.HeroApple;
+import com.nravo.thegame.mobilewars.gamelevel.handlers.DrawPointerUpdateHandler;
+import com.nravo.thegame.mobilewars.gamelevel.handlers.UnitMovementHandler;
+import com.nravo.thegame.mobilewars.layers.LevelWonLayer;
+import com.nravo.thegame.mobilewars.managers.GameManager;
+import com.nravo.thegame.mobilewars.managers.ResourceManager;
+import com.nravo.thegame.mobilewars.managers.SceneManager;
 
 public class GameLevel extends ManagedGameScene implements
         GameManager.GameLevelGoal, IOnSceneTouchListener {
@@ -126,6 +132,12 @@ public class GameLevel extends ManagedGameScene implements
         rectangle.setColor(1, 0, 1);
         GameLevel.this.attachChild(rectangle);
 
+        Hero android = mAndroidHeroPool.obtainAndroid(50, 50, 100, 100);
+        GameLevel.this.attachChild(android);
+        
+        Hero apple = mAppleHeroPool.obtainApple(100, 100, 150, 150);
+        GameLevel.this.attachChild(apple);
+        
         // Buildings
         for (Levels.BuildingDefinition currentBuilding : GameLevel.this.mLevelDefinition.buildingsInLevel) {
             new Building(GameLevel.this, currentBuilding.race,
