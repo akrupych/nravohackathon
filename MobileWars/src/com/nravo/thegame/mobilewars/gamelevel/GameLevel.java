@@ -1,13 +1,19 @@
 package com.nravo.thegame.mobilewars.gamelevel;
 
+import com.nravo.thegame.mobilewars.Utils.Utils;
 import com.nravo.thegame.mobilewars.entity.*;
 import com.nravo.thegame.mobilewars.gamelevel.handlers.DrawPointerUpdateHandler;
+import com.nravo.thegame.mobilewars.gamelevel.handlers.UnitMovementHandler;
 import com.nravo.thegame.mobilewars.layers.LevelWonLayer;
 import com.nravo.thegame.mobilewars.managers.GameManager;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
 import com.nravo.thegame.mobilewars.managers.SceneManager;
 import com.nravo.thegame.mobilewars.modifier.ModifierForHero;
+import com.nravo.thegame.mobilewars.modifier.ModifierForHeroListener;
 import org.andengine.engine.handler.IUpdateHandler;
+import org.andengine.entity.modifier.DelayModifier;
+import org.andengine.entity.modifier.MoveModifier;
+import org.andengine.entity.modifier.SequenceEntityModifier;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
@@ -178,16 +184,30 @@ public class GameLevel extends ManagedGameScene implements
 	}
 
 	private void performUnitMovement() {
+		GameLevel.this.registerUpdateHandler(new UnitMovementHandler(this));
+		Hero heroAndroid;
+		ModifierForHero move;
+
 		for (Building building : buildingsFrom) {
-			Hero heroAndroid = mAndroidHeroPool.obtainAndroid(
+			heroAndroid = mAndroidHeroPool.obtainAndroid(
 					building.buildingSprite.getX(),
 					building.buildingSprite.getY(),
 					buildingTo.buildingSprite.getX(),
 					buildingTo.buildingSprite.getY());
-			ModifierForHero moveModifier = new ModifierForHero(5, heroAndroid.fromX,
+			/*
+			 * SequenceEntityModifier move = new SequenceEntityModifier( new
+			 * MoveModifier(5, heroAndroid.fromX, heroAndroid.fromY,
+			 * heroAndroid.toX, heroAndroid.toY), new DelayModifier(5), new
+			 * MoveModifier(5, heroAndroid.toX, heroAndroid.toY,
+			 * heroAndroid.fromX, heroAndroid.fromY));
+			 */
+			// move.addModifierListener(new
+			// ModifierForHeroListener(GameLevel.this));
+			move = new ModifierForHero(Utils.calculateTime(heroAndroid.fromX,
+					heroAndroid.fromY, heroAndroid.toX, heroAndroid.toY), heroAndroid.fromX,
 					heroAndroid.fromY, heroAndroid.toX, heroAndroid.toY,
 					buildingsFrom, buildingTo);
-			heroAndroid.heroSprite.registerEntityModifier(moveModifier);
+			heroAndroid.heroSprite.registerEntityModifier(move);
 		}
 	
 	//	buildingTo.incrementNumberOfUnits(1);
