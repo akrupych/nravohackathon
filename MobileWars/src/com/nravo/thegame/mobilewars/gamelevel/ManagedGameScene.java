@@ -1,14 +1,15 @@
 package com.nravo.thegame.mobilewars.gamelevel;
 
-import com.nravo.thegame.mobilewars.managers.ResourceManager;
-import com.nravo.thegame.mobilewars.runtime.ManagedScene;
-import org.andengine.engine.camera.hud.HUD;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 
+import com.nravo.thegame.mobilewars.managers.ResourceManager;
+import com.nravo.thegame.mobilewars.runtime.ManagedScene;
+
 public abstract class ManagedGameScene extends ManagedScene {
-    public HUD gameHud = new HUD();
+	
+    public GameHUD mGameHud;
 
     private Text loadingText;
     private Scene loadingScene;
@@ -24,9 +25,6 @@ public abstract class ManagedGameScene extends ManagedScene {
         this.setOnSceneTouchListenerBindingOnActionDownEnabled(true);
         this.setTouchAreaBindingOnActionDownEnabled(true);
         this.setTouchAreaBindingOnActionDownEnabled(true);
-        gameHud.setScaleCenter(0f, 0f);
-        gameHud.setScale(ResourceManager.getInstance().cameraScaleFactorX,
-                ResourceManager.getInstance().cameraScaleFactorY);
     }
 
     public abstract void onLoadLevel();
@@ -65,7 +63,8 @@ public abstract class ManagedGameScene extends ManagedScene {
 
     @Override
     public void onShowScene() {
-        ResourceManager.getInstance().engine.getCamera().setHUD(gameHud);
+    	mGameHud = new GameHUD();
+        ResourceManager.getInstance().engine.getCamera().setHUD(mGameHud);
     }
 
     @Override
