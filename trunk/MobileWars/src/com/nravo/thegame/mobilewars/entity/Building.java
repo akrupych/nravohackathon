@@ -97,9 +97,11 @@ public class Building extends Entity {
         buildingSprite.attachChild(unitNumber);
     }
 
-    public void decrementNumberOfUnits(int numberOfUnits) {
+    public int decrementNumberOfUnits() {
         // TODO perform checks here
-        mNumberOfUnits -= numberOfUnits;
+    	int count = mNumberOfUnits/2;
+        mNumberOfUnits -= count;
+        return count;
     }
 
     public void incrementNumberOfUnits(int numberOfUnits) {

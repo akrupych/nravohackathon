@@ -10,6 +10,8 @@ public abstract class Hero extends Entity {
 	public float toX;
 	public float toY;
 	
+	public int countOfEnemy;
+	
 	public AnimatedSprite heroSprite;
 	
 	public Hero(float fromX, float fromY, float toX, float toY) {
