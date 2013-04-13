@@ -3,17 +3,12 @@ package com.nravo.thegame.mobilewars.gamelevel;
 import com.nravo.thegame.mobilewars.Utils.Utils;
 import com.nravo.thegame.mobilewars.entity.*;
 import com.nravo.thegame.mobilewars.gamelevel.handlers.DrawPointerUpdateHandler;
-import com.nravo.thegame.mobilewars.gamelevel.handlers.UnitMovementHandler;
 import com.nravo.thegame.mobilewars.layers.LevelWonLayer;
 import com.nravo.thegame.mobilewars.managers.GameManager;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
 import com.nravo.thegame.mobilewars.managers.SceneManager;
 import com.nravo.thegame.mobilewars.modifier.ModifierForHero;
-import com.nravo.thegame.mobilewars.modifier.ModifierForHeroListener;
 import org.andengine.engine.handler.IUpdateHandler;
-import org.andengine.entity.modifier.DelayModifier;
-import org.andengine.entity.modifier.MoveModifier;
-import org.andengine.entity.modifier.SequenceEntityModifier;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
@@ -184,7 +179,6 @@ public class GameLevel extends ManagedGameScene implements
 	}
 
 	private void performUnitMovement() {
-		GameLevel.this.registerUpdateHandler(new UnitMovementHandler(this));
 		Hero heroAndroid;
 		ModifierForHero move;
 
