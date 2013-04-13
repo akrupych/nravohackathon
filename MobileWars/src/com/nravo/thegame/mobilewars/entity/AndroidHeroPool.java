@@ -23,6 +23,8 @@ public class AndroidHeroPool<Her> extends GenericPool<HeroAndroid> {
         mGameLevel.attachChild(hero.heroSprite);
         hero.fromX=xFrom;
         hero.fromY=yFrom;
+        hero.toX = xTo;
+        hero.toY = yTo;
         return hero;
     }
 }
