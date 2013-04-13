@@ -1,16 +1,26 @@
 package com.nravo.thegame.mobilewars.entity;
 
-import com.nravo.thegame.mobilewars.gamelevel.Levels.Race;
-import com.nravo.thegame.mobilewars.managers.ResourceManager;
 import org.andengine.entity.Entity;
-import org.andengine.entity.modifier.*;
 import org.andengine.entity.sprite.AnimatedSprite;
 
-public class Hero extends Entity {
+public abstract class Hero extends Entity {
 
-	private AnimatedSprite android;
 
-	public Hero(final float x, final float y, Race type) {
+	public int fromX;
+	public int fromY;
+	public int toX;
+	public int toY;
+	
+	private AnimatedSprite hero;
+	
+	public Hero (){
+		
+	}
+	
+	
+//	private AnimatedSprite android;
+
+	/*public Hero(final float x, final float y, Race type) {
 		if (type == Race.ANDROID) {
 			android = new AnimatedSprite(x, y, ResourceManager.sAndroidTTR,
 					ResourceManager.getActivity()
@@ -45,5 +55,5 @@ public class Hero extends Entity {
 		RotationModifier rotate = new RotationModifier(2, 0, 360);		
 		LoopEntityModifier loop = new LoopEntityModifier(rotate);
 		android.registerEntityModifier(loop);
-	}
+	}*/
 }

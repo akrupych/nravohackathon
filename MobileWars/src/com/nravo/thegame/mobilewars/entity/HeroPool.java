@@ -11,7 +11,7 @@ public class HeroPool extends GenericPool<Hero> {
 
 	@Override
 	protected Hero onAllocatePoolItem() {
-		return new Hero(0, 0, Levels.Race.ANDROID);
+		return new HeroAndroid();
 	}
 
 
