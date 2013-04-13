@@ -15,6 +15,8 @@ public class AndroidSpritePool extends GenericPool<AnimatedSprite> {
 
     public synchronized AnimatedSprite obtainAndroid(float x, float y) {
         AnimatedSprite heroSprite = super.obtainPoolItem();
+        heroSprite.setVisible(true);
+        heroSprite.setIgnoreUpdate(false);
         heroSprite.setX(x);
         heroSprite.setY(y);
         return heroSprite;
