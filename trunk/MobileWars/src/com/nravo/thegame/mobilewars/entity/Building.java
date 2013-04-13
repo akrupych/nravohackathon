@@ -128,8 +128,10 @@ public class Building extends Entity {
 			if (isMy) {
 				mNumberOfUnits = (mNumberOfUnits - numberOfUnits)* (-1);
 				type =  type.equals(Levels.Race.APPLE_IOS) ? Levels.Race.ANDROID :  Levels.Race.APPLE_IOS;
-				isMy = false;
-				buildingSprite.setVisible(false);
+				isMy = false;			
+				buildingSprite.detachSelf();
+				buildingSprite.clearEntityModifiers();
+				buildingSprite.clearUpdateHandlers();
 				buildingSprite = null;
 				buildSprite();
 			}
