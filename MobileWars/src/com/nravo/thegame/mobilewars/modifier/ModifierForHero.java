@@ -1,20 +1,17 @@
 package com.nravo.thegame.mobilewars.modifier;
 
-import java.util.List;
-
+import com.nravo.thegame.mobilewars.entity.Building;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.MoveModifier;
 import org.andengine.util.modifier.IModifier;
 
-import com.nravo.thegame.mobilewars.entity.Building;
-import com.nravo.thegame.mobilewars.entity.Hero;
+import java.util.List;
 
 public class ModifierForHero extends MoveModifier {
-
-	public Hero hero;
 	
-	public ModifierForHero(float duration, float fromX, float fromY, float toX, float toY, final List<Building> from, final Building to) {
-		super (5, fromX,fromY,toX,toY);	
+	public ModifierForHero(float duration, float fromX, float fromY, float toX, float toY,
+                           final List<Building> from, final Building to) {
+		super (5, fromX, fromY, toX, toY);
 		this.addModifierListener(new IModifierListener<IEntity>() {			
 			@Override
 			public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) {
