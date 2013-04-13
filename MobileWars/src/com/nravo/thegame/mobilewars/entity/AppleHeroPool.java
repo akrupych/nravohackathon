@@ -9,7 +9,7 @@ import org.andengine.util.adt.pool.GenericPool;
  * Time: 1:23 PM
  * To change this template use File | Settings | File Templates.
  */
-public class AppleHeroPool extends GenericPool<Hero> {
+public class AppleHeroPool<H> extends GenericPool<Hero> {
     @Override
     protected Hero onAllocatePoolItem() {
         return null;  //To change body of implemented methods use File | Settings | File Templates.

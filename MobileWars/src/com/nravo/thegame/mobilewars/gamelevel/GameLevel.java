@@ -1,8 +1,6 @@
 package com.nravo.thegame.mobilewars.gamelevel;
 
-import com.nravo.thegame.mobilewars.entity.AndroidHeroPool;
-import com.nravo.thegame.mobilewars.entity.Building;
-import com.nravo.thegame.mobilewars.entity.Hero;
+import com.nravo.thegame.mobilewars.entity.*;
 import com.nravo.thegame.mobilewars.gamelevel.handlers.DrawPointerUpdateHandler;
 import com.nravo.thegame.mobilewars.gamelevel.handlers.UnitMovementHandler;
 import com.nravo.thegame.mobilewars.layers.LevelWonLayer;
@@ -14,7 +12,6 @@ import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.input.touch.TouchEvent;
-import org.andengine.util.adt.pool.GenericPool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +19,7 @@ import java.util.List;
 public class GameLevel extends ManagedGameScene implements
         GameManager.GameLevelGoal, IOnSceneTouchListener {
 
-    public static final int HEROES_POOL_SIZE = 50;
+    public static final int HEROES_POOL_SIZE = 25;
     public final Levels.LevelDefinition mLevelDefinition;
     public final int mNumberOfBuildingsInCurrentLevel;
 
@@ -68,6 +65,8 @@ public class GameLevel extends ManagedGameScene implements
 
     // Draws pointers when dragging your finger
     public DrawPointerUpdateHandler lineDrawingHandler;
+    private AndroidHeroPool<HeroAndroid> mAndroidHeroPool;
+    private AppleHeroPool<HeroApple> mAppleHeroPool;
 
     public GameLevel(final Levels.LevelDefinition levelDefinition) {
         this.mLevelDefinition = levelDefinition;
@@ -115,8 +114,10 @@ public class GameLevel extends ManagedGameScene implements
         buildingsFrom = new ArrayList<Building>(numberOfBuildingsInLevel);
         lineDrawingHandler = new DrawPointerUpdateHandler(GameLevel.this);
 
-        GenericPool<Hero> heroPool = new AndroidHeroPool();
-        heroPool.batchAllocatePoolItems(HEROES_POOL_SIZE);
+        mAndroidHeroPool = new AndroidHeroPool<HeroAndroid>();
+        mAppleHeroPool = new AppleHeroPool<HeroApple>();
+        mAndroidHeroPool.batchAllocatePoolItems(HEROES_POOL_SIZE);
+        mAppleHeroPool.batchAllocatePoolItems(HEROES_POOL_SIZE);
 
         Rectangle rectangle = new Rectangle(0f, 0f, 120f, 120f,
                 ResourceManager.getInstance().engine
