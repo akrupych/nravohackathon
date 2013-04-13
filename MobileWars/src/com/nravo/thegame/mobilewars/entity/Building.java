@@ -14,99 +14,126 @@ import org.andengine.opengl.texture.region.ITextureRegion;
  */
 public class Building extends Entity {
 
-    private static final float UNIT_REGENERATION_DELAY_IN_SEC = 1f;
-    private static final int MAX_NUMBER_OF_UNITS_IN_BUILDING = 100;
+	private static final float UNIT_REGENERATION_DELAY_IN_SEC = 1f;
+	private static final int MAX_NUMBER_OF_UNITS_IN_BUILDING = 100;
 
-    private final GameLevel mGameLevel;
-    public final Sprite buildingSprite;
-    private int mNumberOfUnits;
+	private final GameLevel mGameLevel;
+	public Sprite buildingSprite;
+	private int mNumberOfUnits;
+	private boolean isMy;
+	private Levels.Race type;
+	private float x;
+	private float y;
 
-    public Building(final GameLevel gameLevel, final Levels.Race buildingRace,
-                    final float x, final float y, final int initialNumberOfUnits) {
-        this.mGameLevel = gameLevel;
-        this.mNumberOfUnits = initialNumberOfUnits;
+	public Building(final GameLevel gameLevel, final Levels.Race buildingRace,
+			final float x, final float y, final int initialNumberOfUnits) {
+		isMy = true;
+		type = buildingRace;
+		this.mGameLevel = gameLevel;
+		this.mNumberOfUnits = initialNumberOfUnits;
+		this.x = x;
+		this.y = y;
+		buildSprite();
+	}
 
-        // BUILDING SPRITE
-        ITextureRegion buildingTextureRegion = buildingRace.equals(Levels.Race.APPLE_IOS)
-                ? ResourceManager.sAppleSmallBuildingTR : ResourceManager.sAndroidSmallBuildingTR;
-        buildingSprite = new Sprite(x, y, buildingTextureRegion,
-                ResourceManager.getActivity().getVertexBufferObjectManager()) {
-            @Override
-            public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
+	public void buildSprite() {
 
-                boolean isAndroid = (buildingRace == Levels.Race.ANDROID);
+		// BUILDING SPRITE
+		ITextureRegion buildingTextureRegion = type
+				.equals(Levels.Race.APPLE_IOS) ? ResourceManager.sAppleSmallBuildingTR
+				: ResourceManager.sAndroidSmallBuildingTR;
+		buildingSprite = new Sprite(x, y, buildingTextureRegion,
+				ResourceManager.getActivity().getVertexBufferObjectManager()) {
+			@Override
+			public boolean onAreaTouched(TouchEvent pSceneTouchEvent,
+					float pTouchAreaLocalX, float pTouchAreaLocalY) {
 
-                if (pSceneTouchEvent.isActionOutside()) {
-                    return true;
-                }
-                if (pSceneTouchEvent.isActionDown() && isAndroid && gameLevel.buildingsFrom.isEmpty()) {
-                    gameLevel.buildingsFrom.add(Building.this);
-                    return false;
-                } else if (pSceneTouchEvent.isActionMove() && isAndroid
-                        && !gameLevel.buildingsFrom.contains(Building.this)) {
-                    gameLevel.buildingsFrom.add(Building.this);
-                    return true;
-                } else if (pSceneTouchEvent.isActionUp() && !isAndroid
-                        && !gameLevel.buildingsFrom.contains(Building.this) && gameLevel.buildingTo == null) {
-                    gameLevel.buildingTo = (Building.this);
-                    return false;
-                }
-                return super.onAreaTouched(pSceneTouchEvent, pTouchAreaLocalX, pTouchAreaLocalY);
-            }
-        };
-        gameLevel.attachChild(buildingSprite);
-        gameLevel.registerTouchArea(buildingSprite);
+				boolean isAndroid = (type == Levels.Race.ANDROID);
 
-        // coordinates for building unit counter
-        final float counterWidth = buildingSprite.getWidth()/2;
-        final float counterHeight = buildingSprite.getHeight() + 0.25f * buildingSprite.getHeight();
+				if (pSceneTouchEvent.isActionOutside()) {
+					return true;
+				}
+				if (pSceneTouchEvent.isActionDown() && isAndroid
+						&& mGameLevel.buildingsFrom.isEmpty()) {
+					mGameLevel.buildingsFrom.add(Building.this);
+					return false;
+				} else if (pSceneTouchEvent.isActionMove() && isAndroid
+						&& !mGameLevel.buildingsFrom.contains(Building.this)) {
+					mGameLevel.buildingsFrom.add(Building.this);
+					return true;
+				} else if (pSceneTouchEvent.isActionUp() && !isAndroid
+						&& !mGameLevel.buildingsFrom.contains(Building.this)
+						&& mGameLevel.buildingTo == null) {
+					mGameLevel.buildingTo = (Building.this);
+					return false;
+				}
+				return super.onAreaTouched(pSceneTouchEvent, pTouchAreaLocalX,
+						pTouchAreaLocalY);
+			}
+		};
+		mGameLevel.attachChild(buildingSprite);
+		mGameLevel.registerTouchArea(buildingSprite);
 
-        // Background for counter text
-        final Sprite counterBgSprite = new Sprite(counterWidth, counterHeight,
-                ResourceManager.sBuildingCounterBgTR,
-                ResourceManager.getActivity().getVertexBufferObjectManager());
-        buildingSprite.attachChild(counterBgSprite);
+		// coordinates for building unit counter
+		final float counterWidth = buildingSprite.getWidth() / 2;
+		final float counterHeight = buildingSprite.getHeight() + 0.25f
+				* buildingSprite.getHeight();
 
-        // Text displaying number of units
-        Text unitNumber = new Text(counterWidth, counterHeight,
-                ResourceManager.sFontDefault32Bold,
-                String.valueOf(initialNumberOfUnits), 100,
-                ResourceManager.getEngine().getVertexBufferObjectManager()) {
+		// Background for counter text
+		final Sprite counterBgSprite = new Sprite(counterWidth, counterHeight,
+				ResourceManager.sBuildingCounterBgTR, ResourceManager
+						.getActivity().getVertexBufferObjectManager());
+		buildingSprite.attachChild(counterBgSprite);
 
-            float timePassed = 0;
+		// Text displaying number of units
+		Text unitNumber = new Text(counterWidth, counterHeight,
+				ResourceManager.sFontDefault32Bold,
+				String.valueOf(mNumberOfUnits), 100, ResourceManager
+						.getEngine().getVertexBufferObjectManager()) {
 
-            @Override
-            protected void onManagedUpdate(float pSecondsElapsed) {
-                timePassed += pSecondsElapsed;
+			float timePassed = 0;
 
-                if (timePassed >= UNIT_REGENERATION_DELAY_IN_SEC) {
-                    if (mNumberOfUnits < MAX_NUMBER_OF_UNITS_IN_BUILDING) {
-                        mNumberOfUnits++;
-                        gameLevel.mNumberOfEnemiesLeft--;
-                        timePassed = 0;
+			@Override
+			protected void onManagedUpdate(float pSecondsElapsed) {
+				timePassed += pSecondsElapsed;
 
-                        // TODO
-                        // increment number of total units depending on
-                        // race of the building.
-                    }
-                }
-                this.setText(String.valueOf(mNumberOfUnits));
-                super.onManagedUpdate(pSecondsElapsed);
-            }
-        };
-        buildingSprite.attachChild(unitNumber);
-    }
+				if (timePassed >= UNIT_REGENERATION_DELAY_IN_SEC) {
+					if (mNumberOfUnits < MAX_NUMBER_OF_UNITS_IN_BUILDING) {
+						mNumberOfUnits++;
+						mGameLevel.mNumberOfEnemiesLeft--;
+						timePassed = 0;
 
-    public int decrementNumberOfUnits() {
-        // TODO perform checks here
-    	int count = mNumberOfUnits/2;
-        mNumberOfUnits -= count;
-        return count;
-    }
+						// TODO
+						// increment number of total units depending on
+						// race of the building.
+					}
+				}
+				this.setText(String.valueOf(mNumberOfUnits));
+				super.onManagedUpdate(pSecondsElapsed);
+			}
+		};
+		buildingSprite.attachChild(unitNumber);
+	}
 
-    public void incrementNumberOfUnits(int numberOfUnits) {
-        // TODO perform checks here
-        mNumberOfUnits += numberOfUnits;
-    }
+	public int decrementNumberOfUnits() {
+		int count = mNumberOfUnits / 2;
+		mNumberOfUnits -= count;
+		return count;
+	}
 
+	public void decrementNumberOfUnits(int numberOfUnits) {
+		if (mNumberOfUnits - numberOfUnits > 0 && isMy) {
+			mNumberOfUnits -= numberOfUnits;
+		} else {
+			if (isMy) {
+				mNumberOfUnits = (mNumberOfUnits - numberOfUnits)* (-1);
+				type =  type.equals(Levels.Race.APPLE_IOS) ? Levels.Race.ANDROID :  Levels.Race.APPLE_IOS;
+				isMy = false;
+				buildingSprite.setVisible(false);
+				buildingSprite = null;
+				buildSprite();
+			}
+			mNumberOfUnits += numberOfUnits;
+		}
+	}
 }
