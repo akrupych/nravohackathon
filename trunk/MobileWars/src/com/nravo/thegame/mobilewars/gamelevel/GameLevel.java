@@ -65,8 +65,8 @@ public class GameLevel extends ManagedGameScene implements
 
     // Draws pointers when dragging your finger
     public DrawPointerUpdateHandler lineDrawingHandler;
-    private AndroidHeroPool<HeroAndroid> mAndroidHeroPool;
-    private AppleHeroPool<HeroApple> mAppleHeroPool;
+    public AndroidHeroPool<HeroAndroid> mAndroidHeroPool;
+    public AppleHeroPool<HeroApple> mAppleHeroPool;
 
     public GameLevel(final Levels.LevelDefinition levelDefinition) {
         this.mLevelDefinition = levelDefinition;
@@ -114,6 +114,7 @@ public class GameLevel extends ManagedGameScene implements
         buildingsFrom = new ArrayList<Building>(numberOfBuildingsInLevel);
         lineDrawingHandler = new DrawPointerUpdateHandler(GameLevel.this);
 
+        // ============ HERO POOLS =============
         mAndroidHeroPool = new AndroidHeroPool<HeroAndroid>();
         mAppleHeroPool = new AppleHeroPool<HeroApple>();
         mAndroidHeroPool.batchAllocatePoolItems(HEROES_POOL_SIZE);
