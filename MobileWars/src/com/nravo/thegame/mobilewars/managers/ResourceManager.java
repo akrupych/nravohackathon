@@ -43,8 +43,14 @@ public class ResourceManager {
 	// TR = Texture Region
 	public static ITextureRegion sGameBackgroundTR;
 	public static ITextureRegion sLevelWonBackgroundTR;
+
+    // APPLE BUILDINGS
 	public static ITextureRegion sAppleSmallBuildingTR;
+    public static TiledTextureRegion sAppleBigBuildingTTR;
+    // ANDROID BUILDINGS
 	public static ITextureRegion sAndroidSmallBuildingTR;
+	public static ITiledTextureRegion sAndroidBigBuildingTR;
+
     public static ITextureRegion sBuildingCounterBgTR;
 	public static TiledTextureRegion sAndroidTTR;
 	public static TiledTextureRegion sAppleTTR;
@@ -187,6 +193,14 @@ public class ResourceManager {
 		if (sAppleSmallBuildingTR == null) {
 			sAppleSmallBuildingTR = getTextureRegion("apple_mac.png",
 					NORMAL_TEXTURE_OPTION);
+		}
+        if (sAppleBigBuildingTTR == null) {
+			sAppleBigBuildingTTR = getTiledTextureRegion("building_ipad.png", 10, 1,
+                    NORMAL_TEXTURE_OPTION);
+		}
+        if (sAndroidBigBuildingTR == null) {
+            sAndroidBigBuildingTR = getTiledTextureRegion("building_android_big.png", 10, 1,
+                    NORMAL_TEXTURE_OPTION);
 		}
         if (sAndroidSmallBuildingTR == null) {
 			sAndroidSmallBuildingTR = getTextureRegion("android.png",

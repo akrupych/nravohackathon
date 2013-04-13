@@ -24,13 +24,13 @@ import java.util.List;
 public class GameLevel extends ManagedGameScene implements
 		GameManager.GameLevelGoal, IOnSceneTouchListener {
 
-	public static final int HEROES_POOL_SIZE = 1000;
+	public static final int HEROES_POOL_SIZE = 100;
 	public final Levels.LevelDefinition mLevelDefinition;
 	public final int mNumberOfBuildingsInCurrentLevel;
 	
 	public static JellyBeansEffect mJellyBeansEffect = new JellyBeansEffect();
 
-	public int mNumberOfEnemiesLeft = 10;
+	public int mNumberOfEnemiesLeft = 0;
 	private int mNumberOfAlliesLeft = 10;
 
 	public float mX = 0;
@@ -48,7 +48,7 @@ public class GameLevel extends ManagedGameScene implements
 	// ===================== UPDATE HANDLERS=======================
 	// ============================================================
 	private IUpdateHandler onCompletionTimer = new IUpdateHandler() {
-		final float COMPLETION_DELAY_SECONDS = 3f;
+		final float COMPLETION_DELAY_SECONDS = 1f;
 		private float mTotalElapsedTime = 0f;
 
 		@Override
@@ -118,6 +118,10 @@ public class GameLevel extends ManagedGameScene implements
 	public void onLoadLevel() {
 		GameManager.setGameLevel(this);
 		GameManager.setGameLevelGoal(this);
+
+        for (Levels.BuildingDefinition buildingDefinition: mLevelDefinition.buildingsInLevel) {
+
+        }
 
 		final int numberOfBuildingsInLevel = mLevelDefinition.buildingsInLevel.length;
 		buildingsFrom = new ArrayList<Building>(numberOfBuildingsInLevel);
