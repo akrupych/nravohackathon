@@ -8,6 +8,7 @@ import com.nravo.thegame.mobilewars.managers.GameManager;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
 import com.nravo.thegame.mobilewars.managers.SceneManager;
 import org.andengine.engine.handler.IUpdateHandler;
+import org.andengine.entity.modifier.MoveModifier;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
@@ -182,7 +183,10 @@ public class GameLevel extends ManagedGameScene implements
         GameLevel.this.registerUpdateHandler(new UnitMovementHandler(this));
 
         for (Building building : buildingsFrom) {
-            mAndroidHeroPool.obtainAndroid(building.buildingSprite.getX(), building.buildingSprite.getY(), 0, 0);
+            Hero heroAndroid =
+                    mAndroidHeroPool.obtainAndroid(building.buildingSprite.getX(), building.buildingSprite.getY(), 0, 0);
+            heroAndroid.heroSprite.registerEntityModifier(new MoveModifier(5,
+                    heroAndroid.fromX, heroAndroid.fromY, 100, 100));
         }
         buildingTo.incrementNumberOfUnits(1);
     }

@@ -3,7 +3,7 @@ package com.nravo.thegame.mobilewars.entity;
 import com.nravo.thegame.mobilewars.gamelevel.GameLevel;
 import org.andengine.util.adt.pool.GenericPool;
 
-public class AndroidHeroPool<H> extends GenericPool<HeroAndroid> {
+public class AndroidHeroPool<Her> extends GenericPool<HeroAndroid> {
 
     private GameLevel mGameLevel;
 
@@ -21,6 +21,8 @@ public class AndroidHeroPool<H> extends GenericPool<HeroAndroid> {
         hero.heroSprite.setX(xFrom);
         hero.heroSprite.setY(yFrom);
         mGameLevel.attachChild(hero.heroSprite);
+        hero.fromX=xFrom;
+        hero.fromY=yFrom;
         return hero;
     }
 }
