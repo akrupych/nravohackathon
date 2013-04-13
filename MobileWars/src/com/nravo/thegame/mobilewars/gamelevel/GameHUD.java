@@ -55,7 +55,9 @@ public class GameHUD extends HUD {
         	@Override
         	public boolean onAreaTouched(TouchEvent pSceneTouchEvent,
         			float pTouchAreaLocalX, float pTouchAreaLocalY) {
-        		GameLevel.mJellyBeansEffect.mState = State.WAITING;
+        		if (GameLevel.mJellyBeansEffect.mIsEnabled) {
+        			GameLevel.mJellyBeansEffect.mState = State.WAITING;
+        		}
         		return false;
         	};
         };

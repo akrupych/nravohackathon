@@ -14,11 +14,10 @@ import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegion
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
-import com.nravo.thegame.mobilewars.managers.ResourceManager;
-
 import android.content.Context;
 import android.graphics.PointF;
-import android.net.NetworkInfo.DetailedState;
+
+import com.nravo.thegame.mobilewars.managers.ResourceManager;
 
 public class JellyBeansEffect {
 	
@@ -28,11 +27,13 @@ public class JellyBeansEffect {
 		RUNNING
 	}
 	public State mState = State.NONE;
+	public boolean mIsEnabled = true;
 
 	private static final float RATE_MINIMUM = 5;
 	private static final float RATE_MAXIMUM = 10;
 	private static final int PARTICLES_MAXIMUM = 100;
 	private static final float EFFECT_TIME = 5;
+	private static final float RESPAWN_TIME = 30;
 	private static final int IMAGE_SIZE = 32;
 	
 	private static final String[] mImageFileNames = {
@@ -42,13 +43,13 @@ public class JellyBeansEffect {
 		"jelly_bean_red.png",
 		"jelly_bean_yellow.png"
 	};
+
 	private static ITextureRegion[] mTextureRegions =
 			new ITextureRegion[mImageFileNames.length];
 	private static SpriteParticleSystem[] mParticleSystems =
 			new SpriteParticleSystem[mImageFileNames.length];
 	
 	private PointF mEffectCenter;
-	private boolean mIsWaiting = false;
 	
 	public static void setTextures(ITextureRegion[] textures) {
 		mTextureRegions = textures;
@@ -66,6 +67,7 @@ public class JellyBeansEffect {
 	public void launch(float x, float y, final Scene scene,
 			VertexBufferObjectManager vboManager) {
 		mState = State.RUNNING;
+		mIsEnabled = false;
 		mEffectCenter = new PointF(x, y);
 		for (int i = 0; i < mParticleSystems.length; i++) {
 			ITextureRegion texture = mTextureRegions[i];
@@ -86,8 +88,8 @@ public class JellyBeansEffect {
 					new TimerHandler(EFFECT_TIME, new ITimerCallback() {
 				@Override
 				public void onTimePassed(TimerHandler pTimerHandler) {
-					particleSystem.setParticlesSpawnEnabled(false);
 					mState = State.NONE;
+					particleSystem.setParticlesSpawnEnabled(false);
 					ResourceManager.getEngine().runOnUpdateThread(new Runnable() {
 						@Override
 						public void run() {
@@ -96,6 +98,13 @@ public class JellyBeansEffect {
 							particleSystem.detachSelf();
 						}
 					});
+				}
+			}));
+			particleSystem.registerUpdateHandler(
+					new TimerHandler(RESPAWN_TIME, new ITimerCallback() {
+				@Override
+				public void onTimePassed(TimerHandler pTimerHandler) {
+					mIsEnabled = true;
 				}
 			}));
 			scene.attachChild(particleSystem);

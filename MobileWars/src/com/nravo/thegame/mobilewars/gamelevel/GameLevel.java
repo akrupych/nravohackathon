@@ -9,6 +9,8 @@ import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.input.touch.TouchEvent;
 
+import android.util.Log;
+
 import com.nravo.thegame.mobilewars.Utils.Utils;
 import com.nravo.thegame.mobilewars.effects.JellyBeansEffect;
 import com.nravo.thegame.mobilewars.effects.JellyBeansEffect.State;
@@ -161,7 +163,6 @@ public class GameLevel extends ManagedGameScene implements
 				mJellyBeansSprite.setScale(2);
 				pScene.attachChild(mJellyBeansSprite);
 			}
-			return false;
 		}
 
 		if (pSceneTouchEvent.isActionMove()) {
@@ -193,9 +194,8 @@ public class GameLevel extends ManagedGameScene implements
 				mJellyBeansEffect.launch(x, y, pScene,
 					ResourceManager.getEngine().getVertexBufferObjectManager());
 			}
-			return true;
 		}
-		return false;
+		return true;
 	}
 
 	private void performUnitMovement() {
