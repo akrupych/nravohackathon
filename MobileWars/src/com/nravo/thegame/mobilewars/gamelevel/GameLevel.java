@@ -182,7 +182,7 @@ public class GameLevel extends ManagedGameScene implements
         GameLevel.this.registerUpdateHandler(new UnitMovementHandler(this));
 
         for (Building building : buildingsFrom) {
-            building.decrementNumberOfUnits(1);
+            mAndroidHeroPool.obtainAndroid(building.buildingSprite.getX(), building.buildingSprite.getY(), 0, 0);
         }
         buildingTo.incrementNumberOfUnits(1);
     }

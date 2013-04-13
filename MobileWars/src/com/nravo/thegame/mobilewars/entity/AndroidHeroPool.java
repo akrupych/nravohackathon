@@ -16,15 +16,11 @@ public class AndroidHeroPool<H> extends GenericPool<HeroAndroid> {
 		return new HeroAndroid();
 	}
 
-    public synchronized Hero obtainAndroid(int xFrom, int yFrom, int xTo, int yTo) {
+    public synchronized Hero obtainAndroid(float xFrom, float yFrom, float xTo, float yTo) {
         HeroAndroid hero = super.obtainPoolItem();
         hero.heroSprite.setX(xFrom);
         hero.heroSprite.setY(yFrom);
         mGameLevel.attachChild(hero.heroSprite);
-        hero.fromX=xFrom;
-        hero.fromY=yFrom;
-        hero.toX=xTo;
-        hero.toY=yTo;
         return hero;
     }
 }
