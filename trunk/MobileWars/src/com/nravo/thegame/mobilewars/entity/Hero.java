@@ -12,7 +12,11 @@ public abstract class Hero extends Entity {
 	
 	public AnimatedSprite heroSprite;
 	
-	public Hero (){		
+	public Hero(float fromX, float fromY, float toX, float toY) {
+        this.fromX = fromX;
+        this.fromY = fromY;
+        this.toX = toX;
+        this.toY = toY;
 	}
 	
 	

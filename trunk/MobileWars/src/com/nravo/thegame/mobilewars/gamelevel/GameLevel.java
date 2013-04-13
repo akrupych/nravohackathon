@@ -1,15 +1,16 @@
 package com.nravo.thegame.mobilewars.gamelevel;
 
 import com.nravo.thegame.mobilewars.Utils.Utils;
-import com.nravo.thegame.mobilewars.entity.*;
+import com.nravo.thegame.mobilewars.entity.AndroidSpritePool;
+import com.nravo.thegame.mobilewars.entity.Building;
+import com.nravo.thegame.mobilewars.entity.Hero;
+import com.nravo.thegame.mobilewars.entity.HeroAndroid;
 import com.nravo.thegame.mobilewars.gamelevel.handlers.DrawPointerUpdateHandler;
 import com.nravo.thegame.mobilewars.layers.LevelWonLayer;
 import com.nravo.thegame.mobilewars.managers.GameManager;
-import com.nravo.thegame.mobilewars.managers.ResourceManager;
 import com.nravo.thegame.mobilewars.managers.SceneManager;
 import com.nravo.thegame.mobilewars.modifier.ModifierForHero;
 import org.andengine.engine.handler.IUpdateHandler;
-import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.input.touch.TouchEvent;
@@ -66,8 +67,7 @@ public class GameLevel extends ManagedGameScene implements
 
 	// Draws pointers when dragging your finger
 	public DrawPointerUpdateHandler lineDrawingHandler;
-	public AndroidHeroPool<HeroAndroid> mAndroidHeroPool;
-	public AppleHeroPool<HeroApple> mAppleHeroPool;
+	public AndroidSpritePool mAndroidHeroPool;
 
 	public GameLevel(final Levels.LevelDefinition levelDefinition) {
 		this.mLevelDefinition = levelDefinition;
@@ -116,18 +116,8 @@ public class GameLevel extends ManagedGameScene implements
 		lineDrawingHandler = new DrawPointerUpdateHandler(GameLevel.this);
 
 		// ============ HERO POOLS =============
-		mAndroidHeroPool = new AndroidHeroPool<HeroAndroid>(GameLevel.this);
-		mAppleHeroPool = new AppleHeroPool<HeroApple>();
+		mAndroidHeroPool = new AndroidSpritePool();
 		mAndroidHeroPool.batchAllocatePoolItems(HEROES_POOL_SIZE);
-		mAppleHeroPool.batchAllocatePoolItems(HEROES_POOL_SIZE);
-
-		Rectangle rectangle = new Rectangle(0f, 0f, 120f, 120f,
-				ResourceManager.getInstance().engine
-						.getVertexBufferObjectManager());
-		rectangle.setColor(1, 0, 1);
-		GameLevel.this.attachChild(rectangle);
-
-		Hero android = mAndroidHeroPool.obtainAndroid(200, 200, 100, 100);
 
 		// Buildings
 		for (Levels.BuildingDefinition currentBuilding : GameLevel.this.mLevelDefinition.buildingsInLevel) {
@@ -183,17 +173,19 @@ public class GameLevel extends ManagedGameScene implements
 		ModifierForHero move;
 
 		for (Building building : buildingsFrom) {
-			heroAndroid = mAndroidHeroPool.obtainAndroid(
-					building.buildingSprite.getX(),
-					building.buildingSprite.getY(),
-					buildingTo.buildingSprite.getX(),
-					buildingTo.buildingSprite.getY());
+			heroAndroid = new HeroAndroid(
+                    building.buildingSprite.getX(),
+                    building.buildingSprite.getY(),
+                    buildingTo.buildingSprite.getX(),
+                    buildingTo.buildingSprite.getY(),
+                    mAndroidHeroPool);
 
             float timeToMove = Utils.calculateTime(heroAndroid.fromX,
                     heroAndroid.fromY, heroAndroid.toX, heroAndroid.toY);
 			move = new ModifierForHero(timeToMove, heroAndroid.fromX,
 					heroAndroid.fromY, heroAndroid.toX, heroAndroid.toY,
 					buildingsFrom, buildingTo);
+            GameLevel.this.attachChild(heroAndroid.heroSprite);
 			heroAndroid.heroSprite.registerEntityModifier(move);
 		}
 	
