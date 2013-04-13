@@ -84,5 +84,5 @@ public abstract class ManagedGameScene extends ManagedScene {
     @Override
     public void onHideScene() {
         ResourceManager.getInstance().engine.getCamera().setHUD(null);
-    };
+    }
 }

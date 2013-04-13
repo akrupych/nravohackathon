@@ -10,6 +10,10 @@ import com.nravo.thegame.mobilewars.managers.ResourceManager;
 
 public class GameHUD extends HUD {
 	
+	private Sprite mHoneycomb;
+	private Sprite mIceCreamSandwich;
+	private Sprite mJellyBeans;
+	
 	public GameHUD(Scene scene) {
 		
         setScaleCenter(0f, 0f);
@@ -21,32 +25,43 @@ public class GameHUD extends HUD {
         backround.setAnchorCenter(0, 0);
         attachChild(backround);
         
-        Sprite honeycomb = new Sprite(0, 0, ResourceManager.sPowerHoneycombTR,
-        		ResourceManager.getEngine().getVertexBufferObjectManager());
-        honeycomb.setAnchorCenter(0, 0);
-        attachChild(honeycomb);
-        
-        Sprite iceCreamSandwich = new Sprite(128, 0,
-        		ResourceManager.sPowerIceCreamSandwichTR,
-        		ResourceManager.getEngine().getVertexBufferObjectManager());
-        iceCreamSandwich.setAnchorCenter(0, 0);
-        attachChild(iceCreamSandwich);
-        
-        Sprite jellyBeans = new Sprite(256, 0,
-        		ResourceManager.sPowerJellyBeansTR,
+        mHoneycomb = new Sprite(0, 0, ResourceManager.sPowerHoneycombTR,
         		ResourceManager.getEngine().getVertexBufferObjectManager()) {
+        	@Override
         	public boolean onAreaTouched(TouchEvent pSceneTouchEvent,
         			float pTouchAreaLocalX, float pTouchAreaLocalY) {
-        		setScale(2);
-        		GameLevel.mJellyBeansEffect.mState = State.WAITING;
-        		return true;
+        		return false;
         	};
         };
-        jellyBeans.setScaleCenter(jellyBeans.getX() + jellyBeans.getWidth() / 2,
-        		jellyBeans.getY() + jellyBeans.getHeight() / 2);
-        jellyBeans.setAnchorCenter(0, 0);
-        scene.registerTouchArea(jellyBeans);
-        attachChild(jellyBeans);
+        scene.registerTouchArea(mHoneycomb);
+        mHoneycomb.setAnchorCenter(0, 0);
+        attachChild(mHoneycomb);
+        
+        mIceCreamSandwich = new Sprite(128, 0,
+        		ResourceManager.sPowerIceCreamSandwichTR,
+        		ResourceManager.getEngine().getVertexBufferObjectManager()) {
+        	@Override
+        	public boolean onAreaTouched(TouchEvent pSceneTouchEvent,
+        			float pTouchAreaLocalX, float pTouchAreaLocalY) {
+        		return false;
+        	}
+        };
+        scene.registerTouchArea(mIceCreamSandwich);
+        mIceCreamSandwich.setAnchorCenter(0, 0);
+        attachChild(mIceCreamSandwich);
+        
+        mJellyBeans = new Sprite(256, 0, ResourceManager.sPowerJellyBeansTR,
+        		ResourceManager.getEngine().getVertexBufferObjectManager()) {
+        	@Override
+        	public boolean onAreaTouched(TouchEvent pSceneTouchEvent,
+        			float pTouchAreaLocalX, float pTouchAreaLocalY) {
+        		GameLevel.mJellyBeansEffect.mState = State.WAITING;
+        		return false;
+        	};
+        };
+        scene.registerTouchArea(mJellyBeans);
+        mJellyBeans.setAnchorCenter(0, 0);
+        attachChild(mJellyBeans);
 	}
 	
 }
