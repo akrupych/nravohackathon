@@ -7,10 +7,10 @@ import com.nravo.thegame.mobilewars.managers.ResourceManager;
 public class HeroApple extends Hero {
 
 	public HeroApple() {
-		hero = new AnimatedSprite(fromX, fromY, ResourceManager.sAppleTTR,
+		heroSprite = new AnimatedSprite(fromX, fromY, ResourceManager.sAppleTTR,
 				ResourceManager.getActivity().getVertexBufferObjectManager());
 
-		hero.animate(new long[] { 250, 250, 250, 250, 250 });
+		heroSprite.animate(new long[] { 250, 250, 250, 250, 250 });
 	}
 
 }

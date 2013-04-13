@@ -11,7 +11,7 @@ public abstract class Hero extends Entity {
 	public int toX;
 	public int toY;
 	
-	public AnimatedSprite hero;
+	public AnimatedSprite heroSprite;
 	
 	public Hero (){		
 	}

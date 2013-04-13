@@ -8,11 +8,11 @@ public class HeroAndroid extends Hero{
 
 
 	public HeroAndroid() {
-			hero = new AnimatedSprite(fromX, fromY, ResourceManager.sAndroidTTR,
+			heroSprite = new AnimatedSprite(fromX, fromY, ResourceManager.sAndroidTTR,
 					ResourceManager.getActivity()
 							.getVertexBufferObjectManager());
 		
-			hero.animate(new long[] { 150, 150, 150, 150 });	
+			heroSprite.animate(new long[] { 150, 150, 150, 150 });
 		
 	}
 }
