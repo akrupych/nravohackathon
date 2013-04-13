@@ -74,7 +74,7 @@ public abstract class ManagedGameScene extends ManagedScene {
         ResourceManager.getInstance().engine.runOnUpdateThread(new Runnable() {
             @Override
             public void run() {
-                ManagedGameScene.this.detachChildren();;
+                ManagedGameScene.this.detachChildren();
                 ManagedGameScene.this.clearEntityModifiers();
                 ManagedGameScene.this.clearTouchAreas();
                 ManagedGameScene.this.clearUpdateHandlers();

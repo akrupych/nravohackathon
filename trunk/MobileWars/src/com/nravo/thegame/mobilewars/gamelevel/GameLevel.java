@@ -1,26 +1,20 @@
 package com.nravo.thegame.mobilewars.gamelevel;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.andengine.engine.handler.IUpdateHandler;
-import org.andengine.entity.primitive.Rectangle;
-import org.andengine.entity.scene.IOnSceneTouchListener;
-import org.andengine.entity.scene.Scene;
-import org.andengine.input.touch.TouchEvent;
-
-import com.nravo.thegame.mobilewars.entity.AndroidHeroPool;
-import com.nravo.thegame.mobilewars.entity.AppleHeroPool;
-import com.nravo.thegame.mobilewars.entity.Building;
-import com.nravo.thegame.mobilewars.entity.Hero;
-import com.nravo.thegame.mobilewars.entity.HeroAndroid;
-import com.nravo.thegame.mobilewars.entity.HeroApple;
+import com.nravo.thegame.mobilewars.entity.*;
 import com.nravo.thegame.mobilewars.gamelevel.handlers.DrawPointerUpdateHandler;
 import com.nravo.thegame.mobilewars.gamelevel.handlers.UnitMovementHandler;
 import com.nravo.thegame.mobilewars.layers.LevelWonLayer;
 import com.nravo.thegame.mobilewars.managers.GameManager;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
 import com.nravo.thegame.mobilewars.managers.SceneManager;
+import org.andengine.engine.handler.IUpdateHandler;
+import org.andengine.entity.primitive.Rectangle;
+import org.andengine.entity.scene.IOnSceneTouchListener;
+import org.andengine.entity.scene.Scene;
+import org.andengine.input.touch.TouchEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameLevel extends ManagedGameScene implements
         GameManager.GameLevelGoal, IOnSceneTouchListener {
@@ -121,7 +115,7 @@ public class GameLevel extends ManagedGameScene implements
         lineDrawingHandler = new DrawPointerUpdateHandler(GameLevel.this);
 
         // ============ HERO POOLS =============
-        mAndroidHeroPool = new AndroidHeroPool<HeroAndroid>();
+        mAndroidHeroPool = new AndroidHeroPool<HeroAndroid>(GameLevel.this);
         mAppleHeroPool = new AppleHeroPool<HeroApple>();
         mAndroidHeroPool.batchAllocatePoolItems(HEROES_POOL_SIZE);
         mAppleHeroPool.batchAllocatePoolItems(HEROES_POOL_SIZE);
@@ -132,20 +126,16 @@ public class GameLevel extends ManagedGameScene implements
         rectangle.setColor(1, 0, 1);
         GameLevel.this.attachChild(rectangle);
 
-        Hero android = mAndroidHeroPool.obtainAndroid(50, 50, 100, 100);
-        GameLevel.this.attachChild(android);
+        Hero android = mAndroidHeroPool.obtainAndroid(200, 200, 100, 100);
+
         
-        Hero apple = mAppleHeroPool.obtainApple(100, 100, 150, 150);
-        GameLevel.this.attachChild(apple);
-        
-        // Buildings
+//        Buildings
         for (Levels.BuildingDefinition currentBuilding : GameLevel.this.mLevelDefinition.buildingsInLevel) {
             new Building(GameLevel.this, currentBuilding.race,
                     currentBuilding.x, currentBuilding.y, currentBuilding.initialNumberOfUnits);
         }
 
         //new Hero(500f, 400f, GameLevel.this, Race.ANDROID).moveHero(100, 100, 900, 500);
-        //new Hero(500f, 400f, GameLevel.this, Race.APPLE_IOS).moveHero(300, 300, 700, 400);
 
         GameLevel.this.setOnSceneTouchListener(this);
     }
