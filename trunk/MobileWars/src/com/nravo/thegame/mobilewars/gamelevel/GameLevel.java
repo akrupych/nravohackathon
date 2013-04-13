@@ -1,10 +1,8 @@
 package com.nravo.thegame.mobilewars.gamelevel;
 
-import com.nravo.thegame.mobilewars.effects.ApplePiePower;
 import com.nravo.thegame.mobilewars.entity.Building;
-import com.nravo.thegame.mobilewars.entity.Hero;
-import com.nravo.thegame.mobilewars.gamelevel.Levels.Race;
 import com.nravo.thegame.mobilewars.gamelevel.handlers.DrawPointerUpdateHandler;
+import com.nravo.thegame.mobilewars.gamelevel.handlers.UnitMovementHandler;
 import com.nravo.thegame.mobilewars.layers.LevelWonLayer;
 import com.nravo.thegame.mobilewars.managers.GameManager;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
@@ -120,10 +118,10 @@ public class GameLevel extends ManagedGameScene implements
         GameLevel.this.attachChild(rectangle);
 
         // Buildings
-//        for (Levels.BuildingDefinition currentBuilding : GameLevel.this.mLevelDefinition.buildingsInLevel) {
-//            new Building(GameLevel.this, currentBuilding.race,
-//                    currentBuilding.x, currentBuilding.y, currentBuilding.initialNumberOfUnits);
-//        }
+        for (Levels.BuildingDefinition currentBuilding : GameLevel.this.mLevelDefinition.buildingsInLevel) {
+            new Building(GameLevel.this, currentBuilding.race,
+                    currentBuilding.x, currentBuilding.y, currentBuilding.initialNumberOfUnits);
+        }
 
         //new Hero(500f, 400f, GameLevel.this, Race.ANDROID).moveHero(100, 100, 900, 500);
         //new Hero(500f, 400f, GameLevel.this, Race.APPLE_IOS).moveHero(300, 300, 700, 400);
@@ -170,6 +168,8 @@ public class GameLevel extends ManagedGameScene implements
     }
 
     private void performUnitMovement() {
+        GameLevel.this.registerUpdateHandler(new UnitMovementHandler(this));
+
         for (Building building : buildingsFrom) {
             building.decrementNumberOfUnits(1);
         }
