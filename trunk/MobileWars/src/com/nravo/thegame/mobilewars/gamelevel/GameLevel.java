@@ -1,6 +1,8 @@
 package com.nravo.thegame.mobilewars.gamelevel;
 
 import com.nravo.thegame.mobilewars.entity.Building;
+import com.nravo.thegame.mobilewars.entity.Hero;
+import com.nravo.thegame.mobilewars.entity.HeroPool;
 import com.nravo.thegame.mobilewars.gamelevel.handlers.DrawPointerUpdateHandler;
 import com.nravo.thegame.mobilewars.gamelevel.handlers.UnitMovementHandler;
 import com.nravo.thegame.mobilewars.layers.LevelWonLayer;
@@ -12,6 +14,7 @@ import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.input.touch.TouchEvent;
+import org.andengine.util.adt.pool.GenericPool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +22,7 @@ import java.util.List;
 public class GameLevel extends ManagedGameScene implements
         GameManager.GameLevelGoal, IOnSceneTouchListener {
 
+    public static final int HEROES_POOL_SIZE = 50;
     public final Levels.LevelDefinition mLevelDefinition;
     public final int mNumberOfBuildingsInCurrentLevel;
 
@@ -110,6 +114,9 @@ public class GameLevel extends ManagedGameScene implements
         final int numberOfBuildingsInLevel = mLevelDefinition.buildingsInLevel.length;
         buildingsFrom = new ArrayList<Building>(numberOfBuildingsInLevel);
         lineDrawingHandler = new DrawPointerUpdateHandler(GameLevel.this);
+
+        GenericPool<Hero> heroPool = new HeroPool();
+        heroPool.batchAllocatePoolItems(HEROES_POOL_SIZE);
 
         Rectangle rectangle = new Rectangle(0f, 0f, 120f, 120f,
                 ResourceManager.getInstance().engine
