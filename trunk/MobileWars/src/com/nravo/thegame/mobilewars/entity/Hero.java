@@ -5,11 +5,8 @@ import org.andengine.entity.sprite.AnimatedSprite;
 
 public abstract class Hero extends Entity {
 
-
-	public int fromX;
-	public int fromY;
-	public int toX;
-	public int toY;
+	public float fromX;
+	public float fromY;
 	
 	public AnimatedSprite heroSprite;
 	

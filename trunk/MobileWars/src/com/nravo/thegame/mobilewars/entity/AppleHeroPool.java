@@ -17,8 +17,6 @@ public class AppleHeroPool<H> extends GenericPool<HeroApple> {
 		HeroApple hero = super.obtainPoolItem();
 		hero.fromX = xFrom;
 		hero.fromY = yFrom;
-		hero.toX = xTo;
-		hero.toY = yTo;
 		return hero;
 	}
 }
