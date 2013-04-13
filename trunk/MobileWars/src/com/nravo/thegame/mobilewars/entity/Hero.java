@@ -11,31 +11,13 @@ public abstract class Hero extends Entity {
 	public int toX;
 	public int toY;
 	
-	protected AnimatedSprite hero;
+	public AnimatedSprite hero;
 	
-	public Hero (){
-		
+	public Hero (){		
 	}
 	
 	
-//	private AnimatedSprite android;
-
-	/*public Hero(final float x, final float y, Race type) {
-		if (type == Race.ANDROID) {
-			android = new AnimatedSprite(x, y, ResourceManager.sAndroidTTR,
-					ResourceManager.getActivity()
-							.getVertexBufferObjectManager());
-			android.animate(new long[] { 150, 150, 150, 150 });
-		} else {
-			android = new AnimatedSprite(x, y, ResourceManager.sAppleTTR,
-					ResourceManager.getActivity()
-							.getVertexBufferObjectManager());
-			android.animate(new long[] { 250, 250, 250, 250, 250 });
-			// android.animate(new long[] { 100, 100, 100, 100, 100, 100, 100,
-			// 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100 });
-		}
-	}
-
+/**
 	public void moveHero(float fromX, float fromY, float toX, float toY) {
 
 		
