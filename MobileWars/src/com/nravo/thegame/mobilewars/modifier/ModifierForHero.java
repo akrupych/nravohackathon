@@ -18,7 +18,6 @@ public class ModifierForHero extends MoveModifier {
                 for (Building building : from) {
                     building.decrementNumberOfUnits(1);
                 }
-                from.clear();
             }
 
             @Override
