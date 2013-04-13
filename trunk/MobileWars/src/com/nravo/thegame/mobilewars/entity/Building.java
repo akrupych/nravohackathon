@@ -4,10 +4,11 @@ import com.nravo.thegame.mobilewars.gamelevel.GameLevel;
 import com.nravo.thegame.mobilewars.gamelevel.Levels;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
 import org.andengine.entity.Entity;
+import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.input.touch.TouchEvent;
-import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.ITiledTextureRegion;
 
 /**
  * A building where units are generated
@@ -18,7 +19,7 @@ public class Building extends Entity {
 	private static final int MAX_NUMBER_OF_UNITS_IN_BUILDING = 100;
 
 	private final GameLevel mGameLevel;
-	public Sprite buildingSprite;
+	public AnimatedSprite buildingSprite;
 	private int mNumberOfUnits;
 	private boolean isMy;
 	private Levels.Race type;
@@ -39,10 +40,11 @@ public class Building extends Entity {
 	public void buildSprite() {
 
 		// BUILDING SPRITE
-		ITextureRegion buildingTextureRegion = type
-				.equals(Levels.Race.APPLE_IOS) ? ResourceManager.sAppleSmallBuildingTR
-				: ResourceManager.sAndroidSmallBuildingTR;
-		buildingSprite = new Sprite(x, y, buildingTextureRegion,
+		ITiledTextureRegion buildingTextureRegion = type
+				.equals(Levels.Race.APPLE_IOS) ? ResourceManager.sAppleBigBuildingTTR
+				: ResourceManager.sAndroidBigBuildingTR;
+
+		buildingSprite = new AnimatedSprite(x, y, buildingTextureRegion,
 				ResourceManager.getActivity().getVertexBufferObjectManager()) {
 			@Override
 			public boolean onAreaTouched(TouchEvent pSceneTouchEvent,
@@ -71,6 +73,7 @@ public class Building extends Entity {
 						pTouchAreaLocalY);
 			}
 		};
+        buildingSprite.animate(new long[]{150, 150, 150, 150, 150, 150, 150, 150, 150, 150});
 		mGameLevel.attachChild(buildingSprite);
 		mGameLevel.registerTouchArea(buildingSprite);
 
@@ -100,7 +103,9 @@ public class Building extends Entity {
 				if (timePassed >= UNIT_REGENERATION_DELAY_IN_SEC) {
 					if (mNumberOfUnits < MAX_NUMBER_OF_UNITS_IN_BUILDING) {
 						mNumberOfUnits++;
-						mGameLevel.mNumberOfEnemiesLeft--;
+                        if (type == Levels.Race.APPLE_IOS) {
+                            mGameLevel.mNumberOfEnemiesLeft++;
+                        }
 						timePassed = 0;
 
 						// TODO
@@ -124,6 +129,7 @@ public class Building extends Entity {
 	public void decrementNumberOfUnits(int numberOfUnits) {
 		if (mNumberOfUnits - numberOfUnits > 0 && isMy) {
 			mNumberOfUnits -= numberOfUnits;
+            mGameLevel.mNumberOfEnemiesLeft -= numberOfUnits;
 		} else {
 			if (isMy) {
 				mNumberOfUnits = (mNumberOfUnits - numberOfUnits)* (-1);
