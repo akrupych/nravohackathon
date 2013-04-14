@@ -1,6 +1,7 @@
 package com.nravo.thegame.mobilewars.layers;
 
 import com.nravo.thegame.mobilewars.gamelevel.GameLevel;
+import com.nravo.thegame.mobilewars.input.GrowButton;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
 import com.nravo.thegame.mobilewars.managers.SceneManager;
 import org.andengine.engine.handler.IUpdateHandler;
@@ -98,6 +99,16 @@ public class LevelLostLayer extends ManagedLayer {
 //        mLayerBackground.attachChild(new StarFlightEffect(ResourceManager.getEngine().getVertexBufferObjectManager(),
 //                ResourceManager.mStarFlightTR, 0, 0));
         this.attachChild(mLayerBackground);
+
+        GrowButton restartButton = new GrowButton(mLayerBackground.getWidth()/2f,
+                mLayerBackground.getHeight()/2f, ResourceManager.restartButtonTR) {
+            @Override
+            public void onClick() {
+                //To change body of implemented methods use File | Settings | File Templates.
+            }
+        };
+        mLayerBackground.attachChild(restartButton);
+        this.registerTouchArea(restartButton);
 
         this.setPosition(ResourceManager.getInstance().cameraWidth/2f,
                 ResourceManager.getInstance().cameraHeight/2f);
