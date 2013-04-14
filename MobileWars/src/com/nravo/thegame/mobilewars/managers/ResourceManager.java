@@ -53,7 +53,7 @@ public class ResourceManager {
 	public static ITextureRegion sAndroidSmallBuildingTR;
 	public static ITiledTextureRegion sAndroidBigBuildingTR;
     // NEUTRAL
-    public static ITiledTextureRegion sNeutralButildingTTR;
+    public static ITiledTextureRegion sNeutralBuildingTTR;
 
     public static ITextureRegion sBuildingCounterBgTR;
 	public static TiledTextureRegion sAndroidTTR;
@@ -83,6 +83,7 @@ public class ResourceManager {
 	// TR = Texture Region; TTR = Tiled texture region
 	public static ITextureRegion sMenuBackgroundTR;
 	public static ITiledTextureRegion menuMainButtonTTR;
+	public static ITiledTextureRegion restartButtonTR;
 
 	public static TiledTextureRegion musicToggleTTR;
 	public static TiledTextureRegion soundToggleTTR;
@@ -224,8 +225,8 @@ public class ResourceManager {
 			sAppleBigBuildingTTR = getTiledTextureRegion("building_ipad.png", 10, 1,
                     NORMAL_TEXTURE_OPTION);
 		}
-        if (sNeutralButildingTTR == null) {
-            sNeutralButildingTTR = getTiledTextureRegion("building_neutral.png", 10, 1,
+        if (sNeutralBuildingTTR == null) {
+            sNeutralBuildingTTR = getTiledTextureRegion("building_neutral.png", 10, 1,
                     NORMAL_TEXTURE_OPTION);
 		}
         if (sAndroidBigBuildingTR == null) {
@@ -277,6 +278,10 @@ public class ResourceManager {
 		if (menuMainButtonTTR == null) {
 			menuMainButtonTTR = getTiledTextureRegion("andrew_play_button.png", 2, 1,
 					NORMAL_TEXTURE_OPTION);
+		}
+
+        if (restartButtonTR == null) {
+			restartButtonTR = getTiledTextureRegion("restart_lvl_button.png", 2, 1, NORMAL_TEXTURE_OPTION);
 		}
 
 		if (musicToggleTTR == null) {

@@ -50,7 +50,7 @@ public class Building extends Entity {
 				: ResourceManager.sAndroidBigBuildingTR;
 
 		if (type.equals(Levels.Race.NEUTRAL))
-			buildingTextureRegion = ResourceManager.sNeutralButildingTTR;
+			buildingTextureRegion = ResourceManager.sNeutralBuildingTTR;
 
 		buildingSprite = new AnimatedSprite(x, y, buildingTextureRegion,
 				ResourceManager.getActivity().getVertexBufferObjectManager()) {
