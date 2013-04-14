@@ -19,7 +19,7 @@ import org.andengine.opengl.texture.region.ITiledTextureRegion;
 public class Building extends Entity {
 
 	private static final float UNIT_REGENERATION_DELAY_IN_SEC = 1f;
-	private static final int MAX_NUMBER_OF_UNITS_IN_BUILDING = 100;
+	private static final int MAX_NUMBER_OF_UNITS_IN_BUILDING = 40;
 
 	private final GameLevel mGameLevel;
 	public AnimatedSprite buildingSprite;
@@ -134,7 +134,9 @@ public class Building extends Entity {
 									heroApple.fromX, heroApple.fromY,
 									heroApple.toX, heroApple.toY, to,
 									heroApple, from, mGameLevel.mAppleHeroPool);
-							mGameLevel.attachChild(heroApple.heroSprite);
+                            if (!heroApple.heroSprite.hasParent()) {
+							    mGameLevel.attachChild(heroApple.heroSprite);
+                            }
 							heroApple.heroSprite.registerEntityModifier(move);
 						}
 					}
