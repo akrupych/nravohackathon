@@ -12,105 +12,131 @@ import java.io.IOException;
  * Handles the playback of music and sounds as well as their muted state
  */
 public class SFXManager {
-    private static final SFXManager INSTANCE = new SFXManager();
+	private static final SFXManager INSTANCE = new SFXManager();
 
-    private static Music mMusic;
+	private static Music mMusic;
 
-    private static Sound mExplosion;
+	private static Sound mExplosion;
+	private static Sound mIce;
+	private static Sound mBees;
+	private static Sound mBeans;
 
-    public static SFXManager getInstance() {
-        return INSTANCE;
-    }
+	public static SFXManager getInstance() {
+		return INSTANCE;
+	}
 
-    public boolean mSoundsMuted;
-    public boolean mMusicMuted;
+	public boolean mSoundsMuted;
+	public boolean mMusicMuted;
 
-    private SFXManager() {
-        MusicFactory.setAssetBasePath("sounds/");
-        try {
-            mMusic = MusicFactory.createMusicFromAsset(ResourceManager.getActivity().getMusicManager(),
-                    ResourceManager.getActivity(), "music.mp3");
-        } catch (IOException e) {
-            Debug.e(e);
-        }
+	private SFXManager() {
+		MusicFactory.setAssetBasePath("sounds/");
+		try {
+			mMusic = MusicFactory.createMusicFromAsset(ResourceManager
+					.getActivity().getMusicManager(), ResourceManager
+					.getActivity(), "music.mp3");
+		} catch (IOException e) {
+			Debug.e(e);
+		}
 
-        SoundFactory.setAssetBasePath("sounds/");
-        try {
-            mExplosion = SoundFactory.createSoundFromAsset(ResourceManager.getActivity().getSoundManager(),
-                    ResourceManager.getActivity(), "boom_sound.mp3");
-        } catch (IOException e) {
-            Debug.e(e);
-        }
-    }
+		SoundFactory.setAssetBasePath("sounds/");
+		try {
+			mExplosion = SoundFactory.createSoundFromAsset(ResourceManager
+					.getActivity().getSoundManager(), ResourceManager
+					.getActivity(), "boom_sound.mp3");
+			mIce = SoundFactory.createSoundFromAsset(ResourceManager
+					.getActivity().getSoundManager(), ResourceManager
+					.getActivity(), "ice-cracking-02.mp3");
+			mBees = SoundFactory.createSoundFromAsset(ResourceManager
+					.getActivity().getSoundManager(), ResourceManager
+					.getActivity(), "KILLR_B2.WAV");
+			mBeans = SoundFactory.createSoundFromAsset(ResourceManager
+					.getActivity().getSoundManager(), ResourceManager
+					.getActivity(), "221990_SOUNDDOGS__be.mp3");
 
-    // ======================================
-    // ============= METHODS ================
-    // ======================================
+		} catch (IOException e) {
+			Debug.e(e);
+		}
+	}
 
-    public static boolean isSoundMuted() {
-        return getInstance().mSoundsMuted;
-    }
+	// ======================================
+	// ============= METHODS ================
+	// ======================================
 
-    public static boolean isMusicMuted() {
-        return getInstance().mMusicMuted;
-    }
+	public static boolean isSoundMuted() {
+		return getInstance().mSoundsMuted;
+	}
 
-    public static void setSoundMuted(final boolean muted) {
-        getInstance().mSoundsMuted = muted;
-        setVolumeForAllSounds(getInstance().mSoundsMuted ? 0f : 1f);
-    }
+	public static boolean isMusicMuted() {
+		return getInstance().mMusicMuted;
+	}
 
-    private static void setVolumeForAllSounds(final float volume) {
-        mExplosion.setVolume(volume);
-    }
+	public static void setSoundMuted(final boolean muted) {
+		getInstance().mSoundsMuted = muted;
+		setVolumeForAllSounds(getInstance().mSoundsMuted ? 0f : 1f);
+	}
 
-    public static void setMusicMuted(final boolean muted) {
-        getInstance().mMusicMuted = muted;
-        if (getInstance().mMusicMuted) {
-            mMusic.pause();
-        } else {
-            mMusic.play();
-        }
-    }
+	private static void setVolumeForAllSounds(final float volume) {
+		mExplosion.setVolume(volume);
+	}
 
-    public static boolean toggleMusicMuted() {
-        getInstance().mMusicMuted = !getInstance().mMusicMuted;
-        if (getInstance().mMusicMuted) {
-            mMusic.pause();
-        } else {
-            mMusic.play();
-        }
-        return getInstance().mMusicMuted;
-    }
+	public static void setMusicMuted(final boolean muted) {
+		getInstance().mMusicMuted = muted;
+		if (getInstance().mMusicMuted) {
+			mMusic.pause();
+		} else {
+			mMusic.play();
+		}
+	}
 
-    public static void playMusic() {
-        mMusic.play();
-    }
+	public static boolean toggleMusicMuted() {
+		getInstance().mMusicMuted = !getInstance().mMusicMuted;
+		if (getInstance().mMusicMuted) {
+			mMusic.pause();
+		} else {
+			mMusic.play();
+		}
+		return getInstance().mMusicMuted;
+	}
 
-    private static void playSound(final Sound sound, final float pRate, final float pVolume) {
-        if (isSoundMuted()) {
-            return;
-        }
+	public static void playMusic() {
+		mMusic.play();
+	}
 
-        sound.setRate(pRate);
-        sound.setVolume(pVolume);
-        sound.play();
-    }
+	private static void playSound(final Sound sound, final float pRate,
+			final float pVolume) {
+		if (isSoundMuted()) {
+			return;
+		}
 
-    public static void pauseMusic() {
-        mMusic.pause();
-    }
+		sound.setRate(pRate);
+		sound.setVolume(pVolume);
+		sound.play();
+	}
 
-    public static void resumeMusic() {
-        if (!isMusicMuted()) {
-            mMusic.resume();
-        }
-    }
+	public static void pauseMusic() {
+		mMusic.pause();
+	}
 
-    // ========================= SOUNDS ============================
-    public static void playExplosion(final float rate, final float volume) {
-        playSound(mExplosion, rate, volume);
-    }
+	public static void resumeMusic() {
+		if (!isMusicMuted()) {
+			mMusic.resume();
+		}
+	}
 
+	// ========================= SOUNDS ============================
+	public static void playExplosion(final float rate, final float volume) {
+		playSound(mExplosion, rate, volume);
+	}
 
+	public static void playIce(final float rate, final float volume) {
+		playSound(mIce, rate, volume);
+	}
+
+	public static void playBean(final float rate, final float volume) {
+		playSound(mBeans, rate, volume);
+	}
+
+	public static void playBees(final float rate, final float volume) {
+		playSound(mBees, rate, volume);
+	}
 }

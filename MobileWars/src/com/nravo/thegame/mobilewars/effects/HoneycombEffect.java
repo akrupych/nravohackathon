@@ -18,6 +18,7 @@ import android.util.Log;
 
 import com.nravo.thegame.mobilewars.entity.Building;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
+import com.nravo.thegame.mobilewars.managers.SFXManager;
 
 public class HoneycombEffect extends GodPowerEffect {
 	
@@ -31,6 +32,7 @@ public class HoneycombEffect extends GodPowerEffect {
 	public void launch(float x, float y, Scene scene,
 			VertexBufferObjectManager vboManager) {
 		super.launch(x, y, scene, vboManager);
+		SFXManager.playBees(1, 1);
 		mVboManager = vboManager;
 		mScene = scene;
 		mCenterSprite = new Sprite(x, y, ResourceManager.sHoneycombTR, vboManager);
