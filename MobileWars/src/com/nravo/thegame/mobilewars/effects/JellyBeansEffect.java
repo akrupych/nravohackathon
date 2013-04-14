@@ -6,6 +6,7 @@ import org.andengine.entity.particle.SpriteParticleSystem;
 import org.andengine.entity.particle.emitter.PointParticleEmitter;
 import org.andengine.entity.particle.initializer.AccelerationParticleInitializer;
 import org.andengine.entity.particle.initializer.ExpireParticleInitializer;
+import org.andengine.entity.particle.modifier.AlphaParticleModifier;
 import org.andengine.entity.particle.modifier.RotationParticleModifier;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
@@ -24,7 +25,6 @@ public class JellyBeansEffect extends GodPowerEffect {
 	private static final float RATE_MAXIMUM = 10;
 	private static final int PARTICLES_MAXIMUM = 100;
 	private static final float EFFECT_TIME = 5;
-	private static final float RESPAWN_TIME = 30;
 	private static final int IMAGE_SIZE = 32;
 	
 	private static final String[] mImageFileNames = {
@@ -67,6 +67,8 @@ public class JellyBeansEffect extends GodPowerEffect {
 			particleSystem.addParticleInitializer(
 					new AccelerationParticleInitializer<Sprite>(
 							-200, 200, -200, 200));
+			particleSystem.addParticleModifier(
+					new AlphaParticleModifier<Sprite>(0, 4, 1, 0));
 			for (int j = 0; j < EFFECT_TIME; j++) {
 				particleSystem.addParticleModifier(
 						new RotationParticleModifier<Sprite>(j, j + 1, 0, 360));
@@ -87,13 +89,6 @@ public class JellyBeansEffect extends GodPowerEffect {
 					});
 				}
 			}));
-			particleSystem.registerUpdateHandler(
-					new TimerHandler(RESPAWN_TIME, new ITimerCallback() {
-				@Override
-				public void onTimePassed(TimerHandler pTimerHandler) {
-					mIsEnabled = true;
-				}
-			}));
 			scene.attachChild(particleSystem);
 		}
 	}
@@ -101,6 +96,11 @@ public class JellyBeansEffect extends GodPowerEffect {
 	public double getDamageTo(float x, float y) {
 		return 100 / 1 + Math.sqrt(Math.pow(mEffectCenter.x - x, 2.0) +
 				Math.pow(mEffectCenter.y - y, 2.0));
+	}
+
+	@Override
+	public float getRespawnTime() {
+		return 60;
 	}
 
 }
