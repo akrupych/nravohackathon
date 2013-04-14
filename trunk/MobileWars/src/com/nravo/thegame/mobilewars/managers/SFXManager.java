@@ -99,6 +99,7 @@ public class SFXManager {
 	}
 
 	public static void playMusic() {
+        mMusic.setVolume(0.2f);
 		mMusic.play();
 	}
 
