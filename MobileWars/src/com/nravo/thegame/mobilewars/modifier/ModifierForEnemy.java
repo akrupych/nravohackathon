@@ -15,6 +15,12 @@ public class ModifierForEnemy extends MoveModifier {
 			float toX, float toY, final Building buildingTo, final Hero hero,
 			final Building building, final AppleSpritePool pool) {
 		super(duration, fromX, fromY, toX, toY);
+		if (fromX < toX){
+			hero.heroSprite.setFlippedHorizontal(false);
+		}
+		else {
+			hero.heroSprite.setFlippedHorizontal(true);
+		}
 		this.addModifierListener(new IModifierListener<IEntity>() {
 			@Override
 			public void onModifierStarted(IModifier<IEntity> pModifier,

@@ -1,21 +1,8 @@
 package com.nravo.thegame.mobilewars.gamelevel;
 
-import android.util.Log;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.nravo.thegame.mobilewars.Utils.Utils;
-import com.nravo.thegame.mobilewars.effects.GodPowerEffect.State;
-import com.nravo.thegame.mobilewars.effects.HoneycombEffect;
-import com.nravo.thegame.mobilewars.effects.IceCreamSandwichEffect;
-import com.nravo.thegame.mobilewars.effects.JellyBeansEffect;
-import com.nravo.thegame.mobilewars.entity.*;
-import com.nravo.thegame.mobilewars.gamelevel.Levels.Race;
-import com.nravo.thegame.mobilewars.gamelevel.handlers.DrawPointerUpdateHandler;
-import com.nravo.thegame.mobilewars.layers.LevelLostLayer;
-import com.nravo.thegame.mobilewars.layers.LevelWonLayer;
-import com.nravo.thegame.mobilewars.managers.GameManager;
-import com.nravo.thegame.mobilewars.managers.ResourceManager;
-import com.nravo.thegame.mobilewars.managers.SceneManager;
-import com.nravo.thegame.mobilewars.modifier.ModifierForHero;
 import org.andengine.engine.handler.IUpdateHandler;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -24,8 +11,26 @@ import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.input.touch.TouchEvent;
 
-import java.util.ArrayList;
-import java.util.List;
+import android.util.Log;
+
+import com.nravo.thegame.mobilewars.Utils.Utils;
+import com.nravo.thegame.mobilewars.effects.GodPowerEffect.State;
+import com.nravo.thegame.mobilewars.effects.HoneycombEffect;
+import com.nravo.thegame.mobilewars.effects.IceCreamSandwichEffect;
+import com.nravo.thegame.mobilewars.effects.JellyBeansEffect;
+import com.nravo.thegame.mobilewars.entity.AndroidSpritePool;
+import com.nravo.thegame.mobilewars.entity.AppleSpritePool;
+import com.nravo.thegame.mobilewars.entity.Building;
+import com.nravo.thegame.mobilewars.entity.Hero;
+import com.nravo.thegame.mobilewars.entity.HeroAndroid;
+import com.nravo.thegame.mobilewars.gamelevel.Levels.Race;
+import com.nravo.thegame.mobilewars.gamelevel.handlers.DrawPointerUpdateHandler;
+import com.nravo.thegame.mobilewars.layers.LevelLostLayer;
+import com.nravo.thegame.mobilewars.layers.LevelWonLayer;
+import com.nravo.thegame.mobilewars.managers.GameManager;
+import com.nravo.thegame.mobilewars.managers.ResourceManager;
+import com.nravo.thegame.mobilewars.managers.SceneManager;
+import com.nravo.thegame.mobilewars.modifier.ModifierForHero;
 
 public class GameLevel extends ManagedGameScene implements
 		GameManager.GameLevelGoal, IOnSceneTouchListener {
@@ -56,13 +61,11 @@ public class GameLevel extends ManagedGameScene implements
 	private Sprite mIceCreamSandwichSprite;
 	private Sprite mHoneycombSprite;
 
-    private GameStatus gameStatus = GameStatus.IN_PROGRESS;
+	private GameStatus gameStatus = GameStatus.IN_PROGRESS;
 
-    public enum GameStatus {
-        IN_PROGRESS,
-        WON,
-        LOST
-    }
+	public enum GameStatus {
+		IN_PROGRESS, WON, LOST
+	}
 
 	// ============================================================
 	// ===================== UPDATE HANDLERS=======================
@@ -77,10 +80,10 @@ public class GameLevel extends ManagedGameScene implements
 			if (this.mTotalElapsedTime >= this.COMPLETION_DELAY_SECONDS) {
 				GameLevel.this.mHasCompletionTimerRun = true;
 				if (GameLevel.this.isLevelCompleted()) {
-                    gameStatus = GameStatus.WON;
+					gameStatus = GameStatus.WON;
 					GameLevel.this.onLevelCompleted();
 				} else {
-                    gameStatus = GameStatus.LOST;
+					gameStatus = GameStatus.LOST;
 					GameLevel.this.onLevelFailed();
 				}
 				GameLevel.this.unregisterUpdateHandler(this);
@@ -107,31 +110,31 @@ public class GameLevel extends ManagedGameScene implements
 	// ======================================
 	@Override
 	public boolean isLevelCompleted() {
-        int numberOfEnemyBuildingsLeft = 0;
-        for (Building building : mAllBuilding) {
-            if (building.type.equals(Levels.Race.APPLE_IOS)) {
-                numberOfEnemyBuildingsLeft++;
-            }
-        }
-        return numberOfEnemyBuildingsLeft == 0;
+		int numberOfEnemyBuildingsLeft = 0;
+		for (Building building : mAllBuilding) {
+			if (building.type.equals(Levels.Race.APPLE_IOS)) {
+				numberOfEnemyBuildingsLeft++;
+			}
+		}
+		return numberOfEnemyBuildingsLeft == 0;
 	}
 
 	@Override
 	public boolean isLevelFailed() {
-        int numberOfMyBuildingsLeft = 0;
-        for (Building building : mAllBuilding) {
-            if (building.type.equals(Levels.Race.ANDROID)) {
-                numberOfMyBuildingsLeft++;
-            }
-        }
-        return numberOfMyBuildingsLeft == 0;
+		int numberOfMyBuildingsLeft = 0;
+		for (Building building : mAllBuilding) {
+			if (building.type.equals(Levels.Race.ANDROID)) {
+				numberOfMyBuildingsLeft++;
+			}
+		}
+		return numberOfMyBuildingsLeft == 0;
 	}
 
 	@Override
 	public void onLevelCompleted() {
 		if (this.mHasCompletionTimerRun) {
-                SceneManager.getInstance().showLayer(
-                        LevelWonLayer.getInstance(this), false, false, false);
+			SceneManager.getInstance().showLayer(
+					LevelWonLayer.getInstance(this), false, false, false);
 		} else {
 			GameLevel.this.registerUpdateHandler(this.onCompletionTimer);
 		}
@@ -140,8 +143,8 @@ public class GameLevel extends ManagedGameScene implements
 	@Override
 	public void onLevelFailed() {
 		if (this.mHasCompletionTimerRun) {
-            SceneManager.getInstance().showLayer(
-                    LevelLostLayer.getInstance(this), false, false, false);
+			SceneManager.getInstance().showLayer(
+					LevelLostLayer.getInstance(this), false, false, false);
 		} else {
 			GameLevel.this.registerUpdateHandler(this.onCompletionTimer);
 		}
@@ -191,9 +194,10 @@ public class GameLevel extends ManagedGameScene implements
 				if (mJellyBeansEffect.mState == State.RUNNING) {
 					for (Building building : mAllBuilding) {
 						if (building.type != Race.ANDROID) {
-							double damage = mJellyBeansEffect.getDamageTo(building);
-							building.mNumberOfUnits -=
-									Math.min(damage, building.mNumberOfUnits);
+							double damage = mJellyBeansEffect
+									.getDamageTo(building);
+							building.mNumberOfUnits -= Math.min(damage,
+									building.mNumberOfUnits);
 						}
 					}
 				}
@@ -275,15 +279,17 @@ public class GameLevel extends ManagedGameScene implements
 					if (building.type != Levels.Race.ANDROID) {
 						final Building finalBuilding = building;
 						building.mAllowBotSpawn = false;
-						float freezeTime = mIceCreamSandwichEffect.getFreezeTimeFor(building);
+						float freezeTime = mIceCreamSandwichEffect
+								.getFreezeTimeFor(building);
 						registerUpdateHandler(new TimerHandler(freezeTime,
-							new ITimerCallback() {
-								@Override
-								public void onTimePassed(TimerHandler pTimerHandler) {
-									Log.e("qwerty", "allow updates");
-									finalBuilding.mAllowBotSpawn = true;
-								}
-							}));
+								new ITimerCallback() {
+									@Override
+									public void onTimePassed(
+											TimerHandler pTimerHandler) {
+										Log.e("qwerty", "allow updates");
+										finalBuilding.mAllowBotSpawn = true;
+									}
+								}));
 					}
 				}
 			}
@@ -307,8 +313,10 @@ public class GameLevel extends ManagedGameScene implements
 					heroAndroid.fromY, heroAndroid.toX, heroAndroid.toY,
 					buildingsFrom, buildingTo, mAndroidHeroPool, heroAndroid,
 					building);
-			GameLevel.this.attachChild(heroAndroid.heroSprite);
-			heroAndroid.heroSprite.registerEntityModifier(move);
+			if (!heroAndroid.heroSprite.hasParent()) {
+				GameLevel.this.attachChild(heroAndroid.heroSprite);
+				heroAndroid.heroSprite.registerEntityModifier(move);
+			}
 		}
 		// buildingTo.incrementNumberOfUnits(1);
 	}
