@@ -1,10 +1,13 @@
 package com.nravo.thegame.mobilewars.gamelevel;
 
+import android.util.Log;
+
 import com.nravo.thegame.mobilewars.Utils.Utils;
 import com.nravo.thegame.mobilewars.effects.GodPowerEffect.State;
 import com.nravo.thegame.mobilewars.effects.IceCreamSandwichEffect;
 import com.nravo.thegame.mobilewars.effects.JellyBeansEffect;
 import com.nravo.thegame.mobilewars.entity.*;
+import com.nravo.thegame.mobilewars.gamelevel.Levels.Race;
 import com.nravo.thegame.mobilewars.gamelevel.handlers.DrawPointerUpdateHandler;
 import com.nravo.thegame.mobilewars.layers.LevelWonLayer;
 import com.nravo.thegame.mobilewars.managers.GameManager;
@@ -12,6 +15,8 @@ import com.nravo.thegame.mobilewars.managers.ResourceManager;
 import com.nravo.thegame.mobilewars.managers.SceneManager;
 import com.nravo.thegame.mobilewars.modifier.ModifierForHero;
 import org.andengine.engine.handler.IUpdateHandler;
+import org.andengine.engine.handler.timer.ITimerCallback;
+import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
@@ -67,13 +72,7 @@ public class GameLevel extends ManagedGameScene implements
 					GameLevel.this.onLevelFailed();
 				}
 				GameLevel.this.unregisterUpdateHandler(this);
-
-			} else if (mJellyBeansEffect.mState == State.RUNNING) {
-				// TODO: foreach(building)
-				// building.damage(mJellyBeansEffect.getDamageTo(
-				// building.x, building.y));
 			}
-
 		}
 
 		@Override
@@ -171,6 +170,20 @@ public class GameLevel extends ManagedGameScene implements
 						.getEngine().getVertexBufferObjectManager());
 
 		GameLevel.this.setOnSceneTouchListener(this);
+		registerUpdateHandler(new TimerHandler(1, true, new ITimerCallback() {
+			@Override
+			public void onTimePassed(TimerHandler pTimerHandler) {
+				if (mJellyBeansEffect.mState == State.RUNNING) {
+					for (Building building : mAllBuilding) {
+						if (building.type != Race.ANDROID) {
+							double damage = mJellyBeansEffect.getDamageTo(building);
+							building.mNumberOfUnits -=
+									Math.min(damage, building.mNumberOfUnits);
+						}
+					}
+				}
+			}
+		}));
 	}
 
 	@Override

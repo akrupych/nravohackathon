@@ -16,7 +16,9 @@ import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 import android.content.Context;
+import android.util.Log;
 
+import com.nravo.thegame.mobilewars.entity.Building;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
 
 public class JellyBeansEffect extends GodPowerEffect {
@@ -92,15 +94,20 @@ public class JellyBeansEffect extends GodPowerEffect {
 			scene.attachChild(particleSystem);
 		}
 	}
-	
-	public double getDamageTo(float x, float y) {
-		return 100 / 1 + Math.sqrt(Math.pow(mEffectCenter.x - x, 2.0) +
-				Math.pow(mEffectCenter.y - y, 2.0));
-	}
 
 	@Override
 	public float getRespawnTime() {
 		return 60;
+	}
+
+	public double getDamageTo(Building building) {
+		float x = building.getX();
+		float y = building.getY();
+		double distance = Math.sqrt(Math.pow(mEffectCenter.x - x, 2.0) +
+				Math.pow(mEffectCenter.y - y, 2.0));
+		double damage = 1000 / (1 + distance);
+		Log.e("qwerty", distance + " " + damage);
+		return damage;
 	}
 
 }
