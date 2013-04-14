@@ -105,7 +105,7 @@ public class JellyBeansEffect extends GodPowerEffect {
 		float y = building.getY();
 		double distance = Math.sqrt(Math.pow(mEffectCenter.x - x, 2.0) +
 				Math.pow(mEffectCenter.y - y, 2.0));
-		double damage = 1000 / (1 + distance);
+		double damage = 3000 / (1 + distance);
 		Log.e("qwerty", distance + " " + damage);
 		return damage;
 	}

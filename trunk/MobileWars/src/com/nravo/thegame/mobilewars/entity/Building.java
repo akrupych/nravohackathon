@@ -95,7 +95,7 @@ public class Building extends Entity {
 		// Text displaying number of units
 		Text unitNumber = new Text(counterWidth, counterHeight,
 				ResourceManager.sFontDefault32Bold,
-				String.valueOf(mNumberOfUnits), 100, ResourceManager
+				String.valueOf((int) mNumberOfUnits), 100, ResourceManager
 						.getEngine().getVertexBufferObjectManager()) {
 
 			float timePassed = 0;
@@ -148,7 +148,7 @@ public class Building extends Entity {
 
 					}
 				}
-				this.setText(String.valueOf(mNumberOfUnits));
+				this.setText(String.valueOf((int) mNumberOfUnits));
 				super.onManagedUpdate(pSecondsElapsed);
 			}
 		};
