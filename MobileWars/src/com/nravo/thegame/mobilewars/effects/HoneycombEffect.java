@@ -5,16 +5,12 @@ import java.util.LinkedList;
 
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
-import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.AlphaModifier;
-import org.andengine.entity.modifier.IEntityModifier.IEntityModifierListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
-import org.andengine.util.modifier.IModifier;
 
 import android.opengl.GLES20;
-import android.util.Log;
 
 import com.nravo.thegame.mobilewars.entity.Building;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
@@ -23,7 +19,6 @@ import com.nravo.thegame.mobilewars.managers.SFXManager;
 public class HoneycombEffect extends GodPowerEffect {
 	
 	private VertexBufferObjectManager mVboManager;
-	private Scene mScene;
 	private Sprite mCenterSprite;
 	private LinkedList<Sprite> mAllHoneycombs = new LinkedList<Sprite>();
 	private LinkedList<Sprite> mBees = new LinkedList<Sprite>();
@@ -34,45 +29,36 @@ public class HoneycombEffect extends GodPowerEffect {
 		super.launch(x, y, scene, vboManager);
 		SFXManager.playBees(1, 1);
 		mVboManager = vboManager;
-		mScene = scene;
 		mCenterSprite = new Sprite(x, y, ResourceManager.sHoneycombTR, vboManager);
 		mCenterSprite.registerUpdateHandler(new TimerHandler(12, new ITimerCallback() {
 			@Override
 			public void onTimePassed(TimerHandler pTimerHandler) {
 				mAllHoneycombs.addFirst(mCenterSprite);
-				fade(mAllHoneycombs);
-				fade(mBees);
+				killThisFuckinlist(mAllHoneycombs);
+			}
+		}));
+		mCenterSprite.registerUpdateHandler(new TimerHandler(24, new ITimerCallback() {
+			@Override
+			public void onTimePassed(TimerHandler pTimerHandler) {
+				killThisFuckinlist(mBees);
 			}
 		}));
 		scene.attachChild(mCenterSprite);
 		spawnHoneycomb(mCenterSprite);
 	}
 
-	private void fade(final LinkedList<Sprite> list) {
-		for (int i = 0; i < list.size(); i++) {
-			final Sprite sprite = list.get(i);
-			sprite.registerEntityModifier(new AlphaModifier(1, 1, 0, new IEntityModifierListener() {
-				@Override
-				public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) { }
-				@Override
-				public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
-					ResourceManager.getEngine().runOnUpdateThread(new Runnable() {
-						@Override
-						public void run() {
-							remove(sprite);
-							list.remove(sprite);
-							Log.d("removed", list.size() + "");
-						}
-					});
+	private void killThisFuckinlist(final LinkedList<Sprite> list) {
+		ResourceManager.getEngine().runOnUpdateThread(new Runnable() {
+			@Override
+			public void run() {
+				for (Sprite sprite : list) {
+					sprite.clearEntityModifiers();
+					sprite.clearUpdateHandlers();
+					sprite.detachSelf();
 				}
-			}));
-		}
-	}
-
-	private void remove(Sprite sprite) {
-		sprite.clearEntityModifiers();
-		sprite.clearUpdateHandlers();
-		sprite.detachSelf();
+				list.clear();
+			}
+		});
 	}
 
 	private void spawnHoneycomb(Sprite center) {
@@ -121,7 +107,6 @@ public class HoneycombEffect extends GodPowerEffect {
 	}
 	
 	public double getDamageTo(Building building) {
-		Log.d("update", mAllHoneycombs.size() + " " + mBees.size());
 		for (int i = 0; i < mAllHoneycombs.size(); i++) {
 			Sprite honeycomb = mAllHoneycombs.get(i);
 			if (honeycomb.collidesWith(building.buildingSprite)) {
