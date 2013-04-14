@@ -78,6 +78,9 @@ public class ResourceManager {
 	public static ITextureRegion sFreezeTR;
 	public static ITextureRegion sHoneycombTR;
 	public static ITextureRegion sBeeTR;
+	public static ITextureRegion sFrostAndroidPhoneTR;
+	public static ITextureRegion sFrostIPadTR;
+	public static ITextureRegion sFrostNokiaTR;
 
 	// ================== MENU RESOURCES =====================
 	// TR = Texture Region; TTR = Tiled texture region
@@ -203,6 +206,16 @@ public class ResourceManager {
 		}
 		if (sBeeTR == null) {
 			sBeeTR = getTextureRegion("bee.png", NORMAL_TEXTURE_OPTION);
+		}
+		if (sFrostAndroidPhoneTR == null) {
+			sFrostAndroidPhoneTR = getTextureRegion("frost_android_phone.png",
+					NORMAL_TEXTURE_OPTION);
+		}
+		if (sFrostIPadTR == null) {
+			sFrostIPadTR = getTextureRegion("frost_ipad.png", NORMAL_TEXTURE_OPTION);
+		}
+		if (sFrostNokiaTR == null) {
+			sFrostNokiaTR = getTextureRegion("frost_nokia.png", NORMAL_TEXTURE_OPTION);
 		}
 		/////////////////////////////// ETC ////////////////////////////////////
 		if (sGameBackgroundTR == null) {
