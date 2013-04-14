@@ -1,8 +1,9 @@
 package com.nravo.thegame.mobilewars.entity;
 
-import com.nravo.thegame.mobilewars.managers.ResourceManager;
 import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.util.adt.pool.GenericPool;
+
+import com.nravo.thegame.mobilewars.managers.ResourceManager;
 
 public class AndroidSpritePool extends GenericPool<AnimatedSprite> {
 

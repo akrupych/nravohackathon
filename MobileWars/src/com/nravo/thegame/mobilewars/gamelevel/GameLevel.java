@@ -14,21 +14,16 @@ import com.nravo.thegame.mobilewars.effects.GodPowerEffect.State;
 import com.nravo.thegame.mobilewars.effects.IceCreamSandwichEffect;
 import com.nravo.thegame.mobilewars.effects.JellyBeansEffect;
 import com.nravo.thegame.mobilewars.entity.AndroidSpritePool;
+import com.nravo.thegame.mobilewars.entity.AppleSpritePool;
 import com.nravo.thegame.mobilewars.entity.Building;
 import com.nravo.thegame.mobilewars.entity.Hero;
 import com.nravo.thegame.mobilewars.entity.HeroAndroid;
-import com.nravo.thegame.mobilewars.entity.HeroApple;
 import com.nravo.thegame.mobilewars.gamelevel.handlers.DrawPointerUpdateHandler;
 import com.nravo.thegame.mobilewars.layers.LevelWonLayer;
 import com.nravo.thegame.mobilewars.managers.GameManager;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
 import com.nravo.thegame.mobilewars.managers.SceneManager;
-import com.nravo.thegame.mobilewars.modifier.ModifierForEnemy;
 import com.nravo.thegame.mobilewars.modifier.ModifierForHero;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
 
 public class GameLevel extends ManagedGameScene implements
 		GameManager.GameLevelGoal, IOnSceneTouchListener {
@@ -94,6 +89,7 @@ public class GameLevel extends ManagedGameScene implements
 	// Draws pointers when dragging your finger
 	public DrawPointerUpdateHandler lineDrawingHandler;
 	public AndroidSpritePool mAndroidHeroPool;
+	public AppleSpritePool mAppleHeroPool;
 
 	public GameLevel(final Levels.LevelDefinition levelDefinition) {
 		this.mLevelDefinition = levelDefinition;
@@ -137,9 +133,9 @@ public class GameLevel extends ManagedGameScene implements
 		GameManager.setGameLevel(this);
 		GameManager.setGameLevelGoal(this);
 
-		for (Levels.BuildingDefinition buildingDefinition : mLevelDefinition.buildingsInLevel) {
-
-		}
+//		for (Levels.BuildingDefinition buildingDefinition : mLevelDefinition.buildingsInLevel) {
+//
+//		}
 
 		final int numberOfBuildingsInLevel = mLevelDefinition.buildingsInLevel.length;
 		buildingsFrom = new ArrayList<Building>(numberOfBuildingsInLevel);
@@ -148,6 +144,9 @@ public class GameLevel extends ManagedGameScene implements
 		// ============ HERO POOLS =============
 		mAndroidHeroPool = new AndroidSpritePool();
 		mAndroidHeroPool.batchAllocatePoolItems(HEROES_POOL_SIZE);
+
+		mAppleHeroPool = new AppleSpritePool();
+		mAppleHeroPool.batchAllocatePoolItems(HEROES_POOL_SIZE);
 
 		// Buildings
 		for (Levels.BuildingDefinition currentBuilding : GameLevel.this.mLevelDefinition.buildingsInLevel) {
