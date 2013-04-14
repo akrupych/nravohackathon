@@ -28,7 +28,7 @@ public class GameHUD extends HUD {
         backround.setAnchorCenter(0, 0);
         attachChild(backround);
         
-        mHoneycomb = new Sprite(0, 0, ResourceManager.sPowerHoneycombTR,
+        mHoneycomb = new Sprite(23, 10, ResourceManager.sPowerHoneycombTR,
         		ResourceManager.getEngine().getVertexBufferObjectManager()) {
         	@Override
         	public boolean onAreaTouched(TouchEvent pSceneTouchEvent,
@@ -43,7 +43,7 @@ public class GameHUD extends HUD {
         mHoneycomb.setAnchorCenter(0, 0);
         attachChild(mHoneycomb);
         
-        mIceCreamSandwich = new Sprite(128, 0,
+        mIceCreamSandwich = new Sprite(153, 10,
         		ResourceManager.sPowerIceCreamSandwichTR,
         		ResourceManager.getEngine().getVertexBufferObjectManager()) {
         	@Override
@@ -59,7 +59,7 @@ public class GameHUD extends HUD {
         mIceCreamSandwich.setAnchorCenter(0, 0);
         attachChild(mIceCreamSandwich);
         
-        mJellyBeans = new Sprite(256, 0, ResourceManager.sPowerJellyBeansTR,
+        mJellyBeans = new Sprite(307, 10, ResourceManager.sPowerJellyBeansTR,
         		ResourceManager.getEngine().getVertexBufferObjectManager()) {
         	@Override
         	public boolean onAreaTouched(TouchEvent pSceneTouchEvent,
