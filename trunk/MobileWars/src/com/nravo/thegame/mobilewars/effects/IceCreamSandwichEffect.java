@@ -102,7 +102,7 @@ public class IceCreamSandwichEffect extends GodPowerEffect {
 		float y = building.buildingSprite.getY();
 		double distance = Math.sqrt(Math.pow(mEffectCenter.x - x, 2.0) +
 				Math.pow(mEffectCenter.y - y, 2.0));
-		float time = (float) (1000 / (1 + distance));
+		float time = (float) (2000 / (1 + distance));
 		Log.e("qwerty", "time:" + time);
 		return time;
 	}

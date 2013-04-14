@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.nravo.thegame.mobilewars.Utils.Utils;
 import com.nravo.thegame.mobilewars.effects.GodPowerEffect.State;
+import com.nravo.thegame.mobilewars.effects.HoneycombEffect;
 import com.nravo.thegame.mobilewars.effects.IceCreamSandwichEffect;
 import com.nravo.thegame.mobilewars.effects.JellyBeansEffect;
 import com.nravo.thegame.mobilewars.entity.*;
@@ -36,7 +37,9 @@ public class GameLevel extends ManagedGameScene implements
 	public List<Building> mAllBuilding = new ArrayList<Building>();
 
 	public static JellyBeansEffect mJellyBeansEffect = new JellyBeansEffect();
-	public static IceCreamSandwichEffect mIceCreamSandwichEffect = new IceCreamSandwichEffect();
+	public static IceCreamSandwichEffect mIceCreamSandwichEffect =
+			new IceCreamSandwichEffect();
+	public static HoneycombEffect mHoneycombEffect = new HoneycombEffect();
 
 	public float mX = 0;
 	public float mY = 0;
@@ -51,6 +54,7 @@ public class GameLevel extends ManagedGameScene implements
 
 	private Sprite mJellyBeansSprite;
 	private Sprite mIceCreamSandwichSprite;
+	private Sprite mHoneycombSprite;
 
     private GameStatus gameStatus = GameStatus.IN_PROGRESS;
 
@@ -177,6 +181,8 @@ public class GameLevel extends ManagedGameScene implements
 		mIceCreamSandwichSprite = new Sprite(0, 0,
 				ResourceManager.sPowerIceCreamSandwichTR, ResourceManager
 						.getEngine().getVertexBufferObjectManager());
+		mHoneycombSprite = new Sprite(0, 0, ResourceManager.sPowerHoneycombTR,
+				ResourceManager.getEngine().getVertexBufferObjectManager());
 
 		GameLevel.this.setOnSceneTouchListener(this);
 		registerUpdateHandler(new TimerHandler(1, true, new ITimerCallback() {
@@ -188,6 +194,14 @@ public class GameLevel extends ManagedGameScene implements
 							double damage = mJellyBeansEffect.getDamageTo(building);
 							building.mNumberOfUnits -=
 									Math.min(damage, building.mNumberOfUnits);
+						}
+					}
+				}
+				if (mHoneycombEffect.mState == State.RUNNING) {
+					for (Building building : mAllBuilding) {
+						if (building.type != Race.ANDROID) {
+							double damage = mHoneycombEffect.getDamageTo(building);
+							building.mNumberOfUnits -= Math.min(damage, building.mNumberOfUnits);
 						}
 					}
 				}
@@ -211,6 +225,10 @@ public class GameLevel extends ManagedGameScene implements
 				mIceCreamSandwichSprite.setPosition(x, y);
 				mIceCreamSandwichSprite.setScale(2);
 				pScene.attachChild(mIceCreamSandwichSprite);
+			} else if (mHoneycombEffect.mState == State.WAITING) {
+				mHoneycombSprite.setPosition(x, y);
+				mHoneycombSprite.setScale(2);
+				pScene.attachChild(mHoneycombSprite);
 			}
 		}
 
@@ -221,6 +239,8 @@ public class GameLevel extends ManagedGameScene implements
 				mJellyBeansSprite.setPosition(x, y);
 			} else if (mIceCreamSandwichEffect.mState == State.WAITING) {
 				mIceCreamSandwichSprite.setPosition(x, y);
+			} else if (mHoneycombEffect.mState == State.WAITING) {
+				mHoneycombSprite.setPosition(x, y);
 			} else if (!lineDrawingHandler.isRegistered()) {
 				GameLevel.this.registerUpdateHandler(lineDrawingHandler);
 				lineDrawingHandler.setPointersVisible(true);
@@ -242,6 +262,10 @@ public class GameLevel extends ManagedGameScene implements
 			if (mJellyBeansEffect.mState == State.WAITING) {
 				mJellyBeansSprite.detachSelf();
 				mJellyBeansEffect.launch(x, y, pScene, ResourceManager
+						.getEngine().getVertexBufferObjectManager());
+			} else if (mHoneycombEffect.mState == State.WAITING) {
+				mHoneycombSprite.detachSelf();
+				mHoneycombEffect.launch(x, y, pScene, ResourceManager
 						.getEngine().getVertexBufferObjectManager());
 			} else if (mIceCreamSandwichEffect.mState == State.WAITING) {
 				mIceCreamSandwichSprite.detachSelf();

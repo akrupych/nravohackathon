@@ -30,6 +30,9 @@ public class GameHUD extends HUD {
         	@Override
         	public boolean onAreaTouched(TouchEvent pSceneTouchEvent,
         			float pTouchAreaLocalX, float pTouchAreaLocalY) {
+        		if (GameLevel.mHoneycombEffect.mIsEnabled) {
+        			GameLevel.mHoneycombEffect.mState = State.WAITING;
+        		}
         		return false;
         	};
         };
