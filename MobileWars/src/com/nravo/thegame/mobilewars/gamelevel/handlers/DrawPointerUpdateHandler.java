@@ -24,7 +24,9 @@ public class DrawPointerUpdateHandler implements IUpdateHandler {
         int capacity = gameLevel.mNumberOfBuildingsInCurrentLevel;
         lines = new ArrayList<Line>(capacity);
         for (int i = 0; i < capacity; i++) {
-            lines.add(new Line(0, 0, gameLevel.mX, gameLevel.mY, 3f, ResourceManager.getEngine().getVertexBufferObjectManager()));
+            lines.add(new Line(0, 0, gameLevel.mX, gameLevel.mY, 6f, ResourceManager.getEngine().getVertexBufferObjectManager()));
+            lines.get(i).setColor(0f,0f,0f,0.5f);
+            lines.get(i).setZIndex(-1);
         }
     }
 
