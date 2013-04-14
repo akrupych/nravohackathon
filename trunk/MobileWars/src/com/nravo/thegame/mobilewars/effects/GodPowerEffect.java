@@ -16,6 +16,7 @@ public abstract class GodPowerEffect {
 	}
 	public State mState = State.NONE;
 	public boolean mIsEnabled = true;
+	public int mSecondsElapsed = 0;
 	
 	public PointF mEffectCenter;
 	public Scene mScene;
@@ -27,10 +28,16 @@ public abstract class GodPowerEffect {
 		mEffectCenter = new PointF(x, y);
 		mScene = scene;
 		scene.registerUpdateHandler(
-				new TimerHandler(getRespawnTime(), new ITimerCallback() {
+				new TimerHandler(1, true, new ITimerCallback() {
 			@Override
 			public void onTimePassed(TimerHandler pTimerHandler) {
-				mIsEnabled = true;
+				if (mState == State.RUNNING && mIsEnabled) {
+					mIsEnabled = false;
+					mSecondsElapsed = 0;
+				} else if (mSecondsElapsed > getRespawnTime()) {
+					mIsEnabled = true;
+				}
+				mSecondsElapsed++;
 			}
 		}));
 	}
