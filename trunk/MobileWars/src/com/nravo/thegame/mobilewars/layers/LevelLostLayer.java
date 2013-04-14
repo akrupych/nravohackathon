@@ -1,6 +1,7 @@
 package com.nravo.thegame.mobilewars.layers;
 
 import com.nravo.thegame.mobilewars.gamelevel.GameLevel;
+import com.nravo.thegame.mobilewars.gamelevel.Levels;
 import com.nravo.thegame.mobilewars.input.GrowButton;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
 import com.nravo.thegame.mobilewars.managers.SceneManager;
@@ -104,7 +105,7 @@ public class LevelLostLayer extends ManagedLayer {
                 mLayerBackground.getHeight()/2f, ResourceManager.restartButtonTR) {
             @Override
             public void onClick() {
-                //To change body of implemented methods use File | Settings | File Templates.
+                SceneManager.getInstance().showScene(new GameLevel(Levels.AVAILABLE_LEVELS[0]));
             }
         };
         mLayerBackground.attachChild(restartButton);
