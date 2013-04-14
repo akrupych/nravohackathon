@@ -10,7 +10,8 @@ public class Levels {
 
     private static final float CAMERA_WIDTH = ResourceManager.getInstance().cameraWidth;
     private static final float CAMERA_HEIGHT = ResourceManager.getInstance().cameraHeight;
-
+    public static int currentRoom = 0;
+    
     public static final LevelDefinition[] AVAILABLE_LEVELS = new LevelDefinition[] {
             new LevelDefinition(1,
             new BuildingDefinition[] {
