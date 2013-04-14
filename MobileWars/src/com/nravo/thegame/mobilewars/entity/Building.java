@@ -23,7 +23,7 @@ public class Building extends Entity {
 
 	private final GameLevel mGameLevel;
 	public AnimatedSprite buildingSprite;
-	private int mNumberOfUnits;
+	public double mNumberOfUnits;
 	private boolean isMy;
 	public Levels.Race type;
 	public float x;
@@ -156,7 +156,7 @@ public class Building extends Entity {
 	}
 
 	public int decrementNumberOfUnits() {
-		int count = mNumberOfUnits / 2;
+		int count = (int) (mNumberOfUnits / 2);
 		mNumberOfUnits -= count;
 		return count;
 	}
