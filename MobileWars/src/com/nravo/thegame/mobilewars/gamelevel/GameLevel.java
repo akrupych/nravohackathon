@@ -42,8 +42,7 @@ public class GameLevel extends ManagedGameScene implements
 	public List<Building> mAllBuilding = new ArrayList<Building>();
 
 	public static JellyBeansEffect mJellyBeansEffect = new JellyBeansEffect();
-	public static IceCreamSandwichEffect mIceCreamSandwichEffect =
-			new IceCreamSandwichEffect();
+	public static IceCreamSandwichEffect mIceCreamSandwichEffect = new IceCreamSandwichEffect();
 	public static HoneycombEffect mHoneycombEffect = new HoneycombEffect();
 
 	public float mX = 0;
@@ -204,8 +203,10 @@ public class GameLevel extends ManagedGameScene implements
 				if (mHoneycombEffect.mState == State.RUNNING) {
 					for (Building building : mAllBuilding) {
 						if (building.type != Race.ANDROID) {
-							double damage = mHoneycombEffect.getDamageTo(building);
-							building.mNumberOfUnits -= Math.min(damage, building.mNumberOfUnits);
+							double damage = mHoneycombEffect
+									.getDamageTo(building);
+							building.mNumberOfUnits -= Math.min(damage,
+									building.mNumberOfUnits);
 						}
 					}
 				}
@@ -224,15 +225,21 @@ public class GameLevel extends ManagedGameScene implements
 			if (mJellyBeansEffect.mState == State.WAITING) {
 				mJellyBeansSprite.setPosition(x, y);
 				mJellyBeansSprite.setScale(2);
-				pScene.attachChild(mJellyBeansSprite);
+				if (!mJellyBeansSprite.hasParent()) {
+					pScene.attachChild(mJellyBeansSprite);
+				}
 			} else if (mIceCreamSandwichEffect.mState == State.WAITING) {
 				mIceCreamSandwichSprite.setPosition(x, y);
 				mIceCreamSandwichSprite.setScale(2);
-				pScene.attachChild(mIceCreamSandwichSprite);
+				if (!mIceCreamSandwichSprite.hasParent()) {
+					pScene.attachChild(mIceCreamSandwichSprite);
+				}
 			} else if (mHoneycombEffect.mState == State.WAITING) {
 				mHoneycombSprite.setPosition(x, y);
 				mHoneycombSprite.setScale(2);
-				pScene.attachChild(mHoneycombSprite);
+				if (!mHoneycombSprite.hasParent()) {
+					pScene.attachChild(mHoneycombSprite);
+				}
 			}
 		}
 
