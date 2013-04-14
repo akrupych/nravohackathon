@@ -17,6 +17,9 @@ public class GameHUD extends HUD {
 	public GameHUD(Scene scene) {
 		
         setScaleCenter(0f, 0f);
+        setPosition(ResourceManager.getCamera().getCenterX() -
+        		ResourceManager.getInstance().cameraScaleFactorX *
+        		ResourceManager.sHudBackgroundTR.getWidth() / 2, 0);
         setScale(ResourceManager.getInstance().cameraScaleFactorX,
                 ResourceManager.getInstance().cameraScaleFactorY);
         
