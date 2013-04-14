@@ -4,7 +4,10 @@ import java.util.Random;
 
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
+import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.AlphaModifier;
+import org.andengine.entity.modifier.IEntityModifier.IEntityModifierListener;
+import org.andengine.entity.modifier.SequenceEntityModifier;
 import org.andengine.entity.particle.SpriteParticleSystem;
 import org.andengine.entity.particle.emitter.CircleOutlineParticleEmitter;
 import org.andengine.entity.particle.emitter.CircleParticleEmitter;
@@ -16,11 +19,13 @@ import org.andengine.entity.particle.modifier.AlphaParticleModifier;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+import org.andengine.util.modifier.IModifier;
 
 import android.opengl.GLES20;
 import android.util.Log;
 
 import com.nravo.thegame.mobilewars.entity.Building;
+import com.nravo.thegame.mobilewars.gamelevel.Levels.Race;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
 
 public class IceCreamSandwichEffect extends GodPowerEffect {
@@ -38,7 +43,7 @@ public class IceCreamSandwichEffect extends GodPowerEffect {
 		sandwich.registerUpdateHandler(new TimerHandler(2, true, new ITimerCallback() {
 			@Override
 			public void onTimePassed(TimerHandler pTimerHandler) {
-				float randomColor = 0.9f + new Random().nextInt(10) / 100f;
+				float randomColor = 0.8f + new Random().nextInt(20) / 100f;
 				final SpriteParticleSystem particleSystem = new SpriteParticleSystem(
 						new Random().nextBoolean() ?
 								new CircleParticleEmitter(x, y, new Random().nextInt(200) + 100) :
@@ -103,6 +108,29 @@ public class IceCreamSandwichEffect extends GodPowerEffect {
 		double distance = Math.sqrt(Math.pow(mEffectCenter.x - x, 2.0) +
 				Math.pow(mEffectCenter.y - y, 2.0));
 		float time = (float) (2000 / (1 + distance));
+		if (time > 2) {
+			final Sprite frozen = new Sprite(x, y, building.type == Race.APPLE_IOS ?
+					ResourceManager.sFrostIPadTR : ResourceManager.sFrostNokiaTR,
+					ResourceManager.getEngine().getVertexBufferObjectManager());
+			frozen.registerEntityModifier(new SequenceEntityModifier(
+					new AlphaModifier(1, 0, 1), new AlphaModifier(time - 1, 1, 0,
+							new IEntityModifierListener() {
+						@Override
+						public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) { }
+						@Override
+						public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
+							ResourceManager.getEngine().runOnUpdateThread(new Runnable() {
+								@Override
+								public void run() {
+									frozen.clearEntityModifiers();
+									frozen.clearUpdateHandlers();
+									mScene.detachChild(frozen);
+								}
+							});
+						}
+					})));
+			mScene.attachChild(frozen);
+		}
 		Log.e("qwerty", "time:" + time);
 		return time;
 	}

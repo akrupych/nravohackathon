@@ -18,12 +18,14 @@ public abstract class GodPowerEffect {
 	public boolean mIsEnabled = true;
 	
 	public PointF mEffectCenter;
+	public Scene mScene;
 	
 	public void launch(float x, float y, final Scene scene,
 			VertexBufferObjectManager vboManager) {
 		mState = State.RUNNING;
 		mIsEnabled = false;
 		mEffectCenter = new PointF(x, y);
+		mScene = scene;
 		scene.registerUpdateHandler(
 				new TimerHandler(getRespawnTime(), new ITimerCallback() {
 			@Override
