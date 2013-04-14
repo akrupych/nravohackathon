@@ -1,12 +1,18 @@
 package com.nravo.thegame.mobilewars.effects;
 
+import java.util.Random;
+
+import org.andengine.engine.handler.timer.ITimerCallback;
+import org.andengine.engine.handler.timer.TimerHandler;
+import org.andengine.entity.modifier.AlphaModifier;
 import org.andengine.entity.particle.SpriteParticleSystem;
 import org.andengine.entity.particle.emitter.CircleOutlineParticleEmitter;
+import org.andengine.entity.particle.emitter.CircleParticleEmitter;
 import org.andengine.entity.particle.initializer.AccelerationParticleInitializer;
-import org.andengine.entity.particle.initializer.AlphaParticleInitializer;
 import org.andengine.entity.particle.initializer.BlendFunctionParticleInitializer;
 import org.andengine.entity.particle.initializer.ColorParticleInitializer;
 import org.andengine.entity.particle.initializer.ExpireParticleInitializer;
+import org.andengine.entity.particle.modifier.AlphaParticleModifier;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
@@ -20,39 +26,73 @@ public class IceCreamSandwichEffect extends GodPowerEffect {
 	private static final float RATE_MINIMUM = 50;
 	private static final float RATE_MAXIMUM = 100;
 	private static final int PARTICLES_MAXIMUM = 1000;
-	private static final float EFFECT_TIME = 5;
-	private static final float RESPAWN_TIME = 30;
-	private static final int FREEZE_CIRCLES_COUNT = 3;
 	private static final float SPAWN_TIME = 3;
 	
-	public void launch(float x, float y, final Scene scene,
+	public void launch(final float x, final float y, final Scene scene,
 			VertexBufferObjectManager vboManager) {
 		super.launch(x, y, scene, vboManager);
-		
-		for (int i = 0; i < FREEZE_CIRCLES_COUNT; i++) {
-			SpriteParticleSystem particleSystem = new SpriteParticleSystem(
-					new CircleOutlineParticleEmitter(x, y, 100 * (i + 1)),
-					RATE_MINIMUM, RATE_MAXIMUM, PARTICLES_MAXIMUM,
-					ResourceManager.sFreezeTR,
-					ResourceManager.getEngine().getVertexBufferObjectManager());
-			particleSystem.addParticleInitializer(
-					new ExpireParticleInitializer<Sprite>(SPAWN_TIME));
-			particleSystem.addParticleInitializer(
-					new BlendFunctionParticleInitializer<Sprite>(
-							GLES20.GL_SRC_ALPHA, GLES20.GL_ONE));
-			particleSystem.addParticleInitializer(
-					new ColorParticleInitializer<Sprite>(0.2f, 0.2f, 1));
-			particleSystem.addParticleInitializer(
-					new AlphaParticleInitializer<Sprite>(0.9f));
-			particleSystem.addParticleInitializer(
-					new AccelerationParticleInitializer<Sprite>(
-							-10, 10, -10, 10));
-			scene.attachChild(particleSystem);
-		}
-		
-		Sprite sandwich = new Sprite(x, y, ResourceManager.sIceCreamSandwichTR,
+		final Sprite sandwich = new Sprite(x, y, ResourceManager.sIceCreamSandwichTR,
 				ResourceManager.getEngine().getVertexBufferObjectManager());
+		sandwich.registerUpdateHandler(new TimerHandler(2, true, new ITimerCallback() {
+			@Override
+			public void onTimePassed(TimerHandler pTimerHandler) {
+				float randomColor = 0.9f + new Random().nextInt(10) / 100f;
+				final SpriteParticleSystem particleSystem = new SpriteParticleSystem(
+						new Random().nextBoolean() ?
+								new CircleParticleEmitter(x, y, new Random().nextInt(200) + 100) :
+								new CircleOutlineParticleEmitter(x, y, new Random().nextInt(200) + 100),
+						RATE_MINIMUM, RATE_MAXIMUM, PARTICLES_MAXIMUM,
+						ResourceManager.sFreezeTR,
+						ResourceManager.getEngine().getVertexBufferObjectManager());
+				particleSystem.addParticleInitializer(
+						new ExpireParticleInitializer<Sprite>(SPAWN_TIME));
+				particleSystem.addParticleInitializer(
+						new BlendFunctionParticleInitializer<Sprite>(
+								GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA));
+				particleSystem.addParticleInitializer(
+						new ColorParticleInitializer<Sprite>(
+								randomColor, randomColor, 1));
+				particleSystem.addParticleInitializer(
+						new AccelerationParticleInitializer<Sprite>(
+								-20, 20, -20, 20));
+				particleSystem.addParticleModifier(
+						new AlphaParticleModifier<Sprite>(0, 3, 1, 0));
+				particleSystem.registerUpdateHandler(new TimerHandler(6,
+						new ITimerCallback() {
+					@Override
+					public void onTimePassed(TimerHandler pTimerHandler) {
+						ResourceManager.getEngine().runOnUpdateThread(new Runnable() {
+							@Override
+							public void run() {
+								particleSystem.clearEntityModifiers();
+								particleSystem.clearUpdateHandlers();
+								particleSystem.detachSelf();
+							}
+						});
+					}
+				}));
+				scene.attachChild(particleSystem);
+			}
+		}));
 		scene.attachChild(sandwich);
+		sandwich.registerUpdateHandler(new TimerHandler(10, new ITimerCallback() {
+			@Override
+			public void onTimePassed(TimerHandler pTimerHandler) {
+				sandwich.registerEntityModifier(new AlphaModifier(2, 1, 0));
+				mState = State.NONE;
+				ResourceManager.getEngine().runOnUpdateThread(new Runnable() {
+					@Override
+					public void run() {
+						sandwich.clearUpdateHandlers();
+					}
+				});
+			}
+		}));
+	}
+
+	@Override
+	public float getRespawnTime() {
+		return 45;
 	}
 
 }
