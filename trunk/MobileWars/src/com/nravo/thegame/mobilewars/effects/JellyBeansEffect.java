@@ -20,6 +20,7 @@ import android.util.Log;
 
 import com.nravo.thegame.mobilewars.entity.Building;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
+import com.nravo.thegame.mobilewars.managers.SFXManager;
 
 public class JellyBeansEffect extends GodPowerEffect {
 
@@ -58,6 +59,7 @@ public class JellyBeansEffect extends GodPowerEffect {
 	public void launch(float x, float y, final Scene scene,
 			VertexBufferObjectManager vboManager) {
 		super.launch(x, y, scene, vboManager);
+		SFXManager.playBean(1, 1);
 		for (int i = 0; i < mParticleSystems.length; i++) {
 			ITextureRegion texture = mTextureRegions[i];
 			mParticleSystems[i] = new SpriteParticleSystem(

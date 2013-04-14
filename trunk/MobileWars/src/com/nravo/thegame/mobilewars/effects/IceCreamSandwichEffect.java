@@ -27,6 +27,7 @@ import android.util.Log;
 import com.nravo.thegame.mobilewars.entity.Building;
 import com.nravo.thegame.mobilewars.gamelevel.Levels.Race;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
+import com.nravo.thegame.mobilewars.managers.SFXManager;
 
 public class IceCreamSandwichEffect extends GodPowerEffect {
 
@@ -38,6 +39,7 @@ public class IceCreamSandwichEffect extends GodPowerEffect {
 	public void launch(final float x, final float y, final Scene scene,
 			VertexBufferObjectManager vboManager) {
 		super.launch(x, y, scene, vboManager);
+		SFXManager.playIce(1, 1);
 		final Sprite sandwich = new Sprite(x, y, ResourceManager.sIceCreamSandwichTR,
 				ResourceManager.getEngine().getVertexBufferObjectManager());
 		sandwich.registerUpdateHandler(new TimerHandler(2, true, new ITimerCallback() {
