@@ -15,19 +15,10 @@ import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 import android.content.Context;
-import android.graphics.PointF;
 
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
 
-public class JellyBeansEffect {
-	
-	public enum State {
-		NONE,
-		WAITING,
-		RUNNING
-	}
-	public State mState = State.NONE;
-	public boolean mIsEnabled = true;
+public class JellyBeansEffect extends GodPowerEffect {
 
 	private static final float RATE_MINIMUM = 5;
 	private static final float RATE_MAXIMUM = 10;
@@ -49,8 +40,6 @@ public class JellyBeansEffect {
 	private static SpriteParticleSystem[] mParticleSystems =
 			new SpriteParticleSystem[mImageFileNames.length];
 	
-	private PointF mEffectCenter;
-	
 	public static void setTextures(ITextureRegion[] textures) {
 		mTextureRegions = textures;
 	}
@@ -66,9 +55,7 @@ public class JellyBeansEffect {
 
 	public void launch(float x, float y, final Scene scene,
 			VertexBufferObjectManager vboManager) {
-		mState = State.RUNNING;
-		mIsEnabled = false;
-		mEffectCenter = new PointF(x, y);
+		super.launch(x, y, scene, vboManager);
 		for (int i = 0; i < mParticleSystems.length; i++) {
 			ITextureRegion texture = mTextureRegions[i];
 			mParticleSystems[i] = new SpriteParticleSystem(

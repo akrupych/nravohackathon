@@ -70,6 +70,8 @@ public class ResourceManager {
 		"jelly_bean_red.png",
 		"jelly_bean_yellow.png"
 	};
+	public static ITextureRegion sIceCreamSandwichTR;
+	public static ITextureRegion sFreezeTR;
 
 	// ================== MENU RESOURCES =====================
 	// TR = Texture Region; TTR = Tiled texture region
@@ -174,13 +176,20 @@ public class ResourceManager {
 			sPowerJellyBeansTR = getTextureRegion("power_jelly_beans.png",
 					NORMAL_TEXTURE_OPTION);
 		}
-		///////////////////////////// JELLY BEANS //////////////////////////////
+		////////////////////////////// EFFECTS /////////////////////////////////
 		sJellyBeansTRs = new TextureRegion[mJellyBeanImages.length];
 		for (int i = 0; i < mJellyBeanImages.length; i++) {
 			sJellyBeansTRs[i] = getTextureRegion(mJellyBeanImages[i],
 					NORMAL_TEXTURE_OPTION);
 		}
 		JellyBeansEffect.setTextures(sJellyBeansTRs);
+		if (sIceCreamSandwichTR == null) {
+			sIceCreamSandwichTR = getTextureRegion("ice_cream_sandwich.png",
+					NORMAL_TEXTURE_OPTION);
+		}
+		if (sFreezeTR == null) {
+			sFreezeTR = getTextureRegion("freeze.png", NORMAL_TEXTURE_OPTION);
+		}
 		/////////////////////////////// ETC ////////////////////////////////////
 		if (sGameBackgroundTR == null) {
 			sGameBackgroundTR = getTextureRegion("andrew_background.png",

@@ -5,7 +5,7 @@ import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.input.touch.TouchEvent;
 
-import com.nravo.thegame.mobilewars.effects.JellyBeansEffect.State;
+import com.nravo.thegame.mobilewars.effects.GodPowerEffect.State;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
 
 public class GameHUD extends HUD {
@@ -43,6 +43,9 @@ public class GameHUD extends HUD {
         	@Override
         	public boolean onAreaTouched(TouchEvent pSceneTouchEvent,
         			float pTouchAreaLocalX, float pTouchAreaLocalY) {
+        		if (GameLevel.mIceCreamSandwichEffect.mIsEnabled) {
+        			GameLevel.mIceCreamSandwichEffect.mState = State.WAITING;
+        		}
         		return false;
         	}
         };
