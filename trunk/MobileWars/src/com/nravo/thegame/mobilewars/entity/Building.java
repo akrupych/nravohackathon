@@ -1,8 +1,11 @@
 package com.nravo.thegame.mobilewars.entity;
 
+import com.nravo.thegame.mobilewars.Utils.Utils;
 import com.nravo.thegame.mobilewars.gamelevel.GameLevel;
 import com.nravo.thegame.mobilewars.gamelevel.Levels;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
+import com.nravo.thegame.mobilewars.modifier.ModifierForEnemy;
+
 import org.andengine.entity.Entity;
 import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
@@ -22,9 +25,9 @@ public class Building extends Entity {
 	public AnimatedSprite buildingSprite;
 	private int mNumberOfUnits;
 	private boolean isMy;
-	private Levels.Race type;
-	private float x;
-	private float y;
+	public Levels.Race type;
+	public float x;
+	public float y;
 
 	public Building(final GameLevel gameLevel, final Levels.Race buildingRace,
 			final float x, final float y, final int initialNumberOfUnits) {
@@ -95,10 +98,42 @@ public class Building extends Entity {
 						.getEngine().getVertexBufferObjectManager()) {
 
 			float timePassed = 0;
+			float timePassedForBot = 0;
 
 			@Override
 			protected void onManagedUpdate(float pSecondsElapsed) {
 				timePassed += pSecondsElapsed;
+				timePassedForBot += pSecondsElapsed;
+
+				if (timePassedForBot >= 5f) {
+					Building from = mGameLevel.mAllBuilding
+							.get(((int)(Math.random()*1000)% mGameLevel.mAllBuilding.size()));
+					Building to;
+					if (from.type == Levels.Race.APPLE_IOS) {
+						to = mGameLevel.mAllBuilding
+								.get(((int) (Math.random() * 1000) % mGameLevel.mAllBuilding
+										.size()));
+						if (to.type != Levels.Race.APPLE_IOS) {
+							Hero heroApple;
+							ModifierForEnemy move;
+							heroApple = new HeroApple(
+									from.buildingSprite.getX(),
+									from.buildingSprite.getY(),
+									to.buildingSprite.getX(),
+									to.buildingSprite.getY());
+							float timeToMove = Utils.calculateTime(
+									heroApple.fromX, heroApple.fromY,
+									heroApple.toX, heroApple.toY);
+							move = new ModifierForEnemy(timeToMove,
+									heroApple.fromX, heroApple.fromY,
+									heroApple.toX, heroApple.toY, to,
+									heroApple, from);
+							mGameLevel.attachChild(heroApple.heroSprite);
+							heroApple.heroSprite.registerEntityModifier(move);
+						}
+					}
+					timePassedForBot=0;
+				}
 
 				if (timePassed >= UNIT_REGENERATION_DELAY_IN_SEC) {
 					if (mNumberOfUnits < MAX_NUMBER_OF_UNITS_IN_BUILDING) {
@@ -111,6 +146,7 @@ public class Building extends Entity {
 						// TODO
 						// increment number of total units depending on
 						// race of the building.
+
 					}
 				}
 				this.setText(String.valueOf(mNumberOfUnits));
@@ -132,9 +168,10 @@ public class Building extends Entity {
             mGameLevel.mNumberOfEnemiesLeft -= numberOfUnits;
 		} else {
 			if (isMy) {
-				mNumberOfUnits = (mNumberOfUnits - numberOfUnits)* (-1);
-				type =  type.equals(Levels.Race.APPLE_IOS) ? Levels.Race.ANDROID :  Levels.Race.APPLE_IOS;
-				isMy = false;			
+				mNumberOfUnits = (mNumberOfUnits - numberOfUnits) * (-1);
+				type = type.equals(Levels.Race.APPLE_IOS) ? Levels.Race.ANDROID
+						: Levels.Race.APPLE_IOS;
+				isMy = false;
 				buildingSprite.detachSelf();
 				buildingSprite.clearEntityModifiers();
 				buildingSprite.clearUpdateHandlers();
