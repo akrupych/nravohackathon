@@ -100,6 +100,7 @@ public class SFXManager {
 
 	public static void playMusic() {
         mMusic.setVolume(0.2f);
+        mMusic.setLooping(true);
 		mMusic.play();
 	}
 
@@ -130,6 +131,7 @@ public class SFXManager {
 	}
 
 	public static void playIce(final float rate, final float volume) {
+        mIce.setLoopCount(3);
 		playSound(mIce, rate, volume);
 	}
 
@@ -138,6 +140,7 @@ public class SFXManager {
 	}
 
 	public static void playBees(final float rate, final float volume) {
+        mBeans.setLoopCount(3);
 		playSound(mBees, rate, volume);
 	}
 }
