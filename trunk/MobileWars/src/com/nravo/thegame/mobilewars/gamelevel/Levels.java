@@ -14,13 +14,20 @@ public class Levels {
     public static final LevelDefinition[] AVAILABLE_LEVELS = new LevelDefinition[] {
             new LevelDefinition(1,
             new BuildingDefinition[] {
-                new BuildingDefinition(CAMERA_WIDTH/4, CAMERA_HEIGHT/4, 10, Race.ANDROID, BuildingDefinition.BuildingType.SIMPLE),
-                new BuildingDefinition(CAMERA_WIDTH/4, 3*CAMERA_HEIGHT/4, 10, Race.ANDROID, BuildingDefinition.BuildingType.TOWER),
-                new BuildingDefinition(CAMERA_WIDTH/2, 3*CAMERA_HEIGHT/4, 10, Race.APPLE_IOS, BuildingDefinition.BuildingType.TOWER),
-                new BuildingDefinition(CAMERA_WIDTH/2, 1*CAMERA_HEIGHT/4, 10, Race.APPLE_IOS, BuildingDefinition.BuildingType.TOWER),
-                new BuildingDefinition(CAMERA_WIDTH/2, CAMERA_HEIGHT/2, 10, Race.ANDROID, BuildingDefinition.BuildingType.TOWER),
-                new BuildingDefinition(3*CAMERA_WIDTH/4, CAMERA_HEIGHT/4, 10, Race.APPLE_IOS, BuildingDefinition.BuildingType.TOWER),
-                new BuildingDefinition(3*CAMERA_WIDTH/4, 3*CAMERA_HEIGHT/4, 10, Race.APPLE_IOS, BuildingDefinition.BuildingType.TOWER)
+                new BuildingDefinition(0.09f*CAMERA_WIDTH, 0.14f*CAMERA_HEIGHT, 10, Race.ANDROID, BuildingDefinition.BuildingType.SIMPLE),
+                new BuildingDefinition(0.11f*CAMERA_WIDTH, 0.41f*CAMERA_HEIGHT, 10, Race.ANDROID, BuildingDefinition.BuildingType.TOWER),
+                new BuildingDefinition(0.87f*CAMERA_WIDTH, 0.81f*CAMERA_HEIGHT, 10, Race.ANDROID, BuildingDefinition.BuildingType.TOWER),
+                new BuildingDefinition(0.14f*CAMERA_WIDTH, 0.89f*CAMERA_HEIGHT, 10, Race.ANDROID, BuildingDefinition.BuildingType.TOWER),
+                new BuildingDefinition(0.29f*CAMERA_WIDTH, 0.63f*CAMERA_HEIGHT, 10, Race.ANDROID, BuildingDefinition.BuildingType.TOWER),
+
+                new BuildingDefinition(0.33f*CAMERA_WIDTH, 0.24f*CAMERA_HEIGHT, 10, Race.APPLE_IOS, BuildingDefinition.BuildingType.TOWER),
+                new BuildingDefinition(0.55f*CAMERA_WIDTH, 0.80f*CAMERA_HEIGHT, 10, Race.APPLE_IOS, BuildingDefinition.BuildingType.TOWER),
+                new BuildingDefinition(0.54f*CAMERA_WIDTH, 0.40f*CAMERA_HEIGHT, 10, Race.ANDROID, BuildingDefinition.BuildingType.TOWER),
+                new BuildingDefinition(0.53f*CAMERA_WIDTH, 0.10f*CAMERA_HEIGHT, 10, Race.APPLE_IOS, BuildingDefinition.BuildingType.TOWER),
+                new BuildingDefinition(0.70f*CAMERA_WIDTH, 0.57f*CAMERA_HEIGHT, 10, Race.APPLE_IOS, BuildingDefinition.BuildingType.TOWER),
+
+                new BuildingDefinition(0.80f*CAMERA_WIDTH, 0.25f*CAMERA_HEIGHT, 10, Race.APPLE_IOS, BuildingDefinition.BuildingType.TOWER),
+                new BuildingDefinition(0.94f*CAMERA_WIDTH, 0.44f*CAMERA_HEIGHT/4, 10, Race.APPLE_IOS, BuildingDefinition.BuildingType.TOWER),
             }),
     };
 
