@@ -1,6 +1,5 @@
 package com.nravo.thegame.mobilewars.menu;
 
-import com.nravo.thegame.mobilewars.effects.StarFlightEffect;
 import com.nravo.thegame.mobilewars.gamelevel.GameLevel;
 import com.nravo.thegame.mobilewars.gamelevel.Levels;
 import com.nravo.thegame.mobilewars.input.GrowButton;
@@ -51,8 +50,8 @@ public class MainMenu extends ManagedMenuScene {
         // create the background
         mMenuBackgroundSprite = new Sprite(centerX, centerY,
         		ResourceManager.sMenuBackgroundTR, vboManager);
-        mMenuBackgroundSprite.setScale(ResourceManager.getInstance().cameraHeight /
-        		ResourceManager.sMenuBackgroundTR.getHeight());
+        mMenuBackgroundSprite.setScale(ResourceManager.getInstance().cameraWidth /
+        		ResourceManager.sMenuBackgroundTR.getWidth());
         mMenuBackgroundSprite.setZIndex(-5000);
         attachChild(mMenuBackgroundSprite);
         
