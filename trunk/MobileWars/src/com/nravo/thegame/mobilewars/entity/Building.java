@@ -108,7 +108,8 @@ public class Building extends Entity {
 
 				if (timePassedForBot >= 5f) {
 					Building from = mGameLevel.mAllBuilding
-							.get(((int)(Math.random()*1000)% mGameLevel.mAllBuilding.size()));
+							.get(((int) (Math.random() * 1000) % mGameLevel.mAllBuilding
+									.size()));
 					Building to;
 					if (from.type == Levels.Race.APPLE_IOS) {
 						to = mGameLevel.mAllBuilding
@@ -134,7 +135,7 @@ public class Building extends Entity {
 							heroApple.heroSprite.registerEntityModifier(move);
 						}
 					}
-					timePassedForBot=0;
+					timePassedForBot = 0;
 				}
 
 				if (timePassed >= UNIT_REGENERATION_DELAY_IN_SEC) {
@@ -161,22 +162,52 @@ public class Building extends Entity {
 		return count;
 	}
 
-	public void decrementNumberOfUnits(int numberOfUnits) {
-		if (mNumberOfUnits - numberOfUnits > 0 && isMy) {
-			mNumberOfUnits -= numberOfUnits;
-		} else {
-			if (isMy) {
-				mNumberOfUnits = (mNumberOfUnits - numberOfUnits) * (-1);
-				type = type.equals(Levels.Race.APPLE_IOS) ? Levels.Race.ANDROID
-						: Levels.Race.APPLE_IOS;
-				isMy = false;
-				buildingSprite.detachSelf();
-				buildingSprite.clearEntityModifiers();
-				buildingSprite.clearUpdateHandlers();
-				buildingSprite = null;
-				buildSprite();
-			}
-			mNumberOfUnits += numberOfUnits;
+	// Androids run
+	public void decrementNumberOfUnits(Hero hero) {
+
+		if (type == Levels.Race.ANDROID) {
+			mNumberOfUnits += hero.countOfEnemy;
+			return;
+		}
+		if (mNumberOfUnits - hero.countOfEnemy > 0) {
+			mNumberOfUnits -= hero.countOfEnemy;
+			return;
+		}
+		if (mNumberOfUnits - hero.countOfEnemy < 0) {
+			mNumberOfUnits = (mNumberOfUnits - hero.countOfEnemy) * (-1);
+			type = type.equals(Levels.Race.APPLE_IOS) ? Levels.Race.ANDROID
+					: Levels.Race.APPLE_IOS;
+			mGameLevel.mAllBuilding.get(mGameLevel.mAllBuilding.indexOf(this)).type = type;
+			isMy = false;
+			buildingSprite.detachSelf();
+			buildingSprite.clearEntityModifiers();
+			buildingSprite.clearUpdateHandlers();
+			buildingSprite = null;
+			buildSprite();
 		}
 	}
+
+	public void decrementNumberOfUnitsEnemy(Hero hero) {
+		if (type == Levels.Race.APPLE_IOS) {
+			mNumberOfUnits += hero.countOfEnemy;
+			return;
+		}
+		if (mNumberOfUnits - hero.countOfEnemy > 0) {
+			mNumberOfUnits -= hero.countOfEnemy;
+			return;
+		}
+		if (mNumberOfUnits - hero.countOfEnemy < 0) {
+			mNumberOfUnits = (mNumberOfUnits - hero.countOfEnemy) * (-1);
+			type = type.equals(Levels.Race.APPLE_IOS) ? Levels.Race.ANDROID
+					: Levels.Race.APPLE_IOS;
+			mGameLevel.mAllBuilding.get(mGameLevel.mAllBuilding.indexOf(this)).type = type;
+			isMy = false;
+			buildingSprite.detachSelf();
+			buildingSprite.clearEntityModifiers();
+			buildingSprite.clearUpdateHandlers();
+			buildingSprite = null;
+			buildSprite();
+		}
+	}
+
 }

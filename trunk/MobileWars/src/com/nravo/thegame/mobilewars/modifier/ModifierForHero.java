@@ -29,7 +29,7 @@ public class ModifierForHero extends MoveModifier {
 			public void onModifierFinished(IModifier<IEntity> pModifier,
 					IEntity pItem) {
 				pool.recyclePoolItem(hero.heroSprite);
-				buildingTo.decrementNumberOfUnits(hero.countOfEnemy);
+				buildingTo.decrementNumberOfUnits(hero);
 			}
 		});
 	}

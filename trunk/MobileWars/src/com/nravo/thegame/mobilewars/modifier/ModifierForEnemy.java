@@ -26,7 +26,7 @@ public class ModifierForEnemy extends MoveModifier {
 			public void onModifierFinished(IModifier<IEntity> pModifier,
 					IEntity pItem) {
 				pool.recyclePoolItem(hero.heroSprite);
-				buildingTo.decrementNumberOfUnits(hero.countOfEnemy);
+				buildingTo.decrementNumberOfUnitsEnemy(hero);
                 SFXManager.playExplosion(1.0f, 1.0f);
 			}
 		});
