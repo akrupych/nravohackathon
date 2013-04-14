@@ -224,7 +224,7 @@ public class ResourceManager {
 					NORMAL_TEXTURE_OPTION);
 		}
         if (sLevelWonBackgroundTR == null) {
-            sLevelWonBackgroundTR = getTextureRegion("level_won_bg.jpg",
+            sLevelWonBackgroundTR = getTextureRegion("level_won_bg.png",
                     NORMAL_TEXTURE_OPTION);
         }
         if (sLevelLostBackgroundTR == null) {

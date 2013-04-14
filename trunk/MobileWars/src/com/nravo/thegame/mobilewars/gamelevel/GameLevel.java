@@ -206,6 +206,7 @@ public class GameLevel extends ManagedGameScene implements
 				}
 			}
 		}));
+
 	}
 
 	@Override
