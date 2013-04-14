@@ -29,6 +29,8 @@ public class Building extends Entity {
 	public float x;
 	public float y;
 
+	public boolean mAllowBotSpawn = true;
+
 	public Building(final GameLevel gameLevel, final Levels.Race buildingRace,
 			final float x, final float y, final int initialNumberOfUnits) {
 		isMy = true;
@@ -109,7 +111,7 @@ public class Building extends Entity {
 				timePassed += pSecondsElapsed;
 				timePassedForBot += pSecondsElapsed;
 
-				if (timePassedForBot >= 5f) {
+				if (timePassedForBot >= 5f && mAllowBotSpawn) {
 					Building from = mGameLevel.mAllBuilding
 							.get(((int) (Math.random() * 1000) % mGameLevel.mAllBuilding
 									.size()));
@@ -145,7 +147,7 @@ public class Building extends Entity {
 
 				if (timePassed >= UNIT_REGENERATION_DELAY_IN_SEC) {
 					if (mNumberOfUnits < MAX_NUMBER_OF_UNITS_IN_BUILDING) {
-						if (!type.equals(Levels.Race.NEUTRAL)) {
+						if (!type.equals(Levels.Race.NEUTRAL) && mAllowBotSpawn) {
 							mNumberOfUnits++;
 						}
 						timePassed = 0;
