@@ -16,6 +16,12 @@ public class ModifierForHero extends MoveModifier {
 			final Building buildingTo, final AndroidSpritePool pool,
 			final Hero hero, final Building building) {
 		super(duration, fromX, fromY, toX, toY);
+		if (fromX < toX){
+			hero.heroSprite.setFlippedHorizontal(false);
+		}
+		else {
+			hero.heroSprite.setFlippedHorizontal(true);
+		}
 		this.addModifierListener(new IModifierListener<IEntity>() {
 			@Override
 			public void onModifierStarted(IModifier<IEntity> pModifier,
