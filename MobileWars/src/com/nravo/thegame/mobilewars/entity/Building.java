@@ -156,7 +156,9 @@ public class Building extends Entity {
 						// increment number of total units depending on
 						// race of the building.
 
-					}
+					} else if (mNumberOfUnits > MAX_NUMBER_OF_UNITS_IN_BUILDING) {
+                        mNumberOfUnits--;
+                    }
 				}
 				this.setText(String.valueOf((int) mNumberOfUnits));
 				super.onManagedUpdate(pSecondsElapsed);
