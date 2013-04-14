@@ -206,8 +206,6 @@ public class GameLevel extends ManagedGameScene implements
 				}
 			}
 		}));
-
-        SceneManager.getInstance().showLayer(LevelWonLayer.getInstance(), true, true, true);
 	}
 
 	@Override
