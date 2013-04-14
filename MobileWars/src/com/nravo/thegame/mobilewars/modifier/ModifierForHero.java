@@ -19,7 +19,8 @@ public class ModifierForHero extends MoveModifier {
             @Override
             public void onModifierStarted(IModifier<IEntity> pModifier, IEntity pItem) {
                hero.countOfEnemy = building.decrementNumberOfUnits();   
-               buildingsFrom.clear();
+               if (buildingsFrom != null)
+            	   buildingsFrom.clear();
             }
 
             @Override

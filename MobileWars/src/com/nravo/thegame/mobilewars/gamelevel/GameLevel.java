@@ -17,12 +17,18 @@ import com.nravo.thegame.mobilewars.entity.AndroidSpritePool;
 import com.nravo.thegame.mobilewars.entity.Building;
 import com.nravo.thegame.mobilewars.entity.Hero;
 import com.nravo.thegame.mobilewars.entity.HeroAndroid;
+import com.nravo.thegame.mobilewars.entity.HeroApple;
 import com.nravo.thegame.mobilewars.gamelevel.handlers.DrawPointerUpdateHandler;
 import com.nravo.thegame.mobilewars.layers.LevelWonLayer;
 import com.nravo.thegame.mobilewars.managers.GameManager;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
 import com.nravo.thegame.mobilewars.managers.SceneManager;
+import com.nravo.thegame.mobilewars.modifier.ModifierForEnemy;
 import com.nravo.thegame.mobilewars.modifier.ModifierForHero;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
 
 public class GameLevel extends ManagedGameScene implements
 		GameManager.GameLevelGoal, IOnSceneTouchListener {
@@ -30,10 +36,11 @@ public class GameLevel extends ManagedGameScene implements
 	public static final int HEROES_POOL_SIZE = 100;
 	public final Levels.LevelDefinition mLevelDefinition;
 	public final int mNumberOfBuildingsInCurrentLevel;
-	
+
+	public List<Building> mAllBuilding = new ArrayList<Building>();
+
 	public static JellyBeansEffect mJellyBeansEffect = new JellyBeansEffect();
-	public static IceCreamSandwichEffect mIceCreamSandwichEffect =
-			new IceCreamSandwichEffect();
+	public static IceCreamSandwichEffect mIceCreamSandwichEffect = new IceCreamSandwichEffect();
 
 	public int mNumberOfEnemiesLeft = 0;
 	private int mNumberOfAlliesLeft = 10;
@@ -48,7 +55,7 @@ public class GameLevel extends ManagedGameScene implements
 	public Building buildingTo;
 
 	private boolean mHasCompletionTimerRun = false;
-	
+
 	private Sprite mJellyBeansSprite;
 	private Sprite mIceCreamSandwichSprite;
 
@@ -70,10 +77,13 @@ public class GameLevel extends ManagedGameScene implements
 					GameLevel.this.onLevelFailed();
 				}
 				GameLevel.this.unregisterUpdateHandler(this);
+
 			} else if (mJellyBeansEffect.mState == State.RUNNING) {
-				// TODO: foreach(building) building.damage(mJellyBeansEffect.getDamageTo(
-				//           building.x, building.y));
+				// TODO: foreach(building)
+				// building.damage(mJellyBeansEffect.getDamageTo(
+				// building.x, building.y));
 			}
+
 		}
 
 		@Override
@@ -127,9 +137,9 @@ public class GameLevel extends ManagedGameScene implements
 		GameManager.setGameLevel(this);
 		GameManager.setGameLevelGoal(this);
 
-        for (Levels.BuildingDefinition buildingDefinition: mLevelDefinition.buildingsInLevel) {
+		for (Levels.BuildingDefinition buildingDefinition : mLevelDefinition.buildingsInLevel) {
 
-        }
+		}
 
 		final int numberOfBuildingsInLevel = mLevelDefinition.buildingsInLevel.length;
 		buildingsFrom = new ArrayList<Building>(numberOfBuildingsInLevel);
@@ -141,15 +151,18 @@ public class GameLevel extends ManagedGameScene implements
 
 		// Buildings
 		for (Levels.BuildingDefinition currentBuilding : GameLevel.this.mLevelDefinition.buildingsInLevel) {
-			new Building(GameLevel.this, currentBuilding.race,
-					currentBuilding.x, currentBuilding.y,
+			Building building = new Building(GameLevel.this,
+					currentBuilding.race, currentBuilding.x, currentBuilding.y,
 					currentBuilding.initialNumberOfUnits);
+			mAllBuilding.add(building);
 		}
 
-		mJellyBeansSprite = new Sprite(0, 0, ResourceManager.sPowerJellyBeansTR,
-				ResourceManager.getEngine().getVertexBufferObjectManager());
-		mIceCreamSandwichSprite = new Sprite(0, 0, ResourceManager.sPowerIceCreamSandwichTR,
-				ResourceManager.getEngine().getVertexBufferObjectManager());
+		mJellyBeansSprite = new Sprite(0, 0,
+				ResourceManager.sPowerJellyBeansTR, ResourceManager.getEngine()
+						.getVertexBufferObjectManager());
+		mIceCreamSandwichSprite = new Sprite(0, 0,
+				ResourceManager.sPowerIceCreamSandwichTR, ResourceManager
+						.getEngine().getVertexBufferObjectManager());
 
 		GameLevel.this.setOnSceneTouchListener(this);
 	}
@@ -157,7 +170,7 @@ public class GameLevel extends ManagedGameScene implements
 	@Override
 	public boolean onSceneTouchEvent(final Scene pScene,
 			final TouchEvent pSceneTouchEvent) {
-		
+
 		float x = pSceneTouchEvent.getX();
 		float y = pSceneTouchEvent.getY();
 
@@ -194,19 +207,18 @@ public class GameLevel extends ManagedGameScene implements
 			// perform moving units
 			if (!buildingsFrom.isEmpty() && buildingTo != null) {
 				performUnitMovement();
-			}
-			else {
+			} else {
 				buildingsFrom.clear();
 			}
 			buildingTo = null;
 			if (mJellyBeansEffect.mState == State.WAITING) {
 				mJellyBeansSprite.detachSelf();
-				mJellyBeansEffect.launch(x, y, pScene,
-					ResourceManager.getEngine().getVertexBufferObjectManager());
+				mJellyBeansEffect.launch(x, y, pScene, ResourceManager
+						.getEngine().getVertexBufferObjectManager());
 			} else if (mIceCreamSandwichEffect.mState == State.WAITING) {
 				mIceCreamSandwichSprite.detachSelf();
-				mIceCreamSandwichEffect.launch(x, y, pScene,
-					ResourceManager.getEngine().getVertexBufferObjectManager());
+				mIceCreamSandwichEffect.launch(x, y, pScene, ResourceManager
+						.getEngine().getVertexBufferObjectManager());
 			}
 		}
 		return false;
@@ -217,22 +229,21 @@ public class GameLevel extends ManagedGameScene implements
 		ModifierForHero move;
 
 		for (Building building : buildingsFrom) {
-			heroAndroid = new HeroAndroid(
-                    building.buildingSprite.getX(),
-                    building.buildingSprite.getY(),
-                    buildingTo.buildingSprite.getX(),
-                    buildingTo.buildingSprite.getY(),
-                    mAndroidHeroPool);
+			heroAndroid = new HeroAndroid(building.buildingSprite.getX(),
+					building.buildingSprite.getY(),
+					buildingTo.buildingSprite.getX(),
+					buildingTo.buildingSprite.getY(), mAndroidHeroPool);
 
-            float timeToMove = Utils.calculateTime(heroAndroid.fromX,
-                    heroAndroid.fromY, heroAndroid.toX, heroAndroid.toY);
+			float timeToMove = Utils.calculateTime(heroAndroid.fromX,
+					heroAndroid.fromY, heroAndroid.toX, heroAndroid.toY);
 			move = new ModifierForHero(timeToMove, heroAndroid.fromX,
 					heroAndroid.fromY, heroAndroid.toX, heroAndroid.toY,
-					buildingsFrom, buildingTo, mAndroidHeroPool, heroAndroid, building);
-            GameLevel.this.attachChild(heroAndroid.heroSprite);
+					buildingsFrom, buildingTo, mAndroidHeroPool, heroAndroid,
+					building);
+			GameLevel.this.attachChild(heroAndroid.heroSprite);
 			heroAndroid.heroSprite.registerEntityModifier(move);
 		}
-	//	buildingTo.incrementNumberOfUnits(1);
+		// buildingTo.incrementNumberOfUnits(1);
 	}
 
 	public void disposeLevel() {
