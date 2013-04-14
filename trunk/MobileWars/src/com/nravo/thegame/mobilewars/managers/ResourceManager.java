@@ -50,6 +50,8 @@ public class ResourceManager {
     // ANDROID BUILDINGS
 	public static ITextureRegion sAndroidSmallBuildingTR;
 	public static ITiledTextureRegion sAndroidBigBuildingTR;
+    // NEUTRAL
+    public static ITiledTextureRegion sNeutralButildingTTR;
 
     public static ITextureRegion sBuildingCounterBgTR;
 	public static TiledTextureRegion sAndroidTTR;
@@ -205,6 +207,10 @@ public class ResourceManager {
 		}
         if (sAppleBigBuildingTTR == null) {
 			sAppleBigBuildingTTR = getTiledTextureRegion("building_ipad.png", 10, 1,
+                    NORMAL_TEXTURE_OPTION);
+		}
+        if (sNeutralButildingTTR == null) {
+            sNeutralButildingTTR = getTiledTextureRegion("building_neutral.png", 10, 1,
                     NORMAL_TEXTURE_OPTION);
 		}
         if (sAndroidBigBuildingTR == null) {
