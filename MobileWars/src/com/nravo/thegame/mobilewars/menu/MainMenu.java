@@ -82,7 +82,8 @@ public class MainMenu extends ManagedMenuScene {
             @Override
             public void onClick() {
                 // Stub for now, later levels have to be chosen dynamically
-                Levels.LevelDefinition firstLevelDefinition = Levels.AVAILABLE_LEVELS[2]; // load first level
+            	Levels.currentRoom = 0;
+                Levels.LevelDefinition firstLevelDefinition = Levels.AVAILABLE_LEVELS[Levels.currentRoom]; // load first level
                 SceneManager.getInstance().showScene(new GameLevel(firstLevelDefinition));
             }
         };

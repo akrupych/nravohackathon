@@ -105,7 +105,7 @@ public class LevelLostLayer extends ManagedLayer {
                 mLayerBackground.getHeight()/2f, ResourceManager.restartButtonTTR) {
             @Override
             public void onClick() {
-                SceneManager.getInstance().showScene(new GameLevel(Levels.AVAILABLE_LEVELS[0]));
+                SceneManager.getInstance().showScene(new GameLevel(Levels.AVAILABLE_LEVELS[Levels.currentRoom]));
             }
         };
         mLayerBackground.attachChild(restartButton);
