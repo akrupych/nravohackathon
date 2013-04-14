@@ -9,11 +9,10 @@ import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.input.touch.TouchEvent;
 
-import android.util.Log;
-
 import com.nravo.thegame.mobilewars.Utils.Utils;
+import com.nravo.thegame.mobilewars.effects.GodPowerEffect.State;
+import com.nravo.thegame.mobilewars.effects.IceCreamSandwichEffect;
 import com.nravo.thegame.mobilewars.effects.JellyBeansEffect;
-import com.nravo.thegame.mobilewars.effects.JellyBeansEffect.State;
 import com.nravo.thegame.mobilewars.entity.AndroidSpritePool;
 import com.nravo.thegame.mobilewars.entity.Building;
 import com.nravo.thegame.mobilewars.entity.Hero;
@@ -33,6 +32,8 @@ public class GameLevel extends ManagedGameScene implements
 	public final int mNumberOfBuildingsInCurrentLevel;
 	
 	public static JellyBeansEffect mJellyBeansEffect = new JellyBeansEffect();
+	public static IceCreamSandwichEffect mIceCreamSandwichEffect =
+			new IceCreamSandwichEffect();
 
 	public int mNumberOfEnemiesLeft = 0;
 	private int mNumberOfAlliesLeft = 10;
@@ -49,6 +50,7 @@ public class GameLevel extends ManagedGameScene implements
 	private boolean mHasCompletionTimerRun = false;
 	
 	private Sprite mJellyBeansSprite;
+	private Sprite mIceCreamSandwichSprite;
 
 	// ============================================================
 	// ===================== UPDATE HANDLERS=======================
@@ -146,6 +148,8 @@ public class GameLevel extends ManagedGameScene implements
 
 		mJellyBeansSprite = new Sprite(0, 0, ResourceManager.sPowerJellyBeansTR,
 				ResourceManager.getEngine().getVertexBufferObjectManager());
+		mIceCreamSandwichSprite = new Sprite(0, 0, ResourceManager.sPowerIceCreamSandwichTR,
+				ResourceManager.getEngine().getVertexBufferObjectManager());
 
 		GameLevel.this.setOnSceneTouchListener(this);
 	}
@@ -162,6 +166,10 @@ public class GameLevel extends ManagedGameScene implements
 				mJellyBeansSprite.setPosition(x, y);
 				mJellyBeansSprite.setScale(2);
 				pScene.attachChild(mJellyBeansSprite);
+			} else if (mIceCreamSandwichEffect.mState == State.WAITING) {
+				mIceCreamSandwichSprite.setPosition(x, y);
+				mIceCreamSandwichSprite.setScale(2);
+				pScene.attachChild(mIceCreamSandwichSprite);
 			}
 		}
 
@@ -170,6 +178,8 @@ public class GameLevel extends ManagedGameScene implements
 			mY = pSceneTouchEvent.getY();
 			if (mJellyBeansEffect.mState == State.WAITING) {
 				mJellyBeansSprite.setPosition(x, y);
+			} else if (mIceCreamSandwichEffect.mState == State.WAITING) {
+				mIceCreamSandwichSprite.setPosition(x, y);
 			} else if (!lineDrawingHandler.isRegistered()) {
 				GameLevel.this.registerUpdateHandler(lineDrawingHandler);
 				lineDrawingHandler.setPointersVisible(true);
@@ -193,9 +203,13 @@ public class GameLevel extends ManagedGameScene implements
 				mJellyBeansSprite.detachSelf();
 				mJellyBeansEffect.launch(x, y, pScene,
 					ResourceManager.getEngine().getVertexBufferObjectManager());
+			} else if (mIceCreamSandwichEffect.mState == State.WAITING) {
+				mIceCreamSandwichSprite.detachSelf();
+				mIceCreamSandwichEffect.launch(x, y, pScene,
+					ResourceManager.getEngine().getVertexBufferObjectManager());
 			}
 		}
-		return true;
+		return false;
 	}
 
 	private void performUnitMovement() {
