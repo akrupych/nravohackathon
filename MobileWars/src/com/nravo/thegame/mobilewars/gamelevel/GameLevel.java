@@ -137,7 +137,7 @@ public class GameLevel extends ManagedGameScene implements
 	public void onLevelFailed() {
 		if (this.mHasCompletionTimerRun) {
 			SceneManager.getInstance().showLayer(
-					LevelLostLayer.getInstance(this), false, false, false);
+					LevelLostLayer.getInstance(this), true, true, true);
 		} else {
 			GameLevel.this.registerUpdateHandler(this.onCompletionTimer);
 		}

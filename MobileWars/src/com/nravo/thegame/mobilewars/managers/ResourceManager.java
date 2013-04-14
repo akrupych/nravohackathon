@@ -229,7 +229,7 @@ public class ResourceManager {
                     NORMAL_TEXTURE_OPTION);
         }
         if (sLevelLostBackgroundTR == null) {
-            sLevelLostBackgroundTR = getTextureRegion("lost_bg.jpg",
+            sLevelLostBackgroundTR = getTextureRegion("lost.png",
                     NORMAL_TEXTURE_OPTION);
         }
 		if (sAppleSmallBuildingTR == null) {

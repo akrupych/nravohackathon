@@ -102,12 +102,13 @@ public class LevelLostLayer extends ManagedLayer {
         this.attachChild(mLayerBackground);
 
         GrowButton restartButton = new GrowButton(mLayerBackground.getWidth()/2f,
-                mLayerBackground.getHeight()/2f, ResourceManager.restartButtonTTR) {
+                0, ResourceManager.restartButtonTTR) {
             @Override
             public void onClick() {
                 SceneManager.getInstance().showScene(new GameLevel(Levels.AVAILABLE_LEVELS[Levels.currentRoom]));
             }
         };
+        restartButton.setScale(0.5f);
         mLayerBackground.attachChild(restartButton);
         this.registerTouchArea(restartButton);
 
