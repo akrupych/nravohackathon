@@ -108,8 +108,7 @@ public class Building extends Entity {
 
 				if (timePassedForBot >= 5f) {
 					Building from = mGameLevel.mAllBuilding
-							.get(((int) (Math.random() * 1000) % mGameLevel.mAllBuilding
-									.size()));
+							.get(((int)(Math.random()*1000)% mGameLevel.mAllBuilding.size()));
 					Building to;
 					if (from.type == Levels.Race.APPLE_IOS) {
 						to = mGameLevel.mAllBuilding
@@ -135,15 +134,12 @@ public class Building extends Entity {
 							heroApple.heroSprite.registerEntityModifier(move);
 						}
 					}
-					timePassedForBot = 0;
+					timePassedForBot=0;
 				}
 
 				if (timePassed >= UNIT_REGENERATION_DELAY_IN_SEC) {
 					if (mNumberOfUnits < MAX_NUMBER_OF_UNITS_IN_BUILDING) {
 						mNumberOfUnits++;
-						if (type == Levels.Race.APPLE_IOS) {
-							mGameLevel.mNumberOfEnemiesLeft++;
-						}
 						timePassed = 0;
 
 						// TODO
@@ -168,7 +164,6 @@ public class Building extends Entity {
 	public void decrementNumberOfUnits(int numberOfUnits) {
 		if (mNumberOfUnits - numberOfUnits > 0 && isMy) {
 			mNumberOfUnits -= numberOfUnits;
-			mGameLevel.mNumberOfEnemiesLeft -= numberOfUnits;
 		} else {
 			if (isMy) {
 				mNumberOfUnits = (mNumberOfUnits - numberOfUnits) * (-1);

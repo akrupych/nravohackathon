@@ -1,29 +1,24 @@
 package com.nravo.thegame.mobilewars.gamelevel;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.andengine.engine.handler.IUpdateHandler;
-import org.andengine.entity.scene.IOnSceneTouchListener;
-import org.andengine.entity.scene.Scene;
-import org.andengine.entity.sprite.Sprite;
-import org.andengine.input.touch.TouchEvent;
-
 import com.nravo.thegame.mobilewars.Utils.Utils;
 import com.nravo.thegame.mobilewars.effects.GodPowerEffect.State;
 import com.nravo.thegame.mobilewars.effects.IceCreamSandwichEffect;
 import com.nravo.thegame.mobilewars.effects.JellyBeansEffect;
-import com.nravo.thegame.mobilewars.entity.AndroidSpritePool;
-import com.nravo.thegame.mobilewars.entity.AppleSpritePool;
-import com.nravo.thegame.mobilewars.entity.Building;
-import com.nravo.thegame.mobilewars.entity.Hero;
-import com.nravo.thegame.mobilewars.entity.HeroAndroid;
+import com.nravo.thegame.mobilewars.entity.*;
 import com.nravo.thegame.mobilewars.gamelevel.handlers.DrawPointerUpdateHandler;
 import com.nravo.thegame.mobilewars.layers.LevelWonLayer;
 import com.nravo.thegame.mobilewars.managers.GameManager;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
 import com.nravo.thegame.mobilewars.managers.SceneManager;
 import com.nravo.thegame.mobilewars.modifier.ModifierForHero;
+import org.andengine.engine.handler.IUpdateHandler;
+import org.andengine.entity.scene.IOnSceneTouchListener;
+import org.andengine.entity.scene.Scene;
+import org.andengine.entity.sprite.Sprite;
+import org.andengine.input.touch.TouchEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameLevel extends ManagedGameScene implements
 		GameManager.GameLevelGoal, IOnSceneTouchListener {
@@ -101,12 +96,24 @@ public class GameLevel extends ManagedGameScene implements
 	// ======================================
 	@Override
 	public boolean isLevelCompleted() {
-		return this.mNumberOfEnemiesLeft <= 0;
+        int numberOfEnemyBuildingsLeft = 0;
+        for (Building building : mAllBuilding) {
+            if (building.type.equals(Levels.Race.APPLE_IOS)) {
+                numberOfEnemyBuildingsLeft++;
+            }
+        }
+        return numberOfEnemyBuildingsLeft == 0;
 	}
 
 	@Override
 	public boolean isLevelFailed() {
-		return this.mNumberOfAlliesLeft <= 0;
+        int numberOfMyBuildingsLeft = 0;
+        for (Building building : mAllBuilding) {
+            if (building.type.equals(Levels.Race.ANDROID)) {
+                numberOfMyBuildingsLeft++;
+            }
+        }
+        return numberOfMyBuildingsLeft == 0;
 	}
 
 	@Override
@@ -133,9 +140,9 @@ public class GameLevel extends ManagedGameScene implements
 		GameManager.setGameLevel(this);
 		GameManager.setGameLevelGoal(this);
 
-//		for (Levels.BuildingDefinition buildingDefinition : mLevelDefinition.buildingsInLevel) {
-//
-//		}
+		for (Levels.BuildingDefinition buildingDefinition : mLevelDefinition.buildingsInLevel) {
+
+		}
 
 		final int numberOfBuildingsInLevel = mLevelDefinition.buildingsInLevel.length;
 		buildingsFrom = new ArrayList<Building>(numberOfBuildingsInLevel);
