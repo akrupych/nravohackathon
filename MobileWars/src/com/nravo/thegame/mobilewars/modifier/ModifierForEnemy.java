@@ -1,5 +1,6 @@
 package com.nravo.thegame.mobilewars.modifier;
 
+import com.nravo.thegame.mobilewars.managers.SFXManager;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.MoveModifier;
 import org.andengine.util.modifier.IModifier;
@@ -26,6 +27,7 @@ public class ModifierForEnemy extends MoveModifier {
 					IEntity pItem) {
 				pool.recyclePoolItem(hero.heroSprite);
 				buildingTo.decrementNumberOfUnits(hero.countOfEnemy);
+                SFXManager.playExplosion(1.0f, 1.0f);
 			}
 		});
 	}
