@@ -1,28 +1,12 @@
 package com.nravo.thegame.mobilewars.gamelevel;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.andengine.engine.handler.IUpdateHandler;
-import org.andengine.engine.handler.timer.ITimerCallback;
-import org.andengine.engine.handler.timer.TimerHandler;
-import org.andengine.entity.scene.IOnSceneTouchListener;
-import org.andengine.entity.scene.Scene;
-import org.andengine.entity.sprite.Sprite;
-import org.andengine.input.touch.TouchEvent;
-
 import android.util.Log;
-
 import com.nravo.thegame.mobilewars.Utils.Utils;
 import com.nravo.thegame.mobilewars.effects.GodPowerEffect.State;
 import com.nravo.thegame.mobilewars.effects.HoneycombEffect;
 import com.nravo.thegame.mobilewars.effects.IceCreamSandwichEffect;
 import com.nravo.thegame.mobilewars.effects.JellyBeansEffect;
-import com.nravo.thegame.mobilewars.entity.AndroidSpritePool;
-import com.nravo.thegame.mobilewars.entity.AppleSpritePool;
-import com.nravo.thegame.mobilewars.entity.Building;
-import com.nravo.thegame.mobilewars.entity.Hero;
-import com.nravo.thegame.mobilewars.entity.HeroAndroid;
+import com.nravo.thegame.mobilewars.entity.*;
 import com.nravo.thegame.mobilewars.gamelevel.Levels.Race;
 import com.nravo.thegame.mobilewars.gamelevel.handlers.DrawPointerUpdateHandler;
 import com.nravo.thegame.mobilewars.layers.LevelLostLayer;
@@ -31,6 +15,16 @@ import com.nravo.thegame.mobilewars.managers.GameManager;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
 import com.nravo.thegame.mobilewars.managers.SceneManager;
 import com.nravo.thegame.mobilewars.modifier.ModifierForHero;
+import org.andengine.engine.handler.IUpdateHandler;
+import org.andengine.engine.handler.timer.ITimerCallback;
+import org.andengine.engine.handler.timer.TimerHandler;
+import org.andengine.entity.scene.IOnSceneTouchListener;
+import org.andengine.entity.scene.Scene;
+import org.andengine.entity.sprite.Sprite;
+import org.andengine.input.touch.TouchEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameLevel extends ManagedGameScene implements
 		GameManager.GameLevelGoal, IOnSceneTouchListener {
@@ -133,7 +127,7 @@ public class GameLevel extends ManagedGameScene implements
 	public void onLevelCompleted() {
 		if (this.mHasCompletionTimerRun) {
 			SceneManager.getInstance().showLayer(
-					LevelWonLayer.getInstance(this), false, false, false);
+					LevelWonLayer.getInstance(this), true, true, true);
 		} else {
 			GameLevel.this.registerUpdateHandler(this.onCompletionTimer);
 		}
