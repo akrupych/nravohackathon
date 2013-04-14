@@ -76,6 +76,8 @@ public class ResourceManager {
 	};
 	public static ITextureRegion sIceCreamSandwichTR;
 	public static ITextureRegion sFreezeTR;
+	public static ITextureRegion sHoneycombTR;
+	public static ITextureRegion sBeeTR;
 
 	// ================== MENU RESOURCES =====================
 	// TR = Texture Region; TTR = Tiled texture region
@@ -194,6 +196,12 @@ public class ResourceManager {
 		}
 		if (sFreezeTR == null) {
 			sFreezeTR = getTextureRegion("freeze.png", NORMAL_TEXTURE_OPTION);
+		}
+		if (sHoneycombTR == null) {
+			sHoneycombTR = getTextureRegion("honeycomb.png", NORMAL_TEXTURE_OPTION);
+		}
+		if (sBeeTR == null) {
+			sBeeTR = getTextureRegion("bee.png", NORMAL_TEXTURE_OPTION);
 		}
 		/////////////////////////////// ETC ////////////////////////////////////
 		if (sGameBackgroundTR == null) {
