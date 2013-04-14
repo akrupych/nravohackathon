@@ -87,7 +87,8 @@ public class ResourceManager {
 	public static ITextureRegion sMenuBackgroundTR;
 	public static ITextureRegion sGameLogoTR;
 	public static ITiledTextureRegion menuMainButtonTTR;
-	public static ITiledTextureRegion restartButtonTR;
+	public static ITiledTextureRegion restartButtonTTR;
+	public static ITiledTextureRegion nextLevelButtonTTR;
 
 	public static TiledTextureRegion musicToggleTTR;
 	public static TiledTextureRegion soundToggleTTR;
@@ -300,9 +301,13 @@ public class ResourceManager {
 					NORMAL_TEXTURE_OPTION);
 		}
 
-        if (restartButtonTR == null) {
-			restartButtonTR = getTiledTextureRegion("restart_lvl_button.png", 2, 1, NORMAL_TEXTURE_OPTION);
+        if (restartButtonTTR == null) {
+			restartButtonTTR = getTiledTextureRegion("restart_lvl_button.png", 2, 1, NORMAL_TEXTURE_OPTION);
 		}
+
+        if (nextLevelButtonTTR == null) {
+            nextLevelButtonTTR = getTiledTextureRegion("next_level_button.png", 2, 1, NORMAL_TEXTURE_OPTION);
+        }
 
 		if (musicToggleTTR == null) {
 			musicToggleTTR = getTiledTextureRegion("andrew_sound_button.png", 2, 1,
