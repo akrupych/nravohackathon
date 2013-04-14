@@ -20,10 +20,9 @@ public class Levels {
                 new BuildingDefinition(0.14f*CAMERA_WIDTH, 0.81f*CAMERA_HEIGHT, 10, Race.NEUTRAL, BuildingDefinition.BuildingType.TOWER),
                 new BuildingDefinition(0.29f*CAMERA_WIDTH, 0.63f*CAMERA_HEIGHT, 10, Race.NEUTRAL, BuildingDefinition.BuildingType.TOWER),
 
-                new BuildingDefinition(0.33f*CAMERA_WIDTH, 0.24f*CAMERA_HEIGHT, 10, Race.NEUTRAL, BuildingDefinition.BuildingType.TOWER),
+                new BuildingDefinition(0.30f*CAMERA_WIDTH, 0.24f*CAMERA_HEIGHT, 10, Race.NEUTRAL, BuildingDefinition.BuildingType.TOWER),
                 new BuildingDefinition(0.55f*CAMERA_WIDTH, 0.80f*CAMERA_HEIGHT, 10, Race.NEUTRAL, BuildingDefinition.BuildingType.TOWER),
                 new BuildingDefinition(0.54f*CAMERA_WIDTH, 0.40f*CAMERA_HEIGHT, 10, Race.NEUTRAL, BuildingDefinition.BuildingType.TOWER),
-                new BuildingDefinition(0.53f*CAMERA_WIDTH, 0.10f*CAMERA_HEIGHT, 10, Race.NEUTRAL, BuildingDefinition.BuildingType.TOWER),
                 new BuildingDefinition(0.70f*CAMERA_WIDTH, 0.57f*CAMERA_HEIGHT, 10, Race.NEUTRAL, BuildingDefinition.BuildingType.TOWER),
 
                 new BuildingDefinition(0.80f*CAMERA_WIDTH, 0.25f*CAMERA_HEIGHT, 10, Race.NEUTRAL, BuildingDefinition.BuildingType.TOWER),

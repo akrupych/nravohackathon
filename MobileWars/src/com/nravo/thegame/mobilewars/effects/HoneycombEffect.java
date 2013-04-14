@@ -9,7 +9,6 @@ import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.AlphaModifier;
 import org.andengine.entity.modifier.IEntityModifier.IEntityModifierListener;
 import org.andengine.entity.scene.Scene;
-import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.modifier.IModifier;
@@ -60,6 +59,7 @@ public class HoneycombEffect extends GodPowerEffect {
 						public void run() {
 							remove(sprite);
 							list.remove(sprite);
+							Log.d("removed", list.size() + "");
 						}
 					});
 				}
@@ -119,6 +119,7 @@ public class HoneycombEffect extends GodPowerEffect {
 	}
 	
 	public double getDamageTo(Building building) {
+		Log.d("update", mAllHoneycombs.size() + " " + mBees.size());
 		for (int i = 0; i < mAllHoneycombs.size(); i++) {
 			Sprite honeycomb = mAllHoneycombs.get(i);
 			if (honeycomb.collidesWith(building.buildingSprite)) {
