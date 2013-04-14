@@ -16,6 +16,7 @@ public class MainMenu extends ManagedMenuScene {
     private static final MainMenu INSTANCE = new MainMenu();
 
     private Sprite mMenuBackgroundSprite;
+    private Sprite mGameLogoSprite;
 
     public static MainMenu getInstance() {
         return INSTANCE;
@@ -54,9 +55,12 @@ public class MainMenu extends ManagedMenuScene {
         		ResourceManager.sMenuBackgroundTR.getWidth());
         mMenuBackgroundSprite.setZIndex(-5000);
         attachChild(mMenuBackgroundSprite);
-        
-//        attachChild(new StarFlightEffect(vboManager,
-//        		ResourceManager.mStarFlightTR, centerX, centerY));
+
+        mGameLogoSprite = new Sprite(centerX - centerX/2f + 100, centerY,
+                ResourceManager.sGameLogoTR, vboManager);
+        mGameLogoSprite.setScale(ResourceManager.getInstance().cameraWidth /
+                ResourceManager.sGameLogoTR.getWidth()*0.6f);
+        attachChild(mGameLogoSprite);
 
         GrowToggleButton musicToggleButton = new GrowToggleButton(ResourceManager.musicToggleTTR.getWidth() / 2,
                 ResourceManager.musicToggleTTR.getHeight() / 2, ResourceManager.musicToggleTTR, !SFXManager.isMusicMuted()) {
@@ -73,7 +77,7 @@ public class MainMenu extends ManagedMenuScene {
         mMenuBackgroundSprite.attachChild(musicToggleButton);
         this.registerTouchArea(musicToggleButton);
 
-        final GrowButton playButton = new GrowButton(centerX, centerY,
+        final GrowButton playButton = new GrowButton(centerX + centerX/2f + 100, centerY,
         		ResourceManager.menuMainButtonTTR) {
             @Override
             public void onClick() {
@@ -82,6 +86,7 @@ public class MainMenu extends ManagedMenuScene {
                 SceneManager.getInstance().showScene(new GameLevel(firstLevelDefinition));
             }
         };
+        playButton.setScale(0.75f);
         this.attachChild(playButton);
         this.registerTouchArea(playButton);
 

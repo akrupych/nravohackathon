@@ -85,6 +85,7 @@ public class ResourceManager {
 	// ================== MENU RESOURCES =====================
 	// TR = Texture Region; TTR = Tiled texture region
 	public static ITextureRegion sMenuBackgroundTR;
+	public static ITextureRegion sGameLogoTR;
 	public static ITiledTextureRegion menuMainButtonTTR;
 	public static ITiledTextureRegion restartButtonTR;
 
@@ -284,6 +285,12 @@ public class ResourceManager {
 		// MENU background
 		if (sMenuBackgroundTR == null) {
 			sMenuBackgroundTR = getTextureRegion("andrew_background.png",
+					NORMAL_TEXTURE_OPTION);
+		}
+
+        // GAME LOGO
+        if (sGameLogoTR == null) {
+			sGameLogoTR = getTextureRegion("game_logo.png",
 					NORMAL_TEXTURE_OPTION);
 		}
 

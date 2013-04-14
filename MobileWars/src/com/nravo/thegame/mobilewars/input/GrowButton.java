@@ -24,7 +24,7 @@ public abstract class GrowButton extends TiledSprite {
 	// ====================================================
 	private static final float mGROW_DURATION_SECONDS = 0.05f;
 	private static final float mNORMAL_SCALE_DEFAULT = 1f;
-	private static final float mGROWN_SCALE_DEFAULT = 1.4f;
+	private static final float mGROWN_SCALE_DEFAULT = 1.2f;
 	private static final float mENABLED_ALPHA = 1f;
 	private static final float mDISABLED_ALPHA = 0.5f;
 	
