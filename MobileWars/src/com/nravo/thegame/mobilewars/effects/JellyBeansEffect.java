@@ -101,12 +101,12 @@ public class JellyBeansEffect extends GodPowerEffect {
 	}
 
 	public double getDamageTo(Building building) {
-		float x = building.getX();
-		float y = building.getY();
+		float x = building.buildingSprite.getX();
+		float y = building.buildingSprite.getY();
 		double distance = Math.sqrt(Math.pow(mEffectCenter.x - x, 2.0) +
 				Math.pow(mEffectCenter.y - y, 2.0));
-		double damage = 3000 / (1 + distance);
-		Log.e("qwerty", distance + " " + damage);
+		double damage = 300 / (1 + distance);
+		Log.e("qwerty", "damage:" + damage);
 		return damage;
 	}
 

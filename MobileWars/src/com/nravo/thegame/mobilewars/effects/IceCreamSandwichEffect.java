@@ -18,7 +18,9 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 import android.opengl.GLES20;
+import android.util.Log;
 
+import com.nravo.thegame.mobilewars.entity.Building;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
 
 public class IceCreamSandwichEffect extends GodPowerEffect {
@@ -93,6 +95,16 @@ public class IceCreamSandwichEffect extends GodPowerEffect {
 	@Override
 	public float getRespawnTime() {
 		return 45;
+	}
+
+	public float getFreezeTimeFor(Building building) {
+		float x = building.buildingSprite.getX();
+		float y = building.buildingSprite.getY();
+		double distance = Math.sqrt(Math.pow(mEffectCenter.x - x, 2.0) +
+				Math.pow(mEffectCenter.y - y, 2.0));
+		float time = (float) (1000 / (1 + distance));
+		Log.e("qwerty", "time:" + time);
+		return time;
 	}
 
 }

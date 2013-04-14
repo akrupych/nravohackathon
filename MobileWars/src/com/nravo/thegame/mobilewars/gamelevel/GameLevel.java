@@ -1,5 +1,7 @@
 package com.nravo.thegame.mobilewars.gamelevel;
 
+import android.util.Log;
+
 import com.nravo.thegame.mobilewars.Utils.Utils;
 import com.nravo.thegame.mobilewars.effects.GodPowerEffect.State;
 import com.nravo.thegame.mobilewars.effects.IceCreamSandwichEffect;
@@ -245,6 +247,21 @@ public class GameLevel extends ManagedGameScene implements
 				mIceCreamSandwichSprite.detachSelf();
 				mIceCreamSandwichEffect.launch(x, y, pScene, ResourceManager
 						.getEngine().getVertexBufferObjectManager());
+				for (Building building : mAllBuilding) {
+					if (building.type != Levels.Race.ANDROID) {
+						final Building finalBuilding = building;
+						building.mAllowBotSpawn = false;
+						float freezeTime = mIceCreamSandwichEffect.getFreezeTimeFor(building);
+						registerUpdateHandler(new TimerHandler(freezeTime,
+							new ITimerCallback() {
+								@Override
+								public void onTimePassed(TimerHandler pTimerHandler) {
+									Log.e("qwerty", "allow updates");
+									finalBuilding.mAllowBotSpawn = true;
+								}
+							}));
+					}
+				}
 			}
 		}
 		return false;
