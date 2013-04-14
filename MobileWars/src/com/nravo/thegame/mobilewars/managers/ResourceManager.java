@@ -1,5 +1,6 @@
 package com.nravo.thegame.mobilewars.managers;
 
+import com.nravo.thegame.mobilewars.layers.LevelLostLayer;
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
 import org.andengine.opengl.font.Font;
@@ -43,6 +44,7 @@ public class ResourceManager {
 	// TR = Texture Region
 	public static ITextureRegion sGameBackgroundTR;
 	public static ITextureRegion sLevelWonBackgroundTR;
+	public static ITextureRegion sLevelLostBackgroundTR;
 
     // APPLE BUILDINGS
 	public static ITextureRegion sAppleSmallBuildingTR;
@@ -113,6 +115,7 @@ public class ResourceManager {
 		getInstance().loadGameTextures();
         getInstance().loadSharedResources();
         LevelWonLayer.getInstance().onLoadLayer();
+        LevelLostLayer.getInstance().onLoadLayer();
 	}
 
 	public static void loadMenuResources() {
@@ -198,9 +201,13 @@ public class ResourceManager {
 					NORMAL_TEXTURE_OPTION);
 		}
         if (sLevelWonBackgroundTR == null) {
-			sLevelWonBackgroundTR = getTextureRegion("level_won_bg.jpg",
-					NORMAL_TEXTURE_OPTION);
-		}
+            sLevelWonBackgroundTR = getTextureRegion("level_won_bg.jpg",
+                    NORMAL_TEXTURE_OPTION);
+        }
+        if (sLevelLostBackgroundTR == null) {
+            sLevelLostBackgroundTR = getTextureRegion("lost_bg.jpg",
+                    NORMAL_TEXTURE_OPTION);
+        }
 		if (sAppleSmallBuildingTR == null) {
 			sAppleSmallBuildingTR = getTextureRegion("apple_mac.png",
 					NORMAL_TEXTURE_OPTION);

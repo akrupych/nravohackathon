@@ -1,7 +1,5 @@
 package com.nravo.thegame.mobilewars.gamelevel;
 
-import android.util.Log;
-
 import com.nravo.thegame.mobilewars.Utils.Utils;
 import com.nravo.thegame.mobilewars.effects.GodPowerEffect.State;
 import com.nravo.thegame.mobilewars.effects.IceCreamSandwichEffect;
@@ -9,6 +7,7 @@ import com.nravo.thegame.mobilewars.effects.JellyBeansEffect;
 import com.nravo.thegame.mobilewars.entity.*;
 import com.nravo.thegame.mobilewars.gamelevel.Levels.Race;
 import com.nravo.thegame.mobilewars.gamelevel.handlers.DrawPointerUpdateHandler;
+import com.nravo.thegame.mobilewars.layers.LevelLostLayer;
 import com.nravo.thegame.mobilewars.layers.LevelWonLayer;
 import com.nravo.thegame.mobilewars.managers.GameManager;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
@@ -37,9 +36,6 @@ public class GameLevel extends ManagedGameScene implements
 	public static JellyBeansEffect mJellyBeansEffect = new JellyBeansEffect();
 	public static IceCreamSandwichEffect mIceCreamSandwichEffect = new IceCreamSandwichEffect();
 
-	public int mNumberOfEnemiesLeft = 0;
-	private int mNumberOfAlliesLeft = 10;
-
 	public float mX = 0;
 	public float mY = 0;
 
@@ -54,6 +50,14 @@ public class GameLevel extends ManagedGameScene implements
 	private Sprite mJellyBeansSprite;
 	private Sprite mIceCreamSandwichSprite;
 
+    private GameStatus gameStatus = GameStatus.IN_PROGRESS;
+
+    public enum GameStatus {
+        IN_PROGRESS,
+        WON,
+        LOST
+    }
+
 	// ============================================================
 	// ===================== UPDATE HANDLERS=======================
 	// ============================================================
@@ -67,8 +71,10 @@ public class GameLevel extends ManagedGameScene implements
 			if (this.mTotalElapsedTime >= this.COMPLETION_DELAY_SECONDS) {
 				GameLevel.this.mHasCompletionTimerRun = true;
 				if (GameLevel.this.isLevelCompleted()) {
+                    gameStatus = GameStatus.WON;
 					GameLevel.this.onLevelCompleted();
 				} else {
+                    gameStatus = GameStatus.LOST;
 					GameLevel.this.onLevelFailed();
 				}
 				GameLevel.this.unregisterUpdateHandler(this);
@@ -118,8 +124,8 @@ public class GameLevel extends ManagedGameScene implements
 	@Override
 	public void onLevelCompleted() {
 		if (this.mHasCompletionTimerRun) {
-			SceneManager.getInstance().showLayer(
-					LevelWonLayer.getInstance(this), false, false, false);
+                SceneManager.getInstance().showLayer(
+                        LevelWonLayer.getInstance(this), false, false, false);
 		} else {
 			GameLevel.this.registerUpdateHandler(this.onCompletionTimer);
 		}
@@ -128,7 +134,8 @@ public class GameLevel extends ManagedGameScene implements
 	@Override
 	public void onLevelFailed() {
 		if (this.mHasCompletionTimerRun) {
-			// TODO restart level
+            SceneManager.getInstance().showLayer(
+                    LevelLostLayer.getInstance(this), false, false, false);
 		} else {
 			GameLevel.this.registerUpdateHandler(this.onCompletionTimer);
 		}

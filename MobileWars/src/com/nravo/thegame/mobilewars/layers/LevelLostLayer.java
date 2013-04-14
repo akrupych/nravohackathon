@@ -1,6 +1,5 @@
 package com.nravo.thegame.mobilewars.layers;
 
-import com.nravo.thegame.mobilewars.effects.StarFlightEffect;
 import com.nravo.thegame.mobilewars.gamelevel.GameLevel;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
 import com.nravo.thegame.mobilewars.managers.SceneManager;
@@ -11,15 +10,15 @@ import org.andengine.entity.sprite.Sprite;
 /**
  * This layer is shown to the player if a level is completed successfully
  */
-public class LevelWonLayer extends ManagedLayer {
+public class LevelLostLayer extends ManagedLayer {
 
-    private static final LevelWonLayer INSTANCE = new LevelWonLayer();
+    private static final LevelLostLayer INSTANCE = new LevelLostLayer();
 
-    public static LevelWonLayer getInstance() {
+    public static LevelLostLayer getInstance() {
         return INSTANCE;
     }
 
-    public static LevelWonLayer getInstance(final GameLevel currentLevel) {
+    public static LevelLostLayer getInstance(final GameLevel currentLevel) {
         INSTANCE.setCurrentLevel(currentLevel);
         return INSTANCE;
     }
@@ -38,9 +37,9 @@ public class LevelWonLayer extends ManagedLayer {
     IUpdateHandler mSlideInUpdateHandler = new IUpdateHandler() {
         @Override
         public void onUpdate(float pSecondsElapsed) {
-            if (LevelWonLayer.this.mLayerBackground.getY() > 0f) {
-                LevelWonLayer.this.mLayerBackground.setY(
-                        Math.max(LevelWonLayer.this.mLayerBackground.getY() -
+            if (LevelLostLayer.this.mLayerBackground.getY() > 0f) {
+                LevelLostLayer.this.mLayerBackground.setY(
+                        Math.max(LevelLostLayer.this.mLayerBackground.getY() -
                                 (pSecondsElapsed * ManagedLayer.SLIDE_PIXELS_PER_SECOND), 0f));
             } else {
                 ResourceManager.getInstance().engine.unregisterUpdateHandler(this);
@@ -56,13 +55,13 @@ public class LevelWonLayer extends ManagedLayer {
     IUpdateHandler mSlideOutUpdateHandler = new IUpdateHandler() {
         @Override
         public void onUpdate(float pSecondsElapsed) {
-            if (LevelWonLayer.this.mLayerBackground.getY() <
+            if (LevelLostLayer.this.mLayerBackground.getY() <
                     (ResourceManager.getInstance().cameraHeight / 2f) +
-                            (LevelWonLayer.this.mLayerBackground.getHeight() / 2f)) {
-                LevelWonLayer.this.mLayerBackground.setY(Math.min(LevelWonLayer.this.mLayerBackground.getY()
+                            (LevelLostLayer.this.mLayerBackground.getHeight() / 2f)) {
+                LevelLostLayer.this.mLayerBackground.setY(Math.min(LevelLostLayer.this.mLayerBackground.getY()
                         + (pSecondsElapsed * ManagedLayer.SLIDE_PIXELS_PER_SECOND),
                         (ResourceManager.getInstance().cameraHeight / 2f)
-                                + (LevelWonLayer.this.mLayerBackground.getHeight() / 2f)));
+                                + (LevelLostLayer.this.mLayerBackground.getHeight() / 2f)));
             } else {
                 ResourceManager.getInstance().engine.unregisterUpdateHandler(this);
                 SceneManager.getInstance().hideLayer();
@@ -92,12 +91,12 @@ public class LevelWonLayer extends ManagedLayer {
         this.attachChild(fadingBackgroundRectangle);
 
         mLayerBackground = new Sprite(0f, (ResourceManager.getInstance().cameraHeight/2f) +
-                (ResourceManager.sLevelWonBackgroundTR.getHeight()/2f),
-                ResourceManager.sLevelWonBackgroundTR, ResourceManager.getActivity().getVertexBufferObjectManager());
+                (ResourceManager.sLevelLostBackgroundTR.getHeight()/2f),
+                ResourceManager.sLevelLostBackgroundTR, ResourceManager.getActivity().getVertexBufferObjectManager());
         mLayerBackground.setScale(ResourceManager.getInstance().cameraHeight /
                 ResourceManager.sMenuBackgroundTR.getHeight());
-        mLayerBackground.attachChild(new StarFlightEffect(ResourceManager.getEngine().getVertexBufferObjectManager(),
-                ResourceManager.mStarFlightTR, 0, 0));
+//        mLayerBackground.attachChild(new StarFlightEffect(ResourceManager.getEngine().getVertexBufferObjectManager(),
+//                ResourceManager.mStarFlightTR, 0, 0));
         this.attachChild(mLayerBackground);
 
         this.setPosition(ResourceManager.getInstance().cameraWidth/2f,
