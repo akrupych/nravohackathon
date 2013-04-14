@@ -45,7 +45,7 @@ public class SFXManager {
 					.getActivity(), "boom_sound.mp3");
 			mIce = SoundFactory.createSoundFromAsset(ResourceManager
 					.getActivity().getSoundManager(), ResourceManager
-					.getActivity(), "ice-cracking-01.wav");
+					.getActivity(), "ice-cracking-02.mp3");
 			mBees = SoundFactory.createSoundFromAsset(ResourceManager
 					.getActivity().getSoundManager(), ResourceManager
 					.getActivity(), "KILLR_B2.WAV");
