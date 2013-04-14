@@ -166,7 +166,7 @@ public class ResourceManager {
 				.setAssetBasePath(GAME_GRAPHICS_PATH);
 		//////////////////////////////// HUD ///////////////////////////////////
 		if (sHudBackgroundTR == null) {
-			sHudBackgroundTR = getTextureRegion("hud_background.png",
+			sHudBackgroundTR = getTextureRegion("metal_hud.png",
 					NORMAL_TEXTURE_OPTION);
 		}
 		if (sPowerHoneycombTR == null) {
