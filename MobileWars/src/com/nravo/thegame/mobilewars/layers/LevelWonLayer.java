@@ -2,6 +2,8 @@ package com.nravo.thegame.mobilewars.layers;
 
 import com.nravo.thegame.mobilewars.effects.StarFlightEffect;
 import com.nravo.thegame.mobilewars.gamelevel.GameLevel;
+import com.nravo.thegame.mobilewars.gamelevel.Levels;
+import com.nravo.thegame.mobilewars.input.GrowButton;
 import com.nravo.thegame.mobilewars.managers.ResourceManager;
 import com.nravo.thegame.mobilewars.managers.SceneManager;
 import org.andengine.engine.handler.IUpdateHandler;
@@ -99,6 +101,17 @@ public class LevelWonLayer extends ManagedLayer {
         mLayerBackground.attachChild(new StarFlightEffect(ResourceManager.getEngine().getVertexBufferObjectManager(),
                 ResourceManager.mStarFlightTR, 0, 0));
         this.attachChild(mLayerBackground);
+
+        GrowButton restartButton = new GrowButton(mLayerBackground.getWidth()/2f,
+                0, ResourceManager.nextLevelButtonTTR) {
+            @Override
+            public void onClick() {
+                SceneManager.getInstance().showScene(new GameLevel(Levels.AVAILABLE_LEVELS[0]));
+            }
+        };
+        restartButton.setScale(0.5f);
+        mLayerBackground.attachChild(restartButton);
+        this.registerTouchArea(restartButton);
 
         this.setPosition(ResourceManager.getInstance().cameraWidth/2f,
                 ResourceManager.getInstance().cameraHeight/2f);
