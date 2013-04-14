@@ -47,6 +47,9 @@ public class Building extends Entity {
 				.equals(Levels.Race.APPLE_IOS) ? ResourceManager.sAppleBigBuildingTTR
 				: ResourceManager.sAndroidBigBuildingTR;
 
+		if (type.equals(Levels.Race.NEUTRAL))
+			buildingTextureRegion = ResourceManager.sNeutralButildingTTR;
+
 		buildingSprite = new AnimatedSprite(x, y, buildingTextureRegion,
 				ResourceManager.getActivity().getVertexBufferObjectManager()) {
 			@Override
@@ -140,7 +143,9 @@ public class Building extends Entity {
 
 				if (timePassed >= UNIT_REGENERATION_DELAY_IN_SEC) {
 					if (mNumberOfUnits < MAX_NUMBER_OF_UNITS_IN_BUILDING) {
-						mNumberOfUnits++;
+						if (!type.equals(Levels.Race.NEUTRAL)) {
+							mNumberOfUnits++;
+						}
 						timePassed = 0;
 
 						// TODO
@@ -169,11 +174,13 @@ public class Building extends Entity {
 			mNumberOfUnits += hero.countOfEnemy;
 			return;
 		}
-		if (mNumberOfUnits - hero.countOfEnemy > 0) {
+		if (mNumberOfUnits - hero.countOfEnemy > 0
+				&& type == Levels.Race.APPLE_IOS) {
 			mNumberOfUnits -= hero.countOfEnemy;
 			return;
 		}
-		if (mNumberOfUnits - hero.countOfEnemy < 0) {
+		if (mNumberOfUnits - hero.countOfEnemy < 0
+				&& type == Levels.Race.APPLE_IOS) {
 			mNumberOfUnits = (mNumberOfUnits - hero.countOfEnemy) * (-1);
 			type = type.equals(Levels.Race.APPLE_IOS) ? Levels.Race.ANDROID
 					: Levels.Race.APPLE_IOS;
@@ -184,6 +191,25 @@ public class Building extends Entity {
 			buildingSprite.clearUpdateHandlers();
 			buildingSprite = null;
 			buildSprite();
+			return;
+		}
+		if (mNumberOfUnits - hero.countOfEnemy > 0
+				&& type == Levels.Race.NEUTRAL) {
+			mNumberOfUnits -= hero.countOfEnemy;
+			return;
+		}
+		if (mNumberOfUnits - hero.countOfEnemy < 0
+				&& type == Levels.Race.NEUTRAL) {
+			mNumberOfUnits = (mNumberOfUnits - hero.countOfEnemy) * (-1);
+			type = Levels.Race.ANDROID;
+			mGameLevel.mAllBuilding.get(mGameLevel.mAllBuilding.indexOf(this)).type = type;
+			isMy = false;
+			buildingSprite.detachSelf();
+			buildingSprite.clearEntityModifiers();
+			buildingSprite.clearUpdateHandlers();
+			buildingSprite = null;
+			buildSprite();
+			return;
 		}
 	}
 
@@ -192,11 +218,13 @@ public class Building extends Entity {
 			mNumberOfUnits += hero.countOfEnemy;
 			return;
 		}
-		if (mNumberOfUnits - hero.countOfEnemy > 0) {
+		if (mNumberOfUnits - hero.countOfEnemy > 0
+				&& type == Levels.Race.ANDROID) {
 			mNumberOfUnits -= hero.countOfEnemy;
 			return;
 		}
-		if (mNumberOfUnits - hero.countOfEnemy < 0) {
+		if (mNumberOfUnits - hero.countOfEnemy < 0
+				&& type == Levels.Race.ANDROID) {
 			mNumberOfUnits = (mNumberOfUnits - hero.countOfEnemy) * (-1);
 			type = type.equals(Levels.Race.APPLE_IOS) ? Levels.Race.ANDROID
 					: Levels.Race.APPLE_IOS;
@@ -207,6 +235,24 @@ public class Building extends Entity {
 			buildingSprite.clearUpdateHandlers();
 			buildingSprite = null;
 			buildSprite();
+		}
+		if (mNumberOfUnits - hero.countOfEnemy > 0
+				&& type == Levels.Race.NEUTRAL) {
+			mNumberOfUnits -= hero.countOfEnemy;
+			return;
+		}
+		if (mNumberOfUnits - hero.countOfEnemy < 0
+				&& type == Levels.Race.NEUTRAL) {
+			mNumberOfUnits = (mNumberOfUnits - hero.countOfEnemy) * (-1);
+			type = Levels.Race.APPLE_IOS;
+			mGameLevel.mAllBuilding.get(mGameLevel.mAllBuilding.indexOf(this)).type = type;
+			isMy = false;
+			buildingSprite.detachSelf();
+			buildingSprite.clearEntityModifiers();
+			buildingSprite.clearUpdateHandlers();
+			buildingSprite = null;
+			buildSprite();
+			return;
 		}
 	}
 
